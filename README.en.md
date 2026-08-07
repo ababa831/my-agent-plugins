@@ -16,6 +16,11 @@ my-agent-plugins/
 │   └── plugins/
 │       └── marketplace.json    # Marketplace manifest for Codex
 └── plugins/
+    ├── development-rules/      # Shared Git development rules
+    │   ├── plugin.json
+    │   ├── .cursor-plugin/plugin.json
+    │   ├── .codex-plugin/plugin.json
+    │   └── skills/git-development-rules/
     ├── japanese-writing/       # Japanese writing norm skills
     │   ├── plugin.json         # Agent Plugins standard manifest
     │   ├── .cursor-plugin/plugin.json
@@ -38,6 +43,7 @@ Each plugin treats the standard root `plugin.json` as the source of truth and ad
 
 | Plugin | Contents |
 | :-- | :-- |
+| `development-rules` | Minimal shared Git development rules (Conventional Commits, TDD, pull request workflow, and related practices) |
 | `japanese-writing` | `japanese-tech-writing` (writing norms for technical documents), `cognitive-rhythm-writing` (cognitive-rhythm design), `semantic-generation` (referent-table-first generation) |
 | `shared-mcp` | `chrome-devtools` (stdio, npx), `bigquery` (streamable-http), `huggingface` (streamable-http) |
 
@@ -48,6 +54,7 @@ Each plugin treats the standard root `plugin.json` as the source of truth and ad
 Symlink (or copy) each plugin directory under `~/.cursor/plugins/local/`, then restart Cursor (or run **Developer: Reload Window**).
 
 ```bash
+ln -s /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/development-rules
 ln -s /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/japanese-writing
 ln -s /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/shared-mcp
 ```
@@ -64,6 +71,7 @@ Register the repository root as a local marketplace, then install from the CLI.
 cd /path/to/my-agent-plugins
 codex plugin marketplace add .
 codex plugin list --marketplace my-agent-plugins --json --available   # inspect the catalog
+codex plugin add development-rules@my-agent-plugins
 codex plugin add japanese-writing@my-agent-plugins
 codex plugin add shared-mcp@my-agent-plugins
 ```
