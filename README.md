@@ -20,7 +20,8 @@ my-agent-plugins/
     │   ├── .codex-plugin/plugin.json
     │   └── skills/
     │       ├── japanese-tech-writing/SKILL.md
-    │       └── cognitive-rhythm-writing/SKILL.md
+    │       ├── cognitive-rhythm-writing/SKILL.md
+    │       └── semantic-generation/SKILL.md
     └── shared-mcp/             # 共通 MCP サーバ定義
         ├── plugin.json
         ├── mcp.json            # Agent Plugins 標準スキーマ（transport 明示）
@@ -35,7 +36,7 @@ my-agent-plugins/
 
 | プラグイン | 内容 | 元の場所 |
 | :-- | :-- | :-- |
-| `japanese-writing` | `japanese-tech-writing`（技術文書の文章規範）、`cognitive-rhythm-writing`（認知リズム設計）| `~/.codex/skills/`（Codex 専用だった自作スキルを共通化） |
+| `japanese-writing` | `japanese-tech-writing`（技術文書の文章規範）、`cognitive-rhythm-writing`（認知リズム設計）、`semantic-generation`（対応表先行生成）| `~/.codex/skills/`（Codex 専用だった自作スキルを共通化） |
 | `shared-mcp` | `chrome-devtools`（stdio, npx）、`bigquery`（streamable-http）、`huggingface`（streamable-http） | `~/.cursor/mcp.json` と `~/.codex/config.toml` で二重管理されていた定義を統合 |
 
 ## 導入方法
@@ -63,12 +64,8 @@ codex plugin list --marketplace my-agent-plugins --json --available
 
 ### 取り込んだもの
 
-- `~/.codex/skills/japanese-tech-writing`・`cognitive-rhythm-writing`：自作（gist 由来 + ローカル調整）。Codex にしかなく、Cursor でも使うため共通化。
+- `~/.codex/skills/japanese-tech-writing`・`cognitive-rhythm-writing`・`semantic-generation`：自作（前二者は gist 由来 + ローカル調整）。Codex にしかなく、Cursor でも使うため共通化。
 - `~/.cursor/mcp.json` の `chrome-devtools` / `bigquery` / `huggingface`：`chrome-devtools` は Codex の `config.toml` にも重複定義があった。プラグイン化で一元管理する。
-
-### 取り込み待ち（ローカルマシンからのコピーが必要）
-
-- `~/.codex/skills/semantic-generation/`：自作スキルだが出典がなく、この環境からは本文を復元できない。ローカルの当該ディレクトリを `plugins/japanese-writing/skills/semantic-generation/` にコピーすれば完了する（`agents/openai.yaml` を含む）。
 
 ### 意図的に除外したもの
 
