@@ -1,5 +1,7 @@
 # my-agent-plugins
 
+[English version](README.en.md)
+
 Cursor / Codex で共通利用している設定を、[Agent Plugins 仕様 1.0.0](https://agent-plugins.org/)（[agentplugins/agent-plugins-spec](https://github.com/agentplugins/agent-plugins-spec)）にならって一元管理する個人リポジトリ。
 
 Agent Plugins v1 がポータブル対象と定めるのは **skills（[Agent Skills 仕様](https://agentskills.io/specification)）** と **MCP サーバ（`mcp.json`）** の2種類だけである。rules・hooks・commands などはクライアント固有領域（拡張ネームスペース）に留まるため、本リポジトリでもこの線引きに従う。

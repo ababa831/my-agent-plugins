@@ -7,7 +7,7 @@
   "mcpServers": {
     "chrome-devtools": {
       "command": "npx",
-      "args": ["chrome-devtools-mcp@latest", "--headless=false", "--isolated=true"]
+      "args": ["-y", "chrome-devtools-mcp@1.6.0", "--headless=false", "--isolated=true", "--no-usage-statistics"]
     },
     "bigquery": {
       "url": "https://bigquery.googleapis.com/mcp"
