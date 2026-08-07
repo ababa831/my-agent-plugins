@@ -43,22 +43,32 @@ my-agent-plugins/
 
 ### Cursor
 
-リポジトリを Cursor のプラグインとして読み込む。ローカル開発中は次のいずれか。
+`~/.cursor/plugins/local/` 配下に各プラグインディレクトリをシンボリックリンク（またはコピー）し、Cursor を再起動する（**Developer: Reload Window** でもよい）。
 
-- `~/.cursor/plugins/local/` 配下に各プラグインディレクトリ（`plugins/japanese-writing` など）をシンボリックリンクまたはコピーする
-- リポジトリを Git ホスティングに置き、マーケットプレイスとして参照する（root の `.cursor-plugin/marketplace.json` が一覧を提供する）
+```bash
+ln -s /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/japanese-writing
+ln -s /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/shared-mcp
+```
+
+読み込まれたか確認するには、サイドバーの **Customize** でスキル・MCP サーバの一覧を見る。
+
+チームに配布する場合は、Teams / Enterprise プランの Team Marketplace（**Dashboard → Plugins** で本リポジトリを Import from Repo）を使う。root の `.cursor-plugin/marketplace.json` がプラグイン一覧を提供する。
 
 ### Codex
 
-リポジトリルートをローカルマーケットプレイスとして登録する。
+リポジトリルートをローカルマーケットプレイスとして登録し、CLI からインストールする。
 
 ```bash
 cd /path/to/my-agent-plugins
 codex plugin marketplace add .
-codex plugin list --marketplace my-agent-plugins --json --available
+codex plugin list --marketplace my-agent-plugins --json --available   # カタログ確認
+codex plugin add japanese-writing@my-agent-plugins
+codex plugin add shared-mcp@my-agent-plugins
 ```
 
-その後 `/plugins`（TUI）または ChatGPT デスクトップアプリのプラグイン画面からインストールする。
+`codex` 内の `/plugins`（プラグインブラウザ）や ChatGPT デスクトップアプリのプラグイン画面からもインストールできる。バンドルされたスキル・MCP サーバは、インストール後に**新しいセッションを開始してから**有効になる。
+
+インストールされたプラグインはキャッシュ（`~/.codex/plugins/cache/`）へのコピーなので、プラグインの内容を更新したら再インストール（`codex plugin remove` → `codex plugin add`）で反映する。なお `codex plugin marketplace upgrade` は Git ソースのマーケットプレイス専用で、ローカル登録には効かない。
 
 ## ライセンスと出典
 
