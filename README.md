@@ -16,6 +16,11 @@ my-agent-plugins/
 │   └── plugins/
 │       └── marketplace.json    # Codex 用マーケットプレイスマニフェスト
 └── plugins/
+    ├── development-rules/      # Git開発共通ルール
+    │   ├── plugin.json
+    │   ├── .cursor-plugin/plugin.json
+    │   ├── .codex-plugin/plugin.json
+    │   └── skills/git-development-rules/
     ├── japanese-writing/       # 日本語ライティング規範スキル集
     │   ├── plugin.json         # Agent Plugins 標準マニフェスト
     │   ├── .cursor-plugin/plugin.json
@@ -38,6 +43,7 @@ my-agent-plugins/
 
 | プラグイン | 内容 |
 | :-- | :-- |
+| `development-rules` | Git開発で共通利用する最小限のルール（Conventional Commits、TDD、PR運用など） |
 | `japanese-writing` | `japanese-tech-writing`（技術文書の文章規範）、`cognitive-rhythm-writing`（認知リズム設計）、`semantic-generation`（対応表先行生成） |
 | `shared-mcp` | `chrome-devtools`（stdio, npx）、`bigquery`（streamable-http）、`huggingface`（streamable-http） |
 
@@ -48,6 +54,7 @@ my-agent-plugins/
 `~/.cursor/plugins/local/` 配下に各プラグインディレクトリをシンボリックリンク（またはコピー）し、Cursor を再起動する（**Developer: Reload Window** でもよい）。
 
 ```bash
+ln -s /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/development-rules
 ln -s /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/japanese-writing
 ln -s /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/shared-mcp
 ```
@@ -64,6 +71,7 @@ ln -s /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/share
 cd /path/to/my-agent-plugins
 codex plugin marketplace add .
 codex plugin list --marketplace my-agent-plugins --json --available   # カタログ確認
+codex plugin add development-rules@my-agent-plugins
 codex plugin add japanese-writing@my-agent-plugins
 codex plugin add shared-mcp@my-agent-plugins
 ```
