@@ -74,6 +74,11 @@ codex plugin list --marketplace my-agent-plugins --json --available
 - **`~/.codex/AGENTS.md`・Cursor User Rules・`config.toml` の承認ポリシー等**：Agent Plugins v1 は rules / hooks / commands を意図的にポータブル対象外としている（クライアント間で形式が収束していないため）。各クライアント側で管理を続ける。
 - **MCP の `node_repl` / `openaiDeveloperDocs`**：ChatGPT アプリ同梱・Codex 固有のため対象外。
 
+## ライセンスと出典
+
+- `japanese-tech-writing` と `cognitive-rhythm-writing` の原型は [k16shikano 氏の public gist](https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d)（[認知リズム編](https://gist.github.com/k16shikano/eb2929f13ed19c97188393d297be8432)）に、ローカルでの調整を加えたもの。作者は [public gist 全体に Unlicense（パブリックドメイン献呈）を適用すると宣言している](https://gist.github.com/k16shikano/67625f2a7d96e3bbdfae8d571a936063)ため、public リポジトリでの再配布・改変に制約はない。
+- `semantic-generation` は自作。
+
 ## 運用ルール
 
 - スキルの更新はこのリポジトリで行い、各クライアントへはプラグイン経由で配布する（`~/.codex/skills/` 等の直置きコピーは段階的に削除する）。
