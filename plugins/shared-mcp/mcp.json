@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "chrome-devtools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest", "--headless=false", "--isolated=true"]
+    },
+    "bigquery": {
+      "type": "streamable-http",
+      "url": "https://bigquery.googleapis.com/mcp"
+    },
+    "huggingface": {
+      "type": "streamable-http",
+      "url": "https://huggingface.co/mcp?login"
+    }
+  }
+}

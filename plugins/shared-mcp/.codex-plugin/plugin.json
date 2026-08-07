@@ -1,0 +1,6 @@
+{
+  "name": "shared-mcp",
+  "version": "1.0.0",
+  "description": "Cursor/Codex で共通利用する MCP サーバ定義（chrome-devtools / bigquery / huggingface）",
+  "mcpServers": "./.mcp.json"
+}

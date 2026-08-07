@@ -1,0 +1,14 @@
+{
+  "mcp_servers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest", "--headless=false", "--isolated=true"]
+    },
+    "bigquery": {
+      "url": "https://bigquery.googleapis.com/mcp"
+    },
+    "huggingface": {
+      "url": "https://huggingface.co/mcp?login"
+    }
+  }
+}

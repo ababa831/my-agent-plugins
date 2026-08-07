@@ -1,0 +1,29 @@
+{
+  "name": "my-agent-plugins",
+  "plugins": [
+    {
+      "name": "japanese-writing",
+      "source": {
+        "source": "local",
+        "path": "./plugins/japanese-writing"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "shared-mcp",
+      "source": {
+        "source": "local",
+        "path": "./plugins/shared-mcp"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

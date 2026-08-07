@@ -1,0 +1,21 @@
+{
+  "name": "my-agent-plugins",
+  "owner": {
+    "name": "aki"
+  },
+  "metadata": {
+    "description": "Cursor / Codex で共通利用する個人プラグイン集（Agent Plugins 1.0.0 準拠）"
+  },
+  "plugins": [
+    {
+      "name": "japanese-writing",
+      "source": "plugins/japanese-writing",
+      "description": "日本語の技術文書ライティング規範スキル集（文章規範・認知リズム）"
+    },
+    {
+      "name": "shared-mcp",
+      "source": "plugins/shared-mcp",
+      "description": "Cursor/Codex で共通利用する MCP サーバ定義（chrome-devtools / bigquery / huggingface）"
+    }
+  ]
+}

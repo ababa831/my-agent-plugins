@@ -1,0 +1,19 @@
+{
+  "name": "shared-mcp",
+  "version": "1.0.0",
+  "description": "Cursor/Codex で共通利用する MCP サーバ定義（chrome-devtools / bigquery / huggingface）",
+  "license": "MIT",
+  "keywords": ["mcp", "chrome-devtools", "bigquery", "huggingface"],
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest", "--headless=false", "--isolated=true"]
+    },
+    "bigquery": {
+      "url": "https://bigquery.googleapis.com/mcp"
+    },
+    "huggingface": {
+      "url": "https://huggingface.co/mcp?login"
+    }
+  }
+}
