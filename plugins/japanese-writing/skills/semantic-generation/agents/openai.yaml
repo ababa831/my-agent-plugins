@@ -1,0 +1,4 @@
+interface:
+  display_name: "Semantic Generation"
+  short_description: "語より先に指示対象と役割を固定して曖昧な専門用語を防ぐ"
+  default_prompt: "Use $semantic-generation to define referents before drafting the document."
