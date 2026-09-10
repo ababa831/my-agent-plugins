@@ -13,6 +13,11 @@
       "description": "Gitリポジトリで共通利用する最小限の開発ルール"
     },
     {
+      "name": "frontend-ui-development",
+      "source": "plugins/frontend-ui-development",
+      "description": "GUI/UIの設計を保ちながらエージェントで実装・モック・安定化するためのフロントエンド開発ガイド"
+    },
+    {
       "name": "japanese-writing",
       "source": "plugins/japanese-writing",
       "description": "日本語の技術文書ライティング規範スキル集（文章規範・認知リズム）"

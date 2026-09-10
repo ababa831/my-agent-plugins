@@ -1,0 +1,22 @@
+---
+description: Prevent patchwork frontend UI changes by reusing existing components, design tokens, and layout structure.
+globs:
+  - "**/*.{ts,tsx,js,jsx,css,scss,sass,less,html,vue,svelte}"
+alwaysApply: false
+---
+
+# Frontend UI guardrails
+
+Before implementing a UI change, inspect the existing component system, design tokens, and parent layout.
+
+- Reuse an existing generic UI primitive when one already represents the same semantic role.
+- Do not create duplicate primitives such as `PrimaryButton2`, `BlueButton`, `SpecialCard`, or equivalent one-off replacements.
+- Reuse existing color, spacing, typography, radius, and shadow tokens when they match the intended design decision.
+- Before adding local margin, positional offsets, transforms, or selector overrides to fix alignment, inspect parent `gap`, padding, flex/grid alignment, sizing, overflow, and the shared component itself.
+- Avoid `!important`, deep selector chains, arbitrary z-index escalation, and local CSS patches whose only purpose is to make one screenshot look correct.
+- Keep generic UI primitives separate from domain-specific feature components and page composition.
+- Do not over-abstract unstable mock UI. During exploration, small one-off values and temporary duplication are acceptable when they make the UI easier to change or delete.
+- When a prototype becomes a long-lived implementation, stabilize its repeated patterns before continuing to add features.
+- For visual bugs, explain the structural cause before applying a fix. Use a local override only when the behavior is genuinely local.
+
+Use the `frontend-ui-development` skill for the full workflow, phase model, and project bootstrap guidance.

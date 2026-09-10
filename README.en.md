@@ -8,8 +8,9 @@ Agent Plugins v1 defines exactly two portable component types: **skills ([Agent 
 
 ## Layout
 
-```
+```text
 my-agent-plugins/
+├── AGENTS.md                   # Instructions for agents editing this repository
 ├── .cursor-plugin/
 │   └── marketplace.json        # Marketplace manifest for Cursor
 ├── .agents/
@@ -21,8 +22,16 @@ my-agent-plugins/
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
     │   └── skills/git-development-rules/
+    ├── frontend-ui-development/ # GUI/UI development guardrails
+    │   ├── plugin.json
+    │   ├── .cursor-plugin/plugin.json
+    │   ├── .codex-plugin/plugin.json
+    │   ├── rules/frontend-ui-guardrails.mdc   # Cursor-specific persistent rule
+    │   └── skills/frontend-ui-development/
+    │       ├── SKILL.md
+    │       └── assets/AGENTS.frontend.md      # Template for target repositories
     ├── japanese-writing/       # Japanese writing norm skills
-    │   ├── plugin.json         # Agent Plugins standard manifest
+    │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
     │   └── skills/
@@ -31,19 +40,20 @@ my-agent-plugins/
     │       └── semantic-generation/SKILL.md
     └── shared-mcp/             # Shared MCP server definitions
         ├── plugin.json
-        ├── mcp.json            # Agent Plugins standard schema (explicit transport)
-        ├── .cursor-plugin/plugin.json   # Cursor format (inline mcpServers)
+        ├── mcp.json
+        ├── .cursor-plugin/plugin.json
         ├── .codex-plugin/plugin.json
-        └── .mcp.json           # Codex format (wrapped mcp_servers)
+        └── .mcp.json
 ```
 
-Each plugin treats the standard root `plugin.json` as the source of truth and additionally ships client-specific manifests for Cursor (`.cursor-plugin/plugin.json`) and Codex (`.codex-plugin/plugin.json`). The skill format is identical across all three, so there is no duplication. Only MCP configuration has per-client files, to absorb schema differences (explicit vs. inferred transport, `mcpServers` vs. `mcp_servers`).
+Each plugin treats the standard root `plugin.json` as the source of truth and additionally ships client-specific manifests for Cursor (`.cursor-plugin/plugin.json`) and Codex (`.codex-plugin/plugin.json`). Skills remain shared in the portable format. Cursor-specific rules live in `rules/` and are distributed only through `.cursor-plugin/plugin.json`. MCP keeps per-client files where schemas differ.
 
 ## Plugins
 
 | Plugin | Contents |
 | :-- | :-- |
 | `development-rules` | Minimal shared Git development rules (Conventional Commits, TDD, pull request workflow, and related practices) |
+| `frontend-ui-development` | Guardrails for GUI/UI implementation, prototyping, stabilization, and visual bug fixes; prioritizes existing components, design tokens, and layout structure. Cursor also receives an `.mdc` rule |
 | `japanese-writing` | `japanese-tech-writing` (writing norms for technical documents), `cognitive-rhythm-writing` (cognitive-rhythm design), `semantic-generation` (referent-table-first generation) |
 | `shared-mcp` | `chrome-devtools` (stdio, npx), `bigquery` (streamable-http), `huggingface` (streamable-http) |
 
@@ -55,11 +65,14 @@ Symlink (or copy) each plugin directory under `~/.cursor/plugins/local/`, then r
 
 ```bash
 ln -s /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/development-rules
+ln -s /path/to/my-agent-plugins/plugins/frontend-ui-development ~/.cursor/plugins/local/frontend-ui-development
 ln -s /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/japanese-writing
 ln -s /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/shared-mcp
 ```
 
-To verify, open **Customize** in the sidebar and check that the skills and MCP servers appear.
+To verify, open **Customize** in the sidebar and check that rules, skills, and MCP servers appear.
+
+`frontend-ui-development` distributes the portable `SKILL.md` plus the Cursor-specific `rules/frontend-ui-guardrails.mdc`. Project-specific details should be adapted into the target repository's `AGENTS.md` using the bundled `assets/AGENTS.frontend.md` as a starting point.
 
 For team distribution, use a Team Marketplace on the Teams / Enterprise plan (**Dashboard → Plugins**, then Import from Repo). The root `.cursor-plugin/marketplace.json` provides the plugin catalog.
 
@@ -72,11 +85,14 @@ cd /path/to/my-agent-plugins
 codex plugin marketplace add .
 codex plugin list --marketplace my-agent-plugins --json --available   # inspect the catalog
 codex plugin add development-rules@my-agent-plugins
+codex plugin add frontend-ui-development@my-agent-plugins
 codex plugin add japanese-writing@my-agent-plugins
 codex plugin add shared-mcp@my-agent-plugins
 ```
 
 You can also install from `/plugins` (plugin browser) inside `codex`, or from the plugin screen in the ChatGPT desktop app. Bundled skills and MCP servers take effect **after starting a new session**.
+
+Codex receives the portable Agent Plugins skill. The Cursor-specific `.mdc` rule is not distributed to Codex; use `AGENTS.md` for persistent project-specific instructions when needed.
 
 Installed plugins are copies in the cache (`~/.codex/plugins/cache/`); after changing plugin contents, reinstall (`codex plugin remove` → `codex plugin add`) to pick up the changes. Note that `codex plugin marketplace upgrade` only applies to Git-sourced marketplaces, not local registrations.
 
@@ -84,9 +100,11 @@ Installed plugins are copies in the cache (`~/.codex/plugins/cache/`); after cha
 
 - `japanese-tech-writing` and `cognitive-rhythm-writing` are based on [public gists by k16shikano](https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d) ([cognitive-rhythm edition](https://gist.github.com/k16shikano/eb2929f13ed19c97188393d297be8432)) with local adjustments. The author [declares that Unlicense (public-domain dedication) applies to all of their public gists](https://gist.github.com/k16shikano/67625f2a7d96e3bbdfae8d571a936063), so redistribution and modification in a public repository are unrestricted.
 - `semantic-generation` is original work.
+- `frontend-ui-development` is original work.
 
 ## Operating rules
 
 - Update skills in this repository and distribute them to each client via plugins.
+- Do not disguise client-specific components as portable Agent Plugins components. Cursor rules stay on the Cursor plugin side.
 - Never place secrets or credentials inside a plugin (including `env` / `headers` in `mcp.json`). The specification also forbids this.
 - Bump the `version` in the corresponding `plugin.json` whenever a plugin changes.
