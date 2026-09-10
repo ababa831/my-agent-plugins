@@ -24,8 +24,10 @@ plugins/<plugin-name>/
 ├── .codex-plugin/plugin.json
 ├── skills/
 │   └── <skill-name>/
-│       └── SKILL.md
-└── rules/                  # Cursor-only, when needed
+│       ├── SKILL.md
+│       ├── references/        # optional detail loaded only when useful
+│       └── assets/            # optional reusable templates/resources
+└── rules/                     # Cursor-only, when needed
     └── <rule-name>.mdc
 ```
 
@@ -38,14 +40,17 @@ Keep plugin names, versions, and descriptions aligned across client manifests un
 - The `name` in `SKILL.md` must match its parent directory.
 - Descriptions must explain both what the skill does and when it should activate.
 - Keep `SKILL.md` focused; move optional detail to `references/` and reusable templates/resources to `assets/`.
+- Prefer goals, invariants, and decision criteria over long mandatory step-by-step checklists; preserve the agent's ability to choose an efficient path.
+- State broad defaults once instead of repeating the same guidance across `SKILL.md`, rules, and `AGENTS.md` templates.
 - Prefer framework-agnostic guidance unless a skill explicitly targets a framework.
-- Do not duplicate the same long instruction text across portable skills and client-specific rules. Keep the skill as the complete portable workflow and rules as concise persistent guardrails.
+- Do not let a reusable skill introduce unnecessary approval gates, excessive validation, or scope expansion.
 
 ## Cursor rule rules
 
 - Put plugin rules under `rules/` as `.mdc` files.
 - Include `description`, `alwaysApply`, and `globs` when file scoping is appropriate.
 - Rules should be short, persistent constraints rather than full tutorials.
+- Scope globs narrowly enough to avoid activating rules for unrelated code.
 - Do not add a Cursor-only rule to the portable root `plugin.json`.
 
 ## Change checklist
@@ -53,7 +58,7 @@ Keep plugin names, versions, and descriptions aligned across client manifests un
 When adding or changing a plugin:
 
 1. Update the plugin files.
-2. Bump the plugin version when an existing plugin changes.
+2. Bump the plugin version when an existing released plugin changes.
 3. Keep root, Cursor, and Codex manifests aligned.
 4. Add or update entries in both marketplace manifests when the plugin catalog changes.
 5. Update both `README.md` and `README.en.md` when user-facing behavior or installation changes.
