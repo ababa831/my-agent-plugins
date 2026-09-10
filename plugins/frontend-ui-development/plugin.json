@@ -1,0 +1,8 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "frontend-ui-development",
+  "version": "1.0.0",
+  "description": "GUI/UIをエージェントで実装・改善するときに、既存コンポーネント、デザイントークン、レイアウト構造を尊重してパッチワーク化を防ぐフロントエンド開発ガイド",
+  "license": "MIT",
+  "keywords": ["frontend", "ui", "gui", "design-system", "design-tokens", "prototype"]
+}

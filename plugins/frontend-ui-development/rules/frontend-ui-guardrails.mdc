@@ -1,0 +1,15 @@
+---
+description: Guardrails for frontend UI implementation without constraining exploratory work.
+globs:
+  - "**/*.{tsx,jsx,css,scss,sass,less,html,vue,svelte}"
+alwaysApply: false
+---
+
+# Frontend UI guardrails
+
+- Reuse existing UI primitives and design tokens when they fit the same role.
+- Prefer structural layout fixes over one-off spacing, positional offsets, or selector overrides.
+- Avoid duplicate generic components, unnecessary `!important`, and arbitrary z-index escalation.
+- Do not over-abstract unstable exploratory UI; temporary one-off values or small duplication are acceptable when they keep experiments easy to change.
+
+Use the `frontend-ui-development` skill for broader workflow and phase-specific guidance.
