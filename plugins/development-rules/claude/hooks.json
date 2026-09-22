@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "awk 'NR==1&&/^---$/{f=1;next} f&&/^---$/{f=0;next} !f' \"${CLAUDE_PLUGIN_ROOT}/skills/git-development-rules/SKILL.md\""
+            "command": "awk 'NR==1&&/^---[[:space:]]*$/{f=1;next} f&&/^---[[:space:]]*$/{f=0;next} !f&&!/SKILL\\.en\\.md/' \"${CLAUDE_PLUGIN_ROOT}/skills/git-development-rules/SKILL.md\""
           }
         ]
       }
