@@ -74,6 +74,7 @@ When adding or changing a plugin:
 ## Wording
 
 Do not use the word 「正本」 in Japanese text; it is unfamiliar to most readers. Rephrase with 「定義元」「管理元」「元データ」「基準」 or similar.
+The only mechanical check for this is the Claude Code PostToolUse hook in `japanese-writing`; do not add CI or lint checks for it unless repeated failures show the rule and hook are insufficient.
 
 ## Git workflow
 
