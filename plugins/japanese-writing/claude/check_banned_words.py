@@ -15,7 +15,7 @@ blocks work by mistake.
 import json
 import sys
 
-WORD = "正本"  # 「正本」, escaped so editing this file does not trigger the hook
+WORD = "\u6b63\u672c"  # 「正本」, escaped so editing this file does not trigger the hook
 QUOTED = "「" + WORD + "」"
 
 
