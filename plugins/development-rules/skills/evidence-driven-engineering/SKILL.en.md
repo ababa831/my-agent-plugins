@@ -55,9 +55,9 @@ Propose architectural changes beyond the task as a scoped follow-up.
 
 ## Conditional work
 
-- When delegating to other agents or working in parallel, see [references/delegation.md](references/delegation.md).
-- When creating or changing agent instructions, skills, or verification procedures, see [references/evaluating-instructions.md](references/evaluating-instructions.md).
-- Typical failures and expected behavior are in [references/examples.md](references/examples.md); they also serve as evaluation cases.
+- When delegating to other agents or working in parallel, see [references/delegation.md](references/delegation.md) (Japanese).
+- When creating or changing agent instructions, skills, or verification procedures, see [references/evaluating-instructions.md](references/evaluating-instructions.md) (Japanese).
+- Typical failures and expected behavior are in [references/examples.md](references/examples.md) (Japanese); they also serve as evaluation cases.
 
 ## Completion report
 

@@ -125,7 +125,7 @@ claude plugin install shared-mcp@my-agent-plugins
 
 `claude` 内の `/plugin` からも同じ操作ができる。既定の user スコープでインストールすれば、どのプロジェクトでもskillsが使える。
 
-Claude Code にはポータブルなskillsをそのまま配布する。`japanese-writing` は加えて SessionStart hook（`claude/hooks.json`）を持ち、`rules/common-rules.mdc` を毎セッションのコンテキストに追加する。skillが起動しない場面でも共通ルールが効くようにするためである。さらに PostToolUse hook（`claude/check_banned_words.py`）が、Write / Edit / MultiEdit / NotebookEdit で新たに書き込んだ文字列に「正本」があれば Claude に書き直しを促す。語そのものに言及する「正本」（かぎ括弧付き）は対象外で、`python3` がない環境では何もしない。返信本文はファイルに書かれないため検出できない。`shared-mcp` は、プラグイン直下の `.mcp.json` が Codex 形式なので、Claude Code では `.claude-plugin/plugin.json` に直接記述したサーバ定義を使う。
+Claude Code にはポータブルなskillsをそのまま配布する。`japanese-writing` は加えて SessionStart hook（`claude/hooks.json`）を持ち、`rules/common-rules.mdc` を毎セッションのコンテキストに追加する。skillが起動しない場面でも共通ルールが効くようにするためである。さらに PostToolUse hook（`claude/check_banned_words.py`）が、Write / Edit / NotebookEdit で新たに書き込んだ文字列に「正本」があれば Claude に書き直しを促す。語そのものに言及する「正本」（かぎ括弧付き）は対象外で、`python3` がない環境では何もしない。返信本文はファイルに書かれないため検出できない。`shared-mcp` は、プラグイン直下の `.mcp.json` が Codex 形式なので、Claude Code では `.claude-plugin/plugin.json` に直接記述したサーバ定義を使う。
 
 インストールされたプラグインはキャッシュ（`~/.claude/plugins/cache/`）へのコピーである。内容を変えて `version` を上げたら、`claude plugin marketplace update my-agent-plugins` の後に `claude plugin update <plugin>@my-agent-plugins` で反映する。
 
