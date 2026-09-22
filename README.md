@@ -19,12 +19,14 @@ my-agent-plugins/
 │   └── plugins/
 │       └── marketplace.json    # Codex 用マーケットプレイスマニフェスト
 └── plugins/
-    ├── development-rules/      # Git開発共通ルール
+    ├── development-rules/      # Git開発共通ルールと証拠に基づく検証
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
     │   ├── .claude-plugin/plugin.json
-    │   └── skills/git-development-rules/
+    │   └── skills/
+    │       ├── git-development-rules/
+    │       └── evidence-driven-engineering/   # references/ に詳細と評価用の例
     ├── frontend-ui-development/ # GUI/UI開発ガードレール
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
@@ -60,7 +62,7 @@ my-agent-plugins/
 
 | プラグイン | 内容 |
 | :-- | :-- |
-| `development-rules` | Git開発で共通利用する最小限のルール（Conventional Commits、TDD、PR運用など） |
+| `development-rules` | `git-development-rules`（Conventional Commits、TDD、PR運用など最小限のGit開発ルール）、`evidence-driven-engineering`（原因診断はコードと観測で裏付ける、実行中の挙動で検証する、検証を再現可能にする、繰り返す指摘を型・lint・CIなどの仕組みで防ぐ、委任とskill評価の進め方） |
 | `frontend-ui-development` | GUI/UIの実装・モック・安定化・視覚的不具合修正で、既存component / design token / layoutを優先しパッチワーク化を防ぐ。Cursorでは `.mdc` rule も同梱 |
 | `japanese-writing` | `japanese-tech-writing`（技術文書の文章規範）、`cognitive-rhythm-writing`（認知リズム設計）、`semantic-generation`（対応表先行生成）。常時適用の共通ルール（返信は日本語で書く、「正本」という語を使わない）も同梱し、Cursor では rule、Claude Code では SessionStart hook で読み込む |
 | `shared-mcp` | `chrome-devtools`（stdio, npx）、`bigquery`（streamable-http）、`huggingface`（streamable-http） |
@@ -130,6 +132,7 @@ Claude Code にはポータブルなskillsをそのまま配布する。`japanes
 
 - `japanese-tech-writing` と `cognitive-rhythm-writing` の原型は [k16shikano 氏の public gist](https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d)（[認知リズム編](https://gist.github.com/k16shikano/eb2929f13ed19c97188393d297be8432)）に、ローカルでの調整を加えたもの。作者は [public gist 全体に Unlicense（パブリックドメイン献呈）を適用すると宣言している](https://gist.github.com/k16shikano/67625f2a7d96e3bbdfae8d571a936063)ため、public リポジトリでの再配布・改変に制約はない。
 - `semantic-generation` は自作。
+- `evidence-driven-engineering` は [unicodef1wn/lauren-poteto-rules](https://github.com/unicodef1wn/lauren-poteto-rules)（MIT License、Copyright (c) 2026 unicodef1wn）を日本語化し、汎用のskillとして再構成したもの。元の原則は [Lauren Tan 氏（@poteto）](https://x.com/poteto)のコーディングエージェントに関する講演に基づく。ライセンス全文は skill 内の `LICENSE` にある。
 - `frontend-ui-development` は自作。
 
 ## 運用ルール

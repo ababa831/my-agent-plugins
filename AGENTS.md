@@ -48,6 +48,8 @@ Keep plugin names, versions, and descriptions aligned across client manifests un
 - State broad defaults once instead of repeating the same guidance across `SKILL.md`, rules, and `AGENTS.md` templates.
 - Prefer framework-agnostic guidance unless a skill explicitly targets a framework.
 - Do not let a reusable skill introduce unnecessary approval gates, excessive validation, or scope expansion.
+- Create or change a skill in response to an observed agent failure, and state the behavior it should improve.
+- When evaluating a skill change, follow `evidence-driven-engineering`'s `references/evaluating-instructions.md`: include a routine small task to detect unnecessary process, and judge tool calls and diffs rather than the agent's confidence. If you could not run an evaluation, say the change is untested.
 
 ## Cursor rule rules
 
