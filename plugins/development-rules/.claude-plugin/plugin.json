@@ -1,6 +1,6 @@
 {
   "name": "development-rules",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Gitリポジトリで共通利用する最小限の開発ルールと、証拠に基づく検証・改善の進め方",
   "author": {
     "name": "aki"
@@ -12,5 +12,6 @@
     "tdd",
     "conventional-commits",
     "verification"
-  ]
+  ],
+  "hooks": "./claude/hooks.json"
 }
