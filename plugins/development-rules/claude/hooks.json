@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "awk 'NR==1&&/^---[[:space:]]*$/{f=1;next} f&&/^---[[:space:]]*$/{f=0;next} !f&&!/SKILL\\.en\\.md/' \"${CLAUDE_PLUGIN_ROOT}/skills/git-development-rules/SKILL.md\""
+          }
+        ]
+      }
+    ]
+  }
+}
