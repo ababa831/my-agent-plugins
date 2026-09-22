@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repository is the source of truth for personal agent plugins shared across Cursor and Codex.
+This repository is the source of truth for personal agent plugins shared across Cursor, Codex, and Claude Code.
 Keep portable Agent Plugins components separate from client-specific extensions.
 
 ## Compatibility boundary
@@ -10,25 +10,29 @@ Keep portable Agent Plugins components separate from client-specific extensions.
 - Agent Plugins v1 portable components are `skills/` and `mcp.json`.
 - Cursor-specific rules belong in a plugin's `rules/` directory and are exposed by `.cursor-plugin/plugin.json`.
 - Codex-specific manifest details belong in `.codex-plugin/plugin.json`.
+- Claude Code-specific manifest details belong in `.claude-plugin/plugin.json`. Claude Code-only hooks and the files they read live in the plugin's `claude/` directory and are referenced only from that manifest.
+- Claude Code auto-loads a plugin-root `.mcp.json`, which is in Codex format here. Declare Claude Code MCP servers inline in `.claude-plugin/plugin.json` (`type`: `stdio` / `http`).
 - Do not invent a portable representation for rules, hooks, commands, or other client-specific components.
 - Repository-specific instructions belong in `AGENTS.md`; reusable project templates may live in a skill's `assets/` directory.
 
 ## Plugin layout
 
-For a plugin that supports both Cursor and Codex, prefer this shape:
+For a plugin that supports Cursor, Codex, and Claude Code, prefer this shape:
 
 ```text
 plugins/<plugin-name>/
 ├── plugin.json
 ├── .cursor-plugin/plugin.json
 ├── .codex-plugin/plugin.json
+├── .claude-plugin/plugin.json
 ├── skills/
 │   └── <skill-name>/
 │       ├── SKILL.md
 │       ├── references/        # optional detail loaded only when useful
 │       └── assets/            # optional reusable templates/resources
-└── rules/                     # Cursor-only, when needed
-    └── <rule-name>.mdc
+├── rules/                     # Cursor-only, when needed
+│   └── <rule-name>.mdc
+└── claude/                    # Claude Code-only hooks and injected rules, when needed
 ```
 
 The root `plugin.json` is the source of truth for portable plugin metadata.
@@ -59,11 +63,15 @@ When adding or changing a plugin:
 
 1. Update the plugin files.
 2. Bump the plugin version when an existing released plugin changes.
-3. Keep root, Cursor, and Codex manifests aligned.
-4. Add or update entries in both marketplace manifests when the plugin catalog changes.
+3. Keep root, Cursor, Codex, and Claude Code manifests aligned.
+4. Add or update entries in all three marketplace manifests (`.cursor-plugin/`, `.agents/plugins/`, `.claude-plugin/`) when the plugin catalog changes.
 5. Update both `README.md` and `README.en.md` when user-facing behavior or installation changes.
-6. Validate JSON and Agent Skills frontmatter.
+6. Validate JSON and Agent Skills frontmatter, and run `claude plugin validate .`.
 7. Never commit secrets, credentials, private keys, tokens, or personal data.
+
+## Wording
+
+Do not use the word 「正本」 in Japanese text; it is unfamiliar to most readers. Rephrase with 「定義元」「管理元」「元データ」「基準」 or similar.
 
 ## Git workflow
 
