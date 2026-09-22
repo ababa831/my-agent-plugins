@@ -24,6 +24,7 @@ my-agent-plugins/
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
     │   ├── .claude-plugin/plugin.json
+    │   ├── claude/hooks.json              # Claude Code 固有の SessionStart hook（git-development-rules の本文を読み込む）
     │   └── skills/
     │       ├── git-development-rules/
     │       └── evidence-driven-engineering/   # references/ に詳細と評価用の例
@@ -63,7 +64,7 @@ my-agent-plugins/
 
 | プラグイン | 内容 |
 | :-- | :-- |
-| `development-rules` | `git-development-rules`（Conventional Commits、TDD、PR運用など最小限のGit開発ルール）、`evidence-driven-engineering`（原因診断はコードと観測で裏付ける、実行中の挙動で検証する、検証を再現可能にする、繰り返す指摘を型・lint・CIなどの仕組みで防ぐ、委任とskill評価の進め方） |
+| `development-rules` | `git-development-rules`（Conventional Commits、TDD、PR運用など最小限のGit開発ルール）、`evidence-driven-engineering`（原因診断はコードと観測で裏付ける、実行中の挙動で検証する、検証を再現可能にする、繰り返す指摘を型・lint・CIなどの仕組みで防ぐ、委任とskill評価の進め方）。Claude Code では `git-development-rules` を SessionStart hook で毎セッションに読み込む |
 | `frontend-ui-development` | GUI/UIの実装・モック・安定化・視覚的不具合修正で、既存component / design token / layoutを優先しパッチワーク化を防ぐ。Cursorでは `.mdc` rule も同梱 |
 | `japanese-writing` | `japanese-tech-writing`（技術文書の文章規範）、`cognitive-rhythm-writing`（認知リズム設計）、`semantic-generation`（対応表先行生成）。常時適用の共通ルール（返信は日本語で書く、「正本」という語を使わない）も同梱し、Cursor では rule、Claude Code では SessionStart hook で読み込む。Claude Code では「正本」を新たに書き込もうとしたときに止める PreToolUse hook も持つ |
 | `shared-mcp` | `chrome-devtools`（stdio, npx）、`bigquery`（streamable-http）、`huggingface`（streamable-http） |
@@ -125,7 +126,7 @@ claude plugin install shared-mcp@my-agent-plugins
 
 `claude` 内の `/plugin` からも同じ操作ができる。既定の user スコープでインストールすれば、どのプロジェクトでもskillsが使える。
 
-Claude Code にはポータブルなskillsをそのまま配布する。`japanese-writing` は加えて SessionStart hook（`claude/hooks.json`）を持ち、`rules/common-rules.mdc` を毎セッションのコンテキストに追加する。skillが起動しない場面でも共通ルールが効くようにするためである。さらに PreToolUse hook（`claude/check_banned_words.py`）が、Write / Edit / NotebookEdit で「正本」を新たに書き込もうとすると書き込みを止め、言い換えて再実行するよう Claude に伝える。Edit は変更前後の出現回数を比べるので、既存の「正本」を残したまま別の箇所を直す編集は止めない。語そのものに言及する「正本」（かぎ括弧付き）は対象外で、想定外の入力や `python3` がない環境では何もしない。返信本文はファイルに書かれないため検出できない。`shared-mcp` は、プラグイン直下の `.mcp.json` が Codex 形式なので、Claude Code では `.claude-plugin/plugin.json` に直接記述したサーバ定義を使う。
+Claude Code にはポータブルなskillsをそのまま配布する。`japanese-writing` は加えて SessionStart hook（`claude/hooks.json`）を持ち、`rules/common-rules.mdc` を毎セッションのコンテキストに追加する。skillが起動しない場面でも共通ルールが効くようにするためである。さらに PreToolUse hook（`claude/check_banned_words.py`）が、Write / Edit / NotebookEdit で「正本」を新たに書き込もうとすると書き込みを止め、言い換えて再実行するよう Claude に伝える。Edit は変更前後の出現回数を比べるので、既存の「正本」を残したまま別の箇所を直す編集は止めない。語そのものに言及する「正本」（かぎ括弧付き）は対象外で、想定外の入力や `python3` がない環境では何もしない。返信本文はファイルに書かれないため検出できない。`development-rules` も SessionStart hook（`claude/hooks.json`）を持ち、`skills/git-development-rules/SKILL.md` の本文（frontmatter を除く）を毎セッションに追加する。注入するのは日本語版の `SKILL.md` だけで、英語版 `SKILL.en.md` を参照する行は除く（英語セッションでも日本語のルールが入る）。hook は `awk` を使うので、Windows では Git Bash が必要になる（Git Bash がないと hook は PowerShell で実行されて失敗し、ルールは注入されないが skill は使える）。`evidence-driven-engineering` は従来どおり skill として必要なときに読み込まれる。`shared-mcp` は、プラグイン直下の `.mcp.json` が Codex 形式なので、Claude Code では `.claude-plugin/plugin.json` に直接記述したサーバ定義を使う。
 
 インストールされたプラグインはキャッシュ（`~/.claude/plugins/cache/`）へのコピーである。内容を変えて `version` を上げたら、`claude plugin marketplace update my-agent-plugins` の後に `claude plugin update <plugin>@my-agent-plugins` で反映する。
 

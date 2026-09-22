@@ -24,6 +24,7 @@ my-agent-plugins/
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
     │   ├── .claude-plugin/plugin.json
+    │   ├── claude/hooks.json              # Claude Code-only SessionStart hook (reads the git-development-rules body)
     │   └── skills/
     │       ├── git-development-rules/
     │       └── evidence-driven-engineering/   # details and evaluation examples in references/
@@ -63,7 +64,7 @@ Each plugin treats the standard root `plugin.json` as the source of truth and ad
 
 | Plugin | Contents |
 | :-- | :-- |
-| `development-rules` | `git-development-rules` (minimal Git development rules: Conventional Commits, TDD, pull request workflow, and related practices) and `evidence-driven-engineering` (back diagnoses with code and observations, verify running behavior, make verification repeatable, prevent recurring corrections with types, lint, CI, and similar mechanisms, and guidance for delegation and skill evaluation) |
+| `development-rules` | `git-development-rules` (minimal Git development rules: Conventional Commits, TDD, pull request workflow, and related practices) and `evidence-driven-engineering` (support diagnoses with code and observations, verify running behavior, make verification repeatable, prevent recurring corrections with types, lint, CI, and similar mechanisms, and guidance for delegation and skill evaluation). In Claude Code, `git-development-rules` is loaded into every session via a SessionStart hook |
 | `frontend-ui-development` | Guardrails for GUI/UI implementation, prototyping, stabilization, and visual bug fixes; prioritizes existing components, design tokens, and layout structure. Cursor also receives an `.mdc` rule |
 | `japanese-writing` | `japanese-tech-writing` (writing norms for technical documents), `cognitive-rhythm-writing` (cognitive-rhythm design), `semantic-generation` (referent-table-first generation). Also ships always-on shared rules (reply in Japanese; do not use the word 「正本」), loaded as a rule in Cursor and via a SessionStart hook in Claude Code. In Claude Code, a PreToolUse hook also blocks writes that add 「正本」 |
 | `shared-mcp` | `chrome-devtools` (stdio, npx), `bigquery` (streamable-http), `huggingface` (streamable-http) |
@@ -125,7 +126,7 @@ claude plugin install shared-mcp@my-agent-plugins
 
 You can do the same from `/plugin` inside `claude`. Installing at the default user scope makes the skills available in every project.
 
-Claude Code receives the portable skills as-is. `japanese-writing` additionally ships a SessionStart hook (`claude/hooks.json`) that adds `rules/common-rules.mdc` to the context of every session, so those rules apply even when no skill is triggered. A PreToolUse hook (`claude/check_banned_words.py`) also blocks Write / Edit / NotebookEdit calls that add 「正本」 and tells Claude to rephrase and retry. For Edit it compares occurrences before and after, so an edit that keeps an existing occurrence while changing other text is not blocked. Mentions of the term itself in corner brackets (「正本」) are ignored, the hook does nothing on unexpected input or when `python3` is unavailable, and chat replies are not checked because they are not written to files. For `shared-mcp`, Claude Code uses the servers declared inline in `.claude-plugin/plugin.json` (the plugin-root `.mcp.json` is in Codex format).
+Claude Code receives the portable skills as-is. `japanese-writing` additionally ships a SessionStart hook (`claude/hooks.json`) that adds `rules/common-rules.mdc` to the context of every session, so those rules apply even when no skill is triggered. A PreToolUse hook (`claude/check_banned_words.py`) also blocks Write / Edit / NotebookEdit calls that add 「正本」 and tells Claude to rephrase and retry. For Edit it compares occurrences before and after, so an edit that keeps an existing occurrence while changing other text is not blocked. Mentions of the term itself in corner brackets (「正本」) are ignored, the hook does nothing on unexpected input or when `python3` is unavailable, and chat replies are not checked because they are not written to files. `development-rules` also ships a SessionStart hook (`claude/hooks.json`) that adds the body of `skills/git-development-rules/SKILL.md` (without the frontmatter) to every session. Only the Japanese `SKILL.md` is injected, minus the line pointing to the English `SKILL.en.md`, so English sessions also receive the rules in Japanese. The hook uses `awk`, so on Windows it requires Git Bash; without Git Bash the hook runs in PowerShell and fails, and the rules are not injected, although the skill remains available. `evidence-driven-engineering` is still loaded as a skill only when needed. For `shared-mcp`, Claude Code uses the servers declared inline in `.claude-plugin/plugin.json` (the plugin-root `.mcp.json` is in Codex format).
 
 Installed plugins are copies in the cache (`~/.claude/plugins/cache/`). After changing plugin contents and bumping `version`, run `claude plugin marketplace update my-agent-plugins` and then `claude plugin update <plugin>@my-agent-plugins`.
 
