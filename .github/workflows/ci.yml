@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate JSON files
+        run: |
+          git ls-files -z '*.json' | xargs -0 -n1 python3 -m json.tool > /dev/null
+
+      - name: Validate marketplace and plugins
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          claude plugin validate .
+          for plugin in plugins/*/; do
+            claude plugin validate "$plugin"
+          done
+
+      - name: Run tests
+        run: |
+          shopt -s nullglob
+          tests=(tests/*.sh)
+          if [ ${#tests[@]} -eq 0 ]; then
+            echo "No tests found"
+            exit 0
+          fi
+          for t in "${tests[@]}"; do
+            echo "::group::$t"
+            bash "$t"
+            echo "::endgroup::"
+          done
