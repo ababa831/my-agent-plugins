@@ -48,6 +48,8 @@ Keep plugin names, versions, and descriptions aligned across client manifests un
 - State broad defaults once instead of repeating the same guidance across `SKILL.md`, rules, and `AGENTS.md` templates.
 - Prefer framework-agnostic guidance unless a skill explicitly targets a framework.
 - Do not let a reusable skill introduce unnecessary approval gates, excessive validation, or scope expansion.
+- Create or change a skill in response to an observed agent failure, and state the behavior it should improve.
+- When evaluating a skill change, follow `evidence-driven-engineering`'s `references/evaluating-instructions.md`: include a routine small task to detect unnecessary process, and judge tool calls and diffs rather than the agent's confidence. If you could not run an evaluation, say the change is untested.
 
 ## Cursor rule rules
 
@@ -72,6 +74,7 @@ When adding or changing a plugin:
 ## Wording
 
 Do not use the word 「正本」 in Japanese text; it is unfamiliar to most readers. Rephrase with 「定義元」「管理元」「元データ」「基準」 or similar.
+The only mechanical check for this is the Claude Code PreToolUse hook in `japanese-writing`; do not add CI or lint checks for it unless repeated failures show the rule and hook are insufficient.
 
 ## Git workflow
 

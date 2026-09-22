@@ -1,6 +1,6 @@
 {
   "name": "japanese-writing",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "日本語の技術文書ライティング規範スキル集（文章規範・認知リズム）",
   "skills": "./skills/"
 }

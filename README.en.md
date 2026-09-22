@@ -19,12 +19,14 @@ my-agent-plugins/
 │   └── plugins/
 │       └── marketplace.json    # Marketplace manifest for Codex
 └── plugins/
-    ├── development-rules/      # Shared Git development rules
+    ├── development-rules/      # Shared Git development rules and evidence-driven verification
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
     │   ├── .claude-plugin/plugin.json
-    │   └── skills/git-development-rules/
+    │   └── skills/
+    │       ├── git-development-rules/
+    │       └── evidence-driven-engineering/   # details and evaluation examples in references/
     ├── frontend-ui-development/ # GUI/UI development guardrails
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
@@ -40,7 +42,8 @@ my-agent-plugins/
     │   ├── .codex-plugin/plugin.json
     │   ├── .claude-plugin/plugin.json
     │   ├── rules/common-rules.mdc         # Always-on shared rules (Cursor rule; also read by the Claude Code hook)
-    │   ├── claude/hooks.json              # Claude Code-only SessionStart hook
+    │   ├── claude/hooks.json              # Claude Code-only hooks (SessionStart / PreToolUse)
+    │   ├── claude/check_banned_words.py   # 「正本」 detector called by the PreToolUse hook
     │   └── skills/
     │       ├── japanese-tech-writing/SKILL.md
     │       ├── cognitive-rhythm-writing/SKILL.md
@@ -60,9 +63,9 @@ Each plugin treats the standard root `plugin.json` as the source of truth and ad
 
 | Plugin | Contents |
 | :-- | :-- |
-| `development-rules` | Minimal shared Git development rules (Conventional Commits, TDD, pull request workflow, and related practices) |
+| `development-rules` | `git-development-rules` (minimal Git development rules: Conventional Commits, TDD, pull request workflow, and related practices) and `evidence-driven-engineering` (back diagnoses with code and observations, verify running behavior, make verification repeatable, prevent recurring corrections with types, lint, CI, and similar mechanisms, and guidance for delegation and skill evaluation) |
 | `frontend-ui-development` | Guardrails for GUI/UI implementation, prototyping, stabilization, and visual bug fixes; prioritizes existing components, design tokens, and layout structure. Cursor also receives an `.mdc` rule |
-| `japanese-writing` | `japanese-tech-writing` (writing norms for technical documents), `cognitive-rhythm-writing` (cognitive-rhythm design), `semantic-generation` (referent-table-first generation). Also ships always-on shared rules (reply in Japanese; do not use the word 「正本」), loaded as a rule in Cursor and via a SessionStart hook in Claude Code |
+| `japanese-writing` | `japanese-tech-writing` (writing norms for technical documents), `cognitive-rhythm-writing` (cognitive-rhythm design), `semantic-generation` (referent-table-first generation). Also ships always-on shared rules (reply in Japanese; do not use the word 「正本」), loaded as a rule in Cursor and via a SessionStart hook in Claude Code. In Claude Code, a PreToolUse hook also blocks writes that add 「正本」 |
 | `shared-mcp` | `chrome-devtools` (stdio, npx), `bigquery` (streamable-http), `huggingface` (streamable-http) |
 
 ## Installation
@@ -122,7 +125,7 @@ claude plugin install shared-mcp@my-agent-plugins
 
 You can do the same from `/plugin` inside `claude`. Installing at the default user scope makes the skills available in every project.
 
-Claude Code receives the portable skills as-is. `japanese-writing` additionally ships a SessionStart hook (`claude/hooks.json`) that adds `rules/common-rules.mdc` to the context of every session, so those rules apply even when no skill is triggered. For `shared-mcp`, Claude Code uses the servers declared inline in `.claude-plugin/plugin.json` (the plugin-root `.mcp.json` is in Codex format).
+Claude Code receives the portable skills as-is. `japanese-writing` additionally ships a SessionStart hook (`claude/hooks.json`) that adds `rules/common-rules.mdc` to the context of every session, so those rules apply even when no skill is triggered. A PreToolUse hook (`claude/check_banned_words.py`) also blocks Write / Edit / NotebookEdit calls that add 「正本」 and tells Claude to rephrase and retry. For Edit it compares occurrences before and after, so an edit that keeps an existing occurrence while changing other text is not blocked. Mentions of the term itself in corner brackets (「正本」) are ignored, the hook does nothing on unexpected input or when `python3` is unavailable, and chat replies are not checked because they are not written to files. For `shared-mcp`, Claude Code uses the servers declared inline in `.claude-plugin/plugin.json` (the plugin-root `.mcp.json` is in Codex format).
 
 Installed plugins are copies in the cache (`~/.claude/plugins/cache/`). After changing plugin contents and bumping `version`, run `claude plugin marketplace update my-agent-plugins` and then `claude plugin update <plugin>@my-agent-plugins`.
 
@@ -130,6 +133,7 @@ Installed plugins are copies in the cache (`~/.claude/plugins/cache/`). After ch
 
 - `japanese-tech-writing` and `cognitive-rhythm-writing` are based on [public gists by k16shikano](https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d) ([cognitive-rhythm edition](https://gist.github.com/k16shikano/eb2929f13ed19c97188393d297be8432)) with local adjustments. The author [declares that Unlicense (public-domain dedication) applies to all of their public gists](https://gist.github.com/k16shikano/67625f2a7d96e3bbdfae8d571a936063), so redistribution and modification in a public repository are unrestricted.
 - `semantic-generation` is original work.
+- `evidence-driven-engineering` is a Japanese translation and general-purpose restructuring of [unicodef1wn/lauren-poteto-rules](https://github.com/unicodef1wn/lauren-poteto-rules) (MIT License, Copyright (c) 2026 unicodef1wn). The underlying principles come from talks by [Lauren Tan (@poteto)](https://x.com/poteto) about working with coding agents. The full license text is in the skill's `LICENSE` file.
 - `frontend-ui-development` is original work.
 
 ## Operating rules
@@ -138,3 +142,4 @@ Installed plugins are copies in the cache (`~/.claude/plugins/cache/`). After ch
 - Do not disguise client-specific components as portable Agent Plugins components. Cursor rules stay on the Cursor plugin side, and Claude Code hooks stay on the Claude Code plugin side.
 - Never place secrets or credentials inside a plugin (including `env` / `headers` in `mcp.json`). The specification also forbids this.
 - Bump the `version` in the corresponding `plugin.json` whenever a plugin changes.
+- The only mechanical check for the 「正本」 ban is the Claude Code PreToolUse hook in `japanese-writing`. Do not add CI, lint, or checks for other clients unless failures that the rule and hook cannot prevent are observed repeatedly.
