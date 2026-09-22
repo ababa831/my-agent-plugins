@@ -2,7 +2,7 @@
 
 [日本語版](README.md)
 
-A personal repository that consolidates configuration shared between Cursor and Codex, following the [Agent Plugins specification 1.0.0](https://agent-plugins.org/) ([agentplugins/agent-plugins-spec](https://github.com/agentplugins/agent-plugins-spec)).
+A personal repository that consolidates configuration shared between Cursor, Codex, and Claude Code, following the [Agent Plugins specification 1.0.0](https://agent-plugins.org/) ([agentplugins/agent-plugins-spec](https://github.com/agentplugins/agent-plugins-spec)).
 
 Agent Plugins v1 defines exactly two portable component types: **skills ([Agent Skills specification](https://agentskills.io/specification))** and **MCP servers (`mcp.json`)**. Rules, hooks, and commands remain client-specific (extension namespaces), and this repository follows the same boundary.
 
@@ -13,6 +13,8 @@ my-agent-plugins/
 ├── AGENTS.md                   # Instructions for agents editing this repository
 ├── .cursor-plugin/
 │   └── marketplace.json        # Marketplace manifest for Cursor
+├── .claude-plugin/
+│   └── marketplace.json        # Marketplace manifest for Claude Code
 ├── .agents/
 │   └── plugins/
 │       └── marketplace.json    # Marketplace manifest for Codex
@@ -21,11 +23,13 @@ my-agent-plugins/
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
+    │   ├── .claude-plugin/plugin.json
     │   └── skills/git-development-rules/
     ├── frontend-ui-development/ # GUI/UI development guardrails
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
+    │   ├── .claude-plugin/plugin.json
     │   ├── rules/frontend-ui-guardrails.mdc   # Cursor-specific persistent rule
     │   └── skills/frontend-ui-development/
     │       ├── SKILL.md
@@ -34,6 +38,9 @@ my-agent-plugins/
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
+    │   ├── .claude-plugin/plugin.json
+    │   ├── rules/common-rules.mdc         # Always-on shared rules (Cursor rule; also read by the Claude Code hook)
+    │   ├── claude/hooks.json              # Claude Code-only SessionStart hook
     │   └── skills/
     │       ├── japanese-tech-writing/SKILL.md
     │       ├── cognitive-rhythm-writing/SKILL.md
@@ -43,10 +50,11 @@ my-agent-plugins/
         ├── mcp.json
         ├── .cursor-plugin/plugin.json
         ├── .codex-plugin/plugin.json
+        ├── .claude-plugin/plugin.json   # MCP servers inlined for Claude Code
         └── .mcp.json
 ```
 
-Each plugin treats the standard root `plugin.json` as the source of truth and additionally ships client-specific manifests for Cursor (`.cursor-plugin/plugin.json`) and Codex (`.codex-plugin/plugin.json`). Skills remain shared in the portable format. Cursor-specific rules live in `rules/` and are distributed only through `.cursor-plugin/plugin.json`. MCP keeps per-client files where schemas differ.
+Each plugin treats the standard root `plugin.json` as the source of truth and additionally ships client-specific manifests for Cursor (`.cursor-plugin/plugin.json`), Codex (`.codex-plugin/plugin.json`), and Claude Code (`.claude-plugin/plugin.json`). Skills remain shared in the portable format. Cursor-specific rules live in `rules/` and are distributed only through `.cursor-plugin/plugin.json`. Claude Code-only hooks live in `claude/` and are distributed only through `.claude-plugin/plugin.json`. MCP keeps per-client files where schemas differ.
 
 ## Plugins
 
@@ -54,7 +62,7 @@ Each plugin treats the standard root `plugin.json` as the source of truth and ad
 | :-- | :-- |
 | `development-rules` | Minimal shared Git development rules (Conventional Commits, TDD, pull request workflow, and related practices) |
 | `frontend-ui-development` | Guardrails for GUI/UI implementation, prototyping, stabilization, and visual bug fixes; prioritizes existing components, design tokens, and layout structure. Cursor also receives an `.mdc` rule |
-| `japanese-writing` | `japanese-tech-writing` (writing norms for technical documents), `cognitive-rhythm-writing` (cognitive-rhythm design), `semantic-generation` (referent-table-first generation) |
+| `japanese-writing` | `japanese-tech-writing` (writing norms for technical documents), `cognitive-rhythm-writing` (cognitive-rhythm design), `semantic-generation` (referent-table-first generation). Also ships always-on shared rules (reply in Japanese; do not use the word 「正本」), loaded as a rule in Cursor and via a SessionStart hook in Claude Code |
 | `shared-mcp` | `chrome-devtools` (stdio, npx), `bigquery` (streamable-http), `huggingface` (streamable-http) |
 
 ## Installation
@@ -71,6 +79,8 @@ ln -s /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/share
 ```
 
 To verify, open **Customize** in the sidebar and check that rules, skills, and MCP servers appear.
+
+The shared rules in `japanese-writing` (`rules/common-rules.mdc`) are an `alwaysApply: true` rule and are always loaded.
 
 `frontend-ui-development` distributes the portable `SKILL.md` plus the Cursor-specific `rules/frontend-ui-guardrails.mdc`. Project-specific details should be adapted into the target repository's `AGENTS.md` using the bundled `assets/AGENTS.frontend.md` as a starting point.
 
@@ -94,7 +104,27 @@ You can also install from `/plugins` (plugin browser) inside `codex`, or from th
 
 Codex receives the portable Agent Plugins skill. The Cursor-specific `.mdc` rule is not distributed to Codex; use `AGENTS.md` for persistent project-specific instructions when needed.
 
+Codex plugins cannot distribute always-on instructions. To apply the `japanese-writing` shared rules (such as replying in Japanese) in Codex, append the body of `plugins/japanese-writing/rules/common-rules.mdc` (without the frontmatter) to the global instructions file `~/.codex/AGENTS.md`.
+
 Installed plugins are copies in the cache (`~/.codex/plugins/cache/`); after changing plugin contents, reinstall (`codex plugin remove` → `codex plugin add`) to pick up the changes. Note that `codex plugin marketplace upgrade` only applies to Git-sourced marketplaces, not local registrations.
+
+### Claude Code
+
+Register the repository root as a local marketplace, then install the plugins.
+
+```bash
+claude plugin marketplace add /path/to/my-agent-plugins
+claude plugin install development-rules@my-agent-plugins
+claude plugin install frontend-ui-development@my-agent-plugins
+claude plugin install japanese-writing@my-agent-plugins
+claude plugin install shared-mcp@my-agent-plugins
+```
+
+You can do the same from `/plugin` inside `claude`. Installing at the default user scope makes the skills available in every project.
+
+Claude Code receives the portable skills as-is. `japanese-writing` additionally ships a SessionStart hook (`claude/hooks.json`) that adds `rules/common-rules.mdc` to the context of every session, so those rules apply even when no skill is triggered. For `shared-mcp`, Claude Code uses the servers declared inline in `.claude-plugin/plugin.json` (the plugin-root `.mcp.json` is in Codex format).
+
+Installed plugins are copies in the cache (`~/.claude/plugins/cache/`). After changing plugin contents and bumping `version`, run `claude plugin marketplace update my-agent-plugins` and then `claude plugin update <plugin>@my-agent-plugins`.
 
 ## License and provenance
 
@@ -105,6 +135,6 @@ Installed plugins are copies in the cache (`~/.codex/plugins/cache/`); after cha
 ## Operating rules
 
 - Update skills in this repository and distribute them to each client via plugins.
-- Do not disguise client-specific components as portable Agent Plugins components. Cursor rules stay on the Cursor plugin side.
+- Do not disguise client-specific components as portable Agent Plugins components. Cursor rules stay on the Cursor plugin side, and Claude Code hooks stay on the Claude Code plugin side.
 - Never place secrets or credentials inside a plugin (including `env` / `headers` in `mcp.json`). The specification also forbids this.
 - Bump the `version` in the corresponding `plugin.json` whenever a plugin changes.

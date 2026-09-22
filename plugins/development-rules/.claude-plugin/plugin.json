@@ -1,0 +1,15 @@
+{
+  "name": "development-rules",
+  "version": "1.0.0",
+  "description": "Gitリポジトリで共通利用する最小限の開発ルール",
+  "author": {
+    "name": "aki"
+  },
+  "license": "MIT",
+  "keywords": [
+    "git",
+    "development",
+    "tdd",
+    "conventional-commits"
+  ]
+}
