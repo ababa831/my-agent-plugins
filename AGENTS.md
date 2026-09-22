@@ -10,7 +10,7 @@ Keep portable Agent Plugins components separate from client-specific extensions.
 - Agent Plugins v1 portable components are `skills/` and `mcp.json`.
 - Cursor-specific rules belong in a plugin's `rules/` directory and are exposed by `.cursor-plugin/plugin.json`.
 - Codex-specific manifest details belong in `.codex-plugin/plugin.json`.
-- Claude Code-specific manifest details belong in `.claude-plugin/plugin.json`. Claude Code-only hooks and the files they read live in the plugin's `claude/` directory and are referenced only from that manifest.
+- Claude Code-specific manifest details belong in `.claude-plugin/plugin.json`. Claude Code-only hooks live in the plugin's `claude/` directory and are referenced only from that manifest. A hook may read a Cursor rule file so that shared always-on rules have a single file.
 - Claude Code auto-loads a plugin-root `.mcp.json`, which is in Codex format here. Declare Claude Code MCP servers inline in `.claude-plugin/plugin.json` (`type`: `stdio` / `http`).
 - Do not invent a portable representation for rules, hooks, commands, or other client-specific components.
 - Repository-specific instructions belong in `AGENTS.md`; reusable project templates may live in a skill's `assets/` directory.

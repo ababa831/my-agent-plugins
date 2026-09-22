@@ -39,7 +39,8 @@ my-agent-plugins/
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
     │   ├── .claude-plugin/plugin.json
-    │   ├── claude/                        # Claude Code-only SessionStart hook and shared rules
+    │   ├── rules/common-rules.mdc         # Always-on shared rules (Cursor rule; also read by the Claude Code hook)
+    │   ├── claude/hooks.json              # Claude Code-only SessionStart hook
     │   └── skills/
     │       ├── japanese-tech-writing/SKILL.md
     │       ├── cognitive-rhythm-writing/SKILL.md
@@ -61,7 +62,7 @@ Each plugin treats the standard root `plugin.json` as the source of truth and ad
 | :-- | :-- |
 | `development-rules` | Minimal shared Git development rules (Conventional Commits, TDD, pull request workflow, and related practices) |
 | `frontend-ui-development` | Guardrails for GUI/UI implementation, prototyping, stabilization, and visual bug fixes; prioritizes existing components, design tokens, and layout structure. Cursor also receives an `.mdc` rule |
-| `japanese-writing` | `japanese-tech-writing` (writing norms for technical documents), `cognitive-rhythm-writing` (cognitive-rhythm design), `semantic-generation` (referent-table-first generation). On Claude Code, a SessionStart hook also injects shared rules (such as not using the word 「正本」) into every session |
+| `japanese-writing` | `japanese-tech-writing` (writing norms for technical documents), `cognitive-rhythm-writing` (cognitive-rhythm design), `semantic-generation` (referent-table-first generation). Also ships always-on shared rules (reply in Japanese; do not use the word 「正本」), loaded as a rule in Cursor and via a SessionStart hook in Claude Code |
 | `shared-mcp` | `chrome-devtools` (stdio, npx), `bigquery` (streamable-http), `huggingface` (streamable-http) |
 
 ## Installation
@@ -78,6 +79,8 @@ ln -s /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/share
 ```
 
 To verify, open **Customize** in the sidebar and check that rules, skills, and MCP servers appear.
+
+The shared rules in `japanese-writing` (`rules/common-rules.mdc`) are an `alwaysApply: true` rule and are always loaded.
 
 `frontend-ui-development` distributes the portable `SKILL.md` plus the Cursor-specific `rules/frontend-ui-guardrails.mdc`. Project-specific details should be adapted into the target repository's `AGENTS.md` using the bundled `assets/AGENTS.frontend.md` as a starting point.
 
@@ -101,6 +104,8 @@ You can also install from `/plugins` (plugin browser) inside `codex`, or from th
 
 Codex receives the portable Agent Plugins skill. The Cursor-specific `.mdc` rule is not distributed to Codex; use `AGENTS.md` for persistent project-specific instructions when needed.
 
+Codex plugins cannot distribute always-on instructions. To apply the `japanese-writing` shared rules (such as replying in Japanese) in Codex, append the body of `plugins/japanese-writing/rules/common-rules.mdc` (without the frontmatter) to the global instructions file `~/.codex/AGENTS.md`.
+
 Installed plugins are copies in the cache (`~/.codex/plugins/cache/`); after changing plugin contents, reinstall (`codex plugin remove` → `codex plugin add`) to pick up the changes. Note that `codex plugin marketplace upgrade` only applies to Git-sourced marketplaces, not local registrations.
 
 ### Claude Code
@@ -117,7 +122,7 @@ claude plugin install shared-mcp@my-agent-plugins
 
 You can do the same from `/plugin` inside `claude`. Installing at the default user scope makes the skills available in every project.
 
-Claude Code receives the portable skills as-is. `japanese-writing` additionally ships a SessionStart hook (`claude/hooks.json`) that adds `claude/common-rules.md` to the context of every session, so those rules apply even when no skill is triggered. For `shared-mcp`, Claude Code uses the servers declared inline in `.claude-plugin/plugin.json` (the plugin-root `.mcp.json` is in Codex format).
+Claude Code receives the portable skills as-is. `japanese-writing` additionally ships a SessionStart hook (`claude/hooks.json`) that adds `rules/common-rules.mdc` to the context of every session, so those rules apply even when no skill is triggered. For `shared-mcp`, Claude Code uses the servers declared inline in `.claude-plugin/plugin.json` (the plugin-root `.mcp.json` is in Codex format).
 
 Installed plugins are copies in the cache (`~/.claude/plugins/cache/`). After changing plugin contents and bumping `version`, run `claude plugin marketplace update my-agent-plugins` and then `claude plugin update <plugin>@my-agent-plugins`.
 

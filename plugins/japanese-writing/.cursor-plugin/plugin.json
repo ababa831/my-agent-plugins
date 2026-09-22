@@ -3,5 +3,7 @@
   "version": "1.1.0",
   "description": "日本語の技術文書ライティング規範スキル集（文章規範・認知リズム）",
   "license": "MIT",
-  "keywords": ["japanese", "writing", "technical-writing", "documentation"]
+  "keywords": ["japanese", "writing", "technical-writing", "documentation"],
+  "skills": "./skills/",
+  "rules": "./rules/"
 }

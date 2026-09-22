@@ -39,7 +39,8 @@ my-agent-plugins/
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
     │   ├── .claude-plugin/plugin.json
-    │   ├── claude/                        # Claude Code 固有の SessionStart hook と共通ルール
+    │   ├── rules/common-rules.mdc         # 常時適用の共通ルール（Cursor rule、Claude Code hook からも読む）
+    │   ├── claude/hooks.json              # Claude Code 固有の SessionStart hook
     │   └── skills/
     │       ├── japanese-tech-writing/SKILL.md
     │       ├── cognitive-rhythm-writing/SKILL.md
@@ -61,7 +62,7 @@ my-agent-plugins/
 | :-- | :-- |
 | `development-rules` | Git開発で共通利用する最小限のルール（Conventional Commits、TDD、PR運用など） |
 | `frontend-ui-development` | GUI/UIの実装・モック・安定化・視覚的不具合修正で、既存component / design token / layoutを優先しパッチワーク化を防ぐ。Cursorでは `.mdc` rule も同梱 |
-| `japanese-writing` | `japanese-tech-writing`（技術文書の文章規範）、`cognitive-rhythm-writing`（認知リズム設計）、`semantic-generation`（対応表先行生成）。Claude Code では SessionStart hook で共通ルール（「正本」という語を使わない、など）を毎セッションに読み込ませる |
+| `japanese-writing` | `japanese-tech-writing`（技術文書の文章規範）、`cognitive-rhythm-writing`（認知リズム設計）、`semantic-generation`（対応表先行生成）。常時適用の共通ルール（返信は日本語で書く、「正本」という語を使わない）も同梱し、Cursor では rule、Claude Code では SessionStart hook で読み込む |
 | `shared-mcp` | `chrome-devtools`（stdio, npx）、`bigquery`（streamable-http）、`huggingface`（streamable-http） |
 
 ## 導入方法
@@ -78,6 +79,8 @@ ln -s /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/share
 ```
 
 読み込まれたか確認するには、サイドバーの **Customize** で rules・skills・MCP サーバの一覧を見る。
+
+`japanese-writing` の共通ルール `rules/common-rules.mdc` は `alwaysApply: true` の rule として常に読み込まれる。
 
 `frontend-ui-development` では、ポータブルな `SKILL.md` に加えて Cursor 用の `rules/frontend-ui-guardrails.mdc` を配布する。対象プロジェクト固有の情報は、skill に含まれる `assets/AGENTS.frontend.md` を元に、そのプロジェクトの `AGENTS.md` へ適応して記述する。
 
@@ -101,6 +104,8 @@ codex plugin add shared-mcp@my-agent-plugins
 
 Codex では Agent Plugins のポータブルskillを利用する。Cursor固有の `.mdc` ruleはCodexには配布せず、プロジェクト固有の常駐指示が必要な場合は `AGENTS.md` を使う。
 
+Codex のプラグインには常時適用の指示を配布する仕組みがない。`japanese-writing` の共通ルール（返信は日本語で書く、など）を Codex でも効かせるには、`plugins/japanese-writing/rules/common-rules.mdc` の本文（frontmatter を除く）をグローバル指示 `~/.codex/AGENTS.md` に追記する。
+
 インストールされたプラグインはキャッシュ（`~/.codex/plugins/cache/`）へのコピーなので、プラグインの内容を更新したら再インストール（`codex plugin remove` → `codex plugin add`）で反映する。なお `codex plugin marketplace upgrade` は Git ソースのマーケットプレイス専用で、ローカル登録には効かない。
 
 ### Claude Code
@@ -117,7 +122,7 @@ claude plugin install shared-mcp@my-agent-plugins
 
 `claude` 内の `/plugin` からも同じ操作ができる。既定の user スコープでインストールすれば、どのプロジェクトでもskillsが使える。
 
-Claude Code にはポータブルなskillsをそのまま配布する。`japanese-writing` は加えて SessionStart hook（`claude/hooks.json`）を持ち、`claude/common-rules.md` を毎セッションのコンテキストに追加する。skillが起動しない場面でも共通ルールが効くようにするためである。`shared-mcp` は、プラグイン直下の `.mcp.json` が Codex 形式なので、Claude Code では `.claude-plugin/plugin.json` に直接記述したサーバ定義を使う。
+Claude Code にはポータブルなskillsをそのまま配布する。`japanese-writing` は加えて SessionStart hook（`claude/hooks.json`）を持ち、`rules/common-rules.mdc` を毎セッションのコンテキストに追加する。skillが起動しない場面でも共通ルールが効くようにするためである。`shared-mcp` は、プラグイン直下の `.mcp.json` が Codex 形式なので、Claude Code では `.claude-plugin/plugin.json` に直接記述したサーバ定義を使う。
 
 インストールされたプラグインはキャッシュ（`~/.claude/plugins/cache/`）へのコピーである。内容を変えて `version` を上げたら、`claude plugin marketplace update my-agent-plugins` の後に `claude plugin update <plugin>@my-agent-plugins` で反映する。
 
