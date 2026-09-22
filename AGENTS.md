@@ -68,7 +68,7 @@ When adding or changing a plugin:
 3. Keep root, Cursor, Codex, and Claude Code manifests aligned.
 4. Add or update entries in all three marketplace manifests (`.cursor-plugin/`, `.agents/plugins/`, `.claude-plugin/`) when the plugin catalog changes.
 5. Update both `README.md` and `README.en.md` when user-facing behavior or installation changes.
-6. Validate JSON and Agent Skills frontmatter, and run `claude plugin validate .`.
+6. Validate JSON and Agent Skills frontmatter, and run `claude plugin validate .`. Run the scripts in `tests/` (for example `bash tests/development-rules-hook.sh`) when changing the hooks they cover.
 7. Never commit secrets, credentials, private keys, tokens, or personal data.
 
 ## Wording
