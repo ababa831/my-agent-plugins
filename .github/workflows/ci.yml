@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate JSON files
+        run: |
+          git ls-files -z '*.json' | xargs -0 -r -n1 python3 -m json.tool > /dev/null
+
+      - name: Validate marketplace and plugins
+        run: |
+          # CLI の更新で結果が変わらないよう、検証済みのバージョンに固定する
+          npm install -g @anthropic-ai/claude-code@2.1.280
+          claude --version
+          claude plugin validate .
+          shopt -s nullglob
+          for plugin in plugins/*/; do
+            claude plugin validate "$plugin"
+          done
+
+      - name: Run tests
+        run: |
+          shopt -s nullglob
+          tests=(tests/*.sh)
+          if [ ${#tests[@]} -eq 0 ]; then
+            echo "No tests found"
+            exit 0
+          fi
+          failed=()
+          for t in "${tests[@]}"; do
+            echo "::group::$t"
+            if ! bash "$t"; then
+              failed+=("$t")
+            fi
+            echo "::endgroup::"
+          done
+          for t in "${failed[@]}"; do
+            echo "::error::Test failed: $t"
+          done
+          [ ${#failed[@]} -eq 0 ]
