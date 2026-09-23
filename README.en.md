@@ -33,10 +33,10 @@ Minimal installation instructions for each client. For detailed setup, hook beha
 
 ### Cursor
 
-Symlink the plugin directory into your local plugin folder and restart Cursor:
+Copy (or symlink) the plugin directory into your local plugin folder and restart Cursor:
 
 ```bash
-ln -s /path/to/my-agent-plugins/plugins/<plugin-name> ~/.cursor/plugins/local/<plugin-name>
+cp -R /path/to/my-agent-plugins/plugins/<plugin-name> ~/.cursor/plugins/local/
 ```
 
 ### Codex

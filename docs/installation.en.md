@@ -18,10 +18,17 @@ This document provides detailed setup instructions, rule and hook behavior speci
 
 ### Local Plugin Setup
 
-Symlink (or copy) each plugin directory under `~/.cursor/plugins/local/`, then restart Cursor (or run **Developer: Reload Window**).
+Copy (or symlink) each plugin directory under `~/.cursor/plugins/local/`, then restart Cursor (or run **Developer: Reload Window**).
 
 ```bash
-# Example symlink commands
+# Copying plugins (recommended)
+mkdir -p ~/.cursor/plugins/local
+cp -R /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/
+cp -R /path/to/my-agent-plugins/plugins/frontend-ui-development ~/.cursor/plugins/local/
+cp -R /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/
+cp -R /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/
+
+# Or using symlinks
 ln -s /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/development-rules
 ln -s /path/to/my-agent-plugins/plugins/frontend-ui-development ~/.cursor/plugins/local/frontend-ui-development
 ln -s /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/japanese-writing
@@ -74,10 +81,10 @@ codex plugin add shared-mcp@my-agent-plugins
 You can also install plugins from the `/plugins` menu in `codex` or through the ChatGPT desktop application.
 Installed skills and MCP servers take effect **after starting a new session**.
 
-### Always-On Rules Configuration
+### Declarative Always-On Rule Limitations and Setup
 
-Codex plugins do not have a mechanism to distribute always-on instructions (like Cursor's `alwaysApply: true`).
-To apply the `japanese-writing` common rules globally in Codex, copy the body of `plugins/japanese-writing/rules/common-rules.mdc` (excluding the YAML frontmatter) into `~/.codex/AGENTS.md`.
+Codex plugins do not have a **declarative always-on rules feature** like Cursor's `alwaysApply: true` (while Codex can inject context via `SessionStart` hooks, running hooks requires trust confirmation).
+To apply the `japanese-writing` common rules globally in Codex without hook prompts, copy the body of `plugins/japanese-writing/rules/common-rules.mdc` (excluding the YAML frontmatter) into `~/.codex/AGENTS.md`.
 
 ### Updating Plugins
 
@@ -123,8 +130,10 @@ In addition to portable skills, Claude Code uses hooks defined in `claude/hooks.
    - Injects `rules/common-rules.mdc` into every session context so that common rules apply even when no skill is explicitly triggered.
 3. **`japanese-writing` PreToolUse Hook (Banned Terms Detector)**:
    - Before executing file creation/modification tools (Write, Edit, NotebookEdit), `claude/check_banned_words.py` runs automatically.
-   - If unrecommended/banned terms are newly added, the hook interrupts tool execution and instructs the agent to rephrase using proper alternatives (e.g., "source of truth", "canonical source", "master data").
-   - It compares counts before and after edits to avoid blocking existing occurrences in legacy files.
+   - If unrecommended/banned terms are newly added, the hook interrupts tool execution and instructs the agent to rephrase using proper alternatives (e.g., "信頼できる唯一の情報源", "定義元", "管理元").
+   - Detection behavior varies by tool:
+     - `Edit`: Compares occurrences between `old_string` and `new_string`, so edits that preserve existing occurrences while editing other text are not blocked.
+     - `Write` / `NotebookEdit`: Scans the entire file content or new cell source (`content` / `new_source`), so saving files with pre-existing banned terms will be blocked.
 4. **`shared-mcp` Configuration**:
    - Claude Code uses the MCP servers declared inline in `.claude-plugin/plugin.json`.
 

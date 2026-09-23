@@ -18,10 +18,17 @@
 
 ### ローカルプラグインとしての導入
 
-`~/.cursor/plugins/local/` 配下に各プラグインディレクトリへのシンボリックリンクを作成（またはディレクトリをコピー）し、Cursor を再起動（または **Developer: Reload Window** を実行）します。
+各プラグインディレクトリを `~/.cursor/plugins/local/` 配下にコピー（またはシンボリックリンクを作成）し、Cursor を再起動（または **Developer: Reload Window** を実行）します。
 
 ```bash
-# シンボリックリンクの作成例
+# コピーによる配置（推奨）
+mkdir -p ~/.cursor/plugins/local
+cp -R /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/
+cp -R /path/to/my-agent-plugins/plugins/frontend-ui-development ~/.cursor/plugins/local/
+cp -R /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/
+cp -R /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/
+
+# またはシンボリックリンクを作成する場合
 ln -s /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/development-rules
 ln -s /path/to/my-agent-plugins/plugins/frontend-ui-development ~/.cursor/plugins/local/frontend-ui-development
 ln -s /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/japanese-writing
@@ -74,10 +81,10 @@ codex plugin add shared-mcp@my-agent-plugins
 `codex` 内の `/plugins`（プラグインブラウザ）や ChatGPT デスクトップアプリのプラグイン管理画面からもインストールが可能です。
 インストールされたスキルや MCP サーバは、**新しいセッションを開始した時点**から有効になります。
 
-### 常時適用ルールの設定
+### 宣言的常時適用ルールの制約と設定
 
-Codex プラグインの仕様では、常時適用の指示（Cursor における `alwaysApply: true` ルールのような機能）をプラグイン経由で直接配布する仕組みがありません。
-`japanese-writing` の共通ルール（日本語での返信や用語制約）を Codex でも常時有効化したい場合は、`plugins/japanese-writing/rules/common-rules.mdc` の本文（YAML frontmatter を除く）を、グローバル指示ファイル（`~/.codex/AGENTS.md`）に追記してください。
+Codex プラグインには、Cursor の `alwaysApply: true` のような**宣言的な常時適用ルール機能**がありません（Codex では SessionStart フックによるコンテキスト注入は可能ですが、フック実行時に信頼確認が必要です）。
+`japanese-writing` の共通ルール（日本語での返信や用語制約）を Codex でも静的に常時有効化したい場合は、`plugins/japanese-writing/rules/common-rules.mdc` の本文（YAML frontmatter を除く）を、グローバル指示ファイル（`~/.codex/AGENTS.md`）に追記してください。
 
 ### プラグインの更新手順
 
@@ -123,8 +130,10 @@ Claude Code 向けには、ポータブルなスキルに加えて `claude/hooks
    - `rules/common-rules.mdc` の内容を毎セッションのコンテキストに自動追加し、スキルが明示的に発火していない対話でも共通ルール（日本語返信・用語規約）を適用させます。
 3. **`japanese-writing` の PreToolUse フック（禁止用語検出）**:
    - Claude がファイル作成・編集ツール（Write, Edit, NotebookEdit）を呼び出す直前に、`claude/check_banned_words.py` が自動実行されます。
-   - 文章中に読者への配慮に欠ける不適切な禁止用語が含まれている場合、ツール実行をブロックして適切な代替表現（「定義元」「一次情報源」「管理元」など）への言い換えを促します。
-   - 既存ファイルに元から存在する箇所の編集を妨げないよう、変更前後の出現回数を比較して新たに追記された場合のみブロックします。
+   - 文章中に読者への配慮に欠ける不適切な禁止用語が含まれている場合、ツール実行をブロックして適切な代替表現（「信頼できる唯一の情報源」「定義元」「一次情報源」「管理元」など）への言い換えを促します。
+   - 検出動作はツールごとに異なります：
+     - `Edit`: `old_string` と `new_string` の出現回数を比較するため、既存の用語を残したまま別の箇所を直す編集はブロックされません。
+     - `Write` / `NotebookEdit`: ファイル全文または新規セル全体（`content` / `new_source`）を走査するため、既存ファイルを上書きする場合でも対象用語が含まれているとブロックされます。
 4. **`shared-mcp` の設定**:
    - Claude Code では `.claude-plugin/plugin.json` 内にインラインで定義された MCP サーバ設定を使用します。
 

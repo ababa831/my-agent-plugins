@@ -33,10 +33,10 @@ Cursor / Codex / Claude Code で共通利用するエージェント向け設定
 
 ### Cursor
 
-ローカルプラグインディレクトリへシンボリックリンクを作成し、Cursor を再起動します。
+ローカルプラグインディレクトリへコピー（またはシンボリックリンクを作成）し、Cursor を再起動します。
 
 ```bash
-ln -s /path/to/my-agent-plugins/plugins/<plugin-name> ~/.cursor/plugins/local/<plugin-name>
+cp -R /path/to/my-agent-plugins/plugins/<plugin-name> ~/.cursor/plugins/local/
 ```
 
 ### Codex

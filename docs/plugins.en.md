@@ -26,7 +26,7 @@ Provides essential Git development standards and evidence-driven engineering pra
 - **`git-development-rules` (Skill)**:
   - Adherence to [Conventional Commits](https://www.conventionalcommits.org/).
   - Test-Driven Development (TDD) principles.
-  - Prohibits direct commits to `main`; enforces feature branch and Pull Request workflows.
+  - Prohibits direct pushes to main; enforces feature branch and Pull Request workflows.
   - Prevention of committing credentials or personal data.
 - **`evidence-driven-engineering` (Skill)**:
   - Backing up diagnoses with source code and observed runtime behavior (logs/outputs).
