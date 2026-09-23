@@ -18,21 +18,15 @@
 
 ### ローカルプラグインとしての導入
 
-各プラグインディレクトリを `~/.cursor/plugins/local/` 配下にコピー（またはシンボリックリンクを作成）し、Cursor を再起動（または **Developer: Reload Window** を実行）します。
+各プラグインディレクトリを `~/.cursor/plugins/local/` 配下にコピーし、Cursor を再起動（または **Developer: Reload Window** を実行）します。
+※Cursor は `~/.cursor/plugins/local/` の外部を指すシンボリックリンクを読み込まないため、コピー方式で配置します。
 
 ```bash
-# コピーによる配置（推奨）
 mkdir -p ~/.cursor/plugins/local
 cp -R /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/frontend-ui-development ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/
-
-# またはシンボリックリンクを作成する場合
-ln -s /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/development-rules
-ln -s /path/to/my-agent-plugins/plugins/frontend-ui-development ~/.cursor/plugins/local/frontend-ui-development
-ln -s /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/japanese-writing
-ln -s /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/shared-mcp
 ```
 
 ### 反映確認

@@ -18,21 +18,15 @@ This document provides detailed setup instructions, rule and hook behavior speci
 
 ### Local Plugin Setup
 
-Copy (or symlink) each plugin directory under `~/.cursor/plugins/local/`, then restart Cursor (or run **Developer: Reload Window**).
+Copy each plugin directory under `~/.cursor/plugins/local/`, then restart Cursor (or run **Developer: Reload Window**).
+*Note: Cursor skips symlinks whose targets resolve outside `~/.cursor/plugins/local/`, so copy the directories directly.*
 
 ```bash
-# Copying plugins (recommended)
 mkdir -p ~/.cursor/plugins/local
 cp -R /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/frontend-ui-development ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/
-
-# Or using symlinks
-ln -s /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/development-rules
-ln -s /path/to/my-agent-plugins/plugins/frontend-ui-development ~/.cursor/plugins/local/frontend-ui-development
-ln -s /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/japanese-writing
-ln -s /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/shared-mcp
 ```
 
 ### Verification
