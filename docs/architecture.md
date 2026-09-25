@@ -74,8 +74,10 @@ my-agent-plugins/
     │   ├── .codex-plugin/plugin.json
     │   ├── .claude-plugin/plugin.json
     │   ├── rules/common-rules.mdc         # 常時適用の共通ルール（Cursor rule、Claude Code hook からも参照）
+    │   ├── rules/readme-writing.mdc       # README 作成時の規約（Cursor rule、Claude Code hook からも参照）
     │   ├── claude/hooks.json              # Claude Code 固有の hook（SessionStart / PreToolUse）
     │   ├── claude/check_banned_words.py   # PreToolUse hook が呼ぶ禁止用語検出スクリプト
+    │   ├── claude/inject_readme_rule.py   # README への書き込み時に README 規約を注入するスクリプト
     │   └── skills/
     │       ├── japanese-tech-writing/SKILL.md
     │       ├── cognitive-rhythm-writing/SKILL.md
