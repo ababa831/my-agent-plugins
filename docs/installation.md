@@ -37,6 +37,7 @@ Cursor サイドバーの **Customize** を開き、各プラグインに含ま�
 
 - **`japanese-writing`**:
   - `rules/common-rules.mdc` は `alwaysApply: true` として定義されており、セッション開始時に常にコンテキストへ読み込まれます。
+  - `rules/readme-writing.mdc` は `README.md` と `README.*.md` を扱うときにだけ読み込まれます。
 - **`frontend-ui-development`**:
   - ポータブルな `SKILL.md` に加えて Cursor 用の `rules/frontend-ui-guardrails.mdc` が配布されます。
   - プロジェクト固有の UI ルールを記述したい場合は、スキル内のテンプレート `assets/AGENTS.frontend.md` をコピーして、対象リポジトリの `AGENTS.md` に追記します。

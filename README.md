@@ -20,7 +20,7 @@ Cursor / Codex / Claude Code で共通利用するエージェント向け設定
 | :-- | :-- | :-- |
 | [`development-rules`](plugins/development-rules/) | Git開発共通ルール & 証拠駆動検証 | `git-development-rules`, `evidence-driven-engineering` |
 | [`frontend-ui-development`](plugins/frontend-ui-development/) | フロントエンドUI実装ガードレール | `frontend-ui-development`, Cursor rules, テンプレート |
-| [`japanese-writing`](plugins/japanese-writing/) | 日本語技術文書の品質向上 & 共通規約 | `japanese-tech-writing`, `cognitive-rhythm-writing`, `semantic-generation`, 共通ルール |
+| [`japanese-writing`](plugins/japanese-writing/) | 日本語技術文書の品質向上 & 共通規約 | `japanese-tech-writing`, `cognitive-rhythm-writing`, `semantic-generation`, 共通ルール, README 規約 |
 | [`shared-mcp`](plugins/shared-mcp/) | 共通 MCP サーバ定義 | Chrome DevTools, BigQuery, Hugging Face |
 
 各プラグインの詳細な機能・動作仕様については [プラグイン詳細仕様 (docs/plugins.md)](docs/plugins.md) を参照してください。

@@ -74,6 +74,7 @@ my-agent-plugins/
     │   ├── .codex-plugin/plugin.json
     │   ├── .claude-plugin/plugin.json
     │   ├── rules/common-rules.mdc         # Shared rules (Cursor rule & Claude Code hook)
+    │   ├── rules/readme-writing.mdc       # README writing conventions (Cursor rule)
     │   ├── claude/hooks.json              # Claude Code hooks (SessionStart / PreToolUse)
     │   ├── claude/check_banned_words.py   # Detector script invoked by PreToolUse hook
     │   └── skills/

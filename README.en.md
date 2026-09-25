@@ -20,7 +20,7 @@ A personal repository that consolidates agent configurations (skills and MCP ser
 | :-- | :-- | :-- |
 | [`development-rules`](plugins/development-rules/) | Shared Git development rules & evidence-driven verification | `git-development-rules`, `evidence-driven-engineering` |
 | [`frontend-ui-development`](plugins/frontend-ui-development/) | Frontend GUI/UI development guardrails | `frontend-ui-development`, Cursor rules, template |
-| [`japanese-writing`](plugins/japanese-writing/) | Japanese writing norms & common conventions | `japanese-tech-writing`, `cognitive-rhythm-writing`, `semantic-generation`, shared rules |
+| [`japanese-writing`](plugins/japanese-writing/) | Japanese writing norms & common conventions | `japanese-tech-writing`, `cognitive-rhythm-writing`, `semantic-generation`, shared rules, README conventions |
 | [`shared-mcp`](plugins/shared-mcp/) | Shared MCP server definitions | Chrome DevTools, BigQuery, Hugging Face |
 
 For detailed documentation and specifications for each plugin, see [Plugin Specifications (docs/plugins.en.md)](docs/plugins.en.md).

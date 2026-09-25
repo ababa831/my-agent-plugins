@@ -37,6 +37,7 @@ Open **Customize** in the Cursor sidebar to verify that rules, skills, and MCP s
 
 - **`japanese-writing`**:
   - `rules/common-rules.mdc` is configured with `alwaysApply: true` and is automatically injected into every session.
+  - `rules/readme-writing.mdc` is loaded only when working on `README.md` and `README.*.md`.
 - **`frontend-ui-development`**:
   - In addition to the portable `SKILL.md`, this plugin provides `rules/frontend-ui-guardrails.mdc` for Cursor.
   - To adapt project-specific UI rules, copy the bundled template `assets/AGENTS.frontend.md` into the target repository's `AGENTS.md`.

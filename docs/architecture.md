@@ -74,6 +74,7 @@ my-agent-plugins/
     │   ├── .codex-plugin/plugin.json
     │   ├── .claude-plugin/plugin.json
     │   ├── rules/common-rules.mdc         # 常時適用の共通ルール（Cursor rule、Claude Code hook からも参照）
+    │   ├── rules/readme-writing.mdc       # README 作成時の規約（Cursor rule）
     │   ├── claude/hooks.json              # Claude Code 固有の hook（SessionStart / PreToolUse）
     │   ├── claude/check_banned_words.py   # PreToolUse hook が呼ぶ禁止用語検出スクリプト
     │   └── skills/
