@@ -129,7 +129,10 @@ Claude Code 向けには、ポータブルなスキルに加えて `claude/hooks
    - 検出動作はツールごとに異なります：
      - `Edit`: `old_string` と `new_string` の出現回数を比較するため、既存の用語を残したまま別の箇所を直す編集はブロックされません。
      - `Write` / `NotebookEdit`: ファイル全文または新規セル全体（`content` / `new_source`）を走査するため、既存ファイルを上書きする場合でも対象用語が含まれているとブロックされます。
-4. **`shared-mcp` の設定**:
+4. **`japanese-writing` の PreToolUse フック（README 規約の注入）**:
+   - `Write` / `Edit` の対象が `README.md` または `README.*.md` のときだけ、`claude/inject_readme_rule.py` が `rules/readme-writing.mdc` の本文（frontmatter を除く）をコンテキストに追加します。ツールの実行は止めません。
+   - 規約が届くのは書き込みツールの呼び出し時です。新しく README を書く場合、最初の書き込みには規約が反映されず、その後の見直しや編集から反映されます。
+5. **`shared-mcp` の設定**:
    - Claude Code では `.claude-plugin/plugin.json` 内にインラインで定義された MCP サーバ設定を使用します。
 
 ### プラグインの更新手順

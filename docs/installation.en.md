@@ -129,7 +129,10 @@ In addition to portable skills, Claude Code uses hooks defined in `claude/hooks.
    - Detection behavior varies by tool:
      - `Edit`: Compares occurrences between `old_string` and `new_string`, so edits that preserve existing occurrences while editing other text are not blocked.
      - `Write` / `NotebookEdit`: Scans the entire file content or new cell source (`content` / `new_source`), so saving files with pre-existing banned terms will be blocked.
-4. **`shared-mcp` Configuration**:
+4. **`japanese-writing` PreToolUse Hook (README Conventions)**:
+   - Only when `Write` / `Edit` targets `README.md` or `README.*.md`, `claude/inject_readme_rule.py` adds the body of `rules/readme-writing.mdc` (excluding frontmatter) to the context. It never blocks the tool call.
+   - The conventions arrive with the write tool call, so the first write of a new README is not governed by them; they apply from the following review and edits.
+5. **`shared-mcp` Configuration**:
    - Claude Code uses the MCP servers declared inline in `.claude-plugin/plugin.json`.
 
 ### Updating Plugins

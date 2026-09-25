@@ -77,9 +77,9 @@ Web / GUI アプリケーションのフロントエンド開発において、�
   - ユーザーへの返信を常に日本語で行う規約。
   - 日本語として馴染みの薄い不自然な直訳表現を禁止し、文脈に応じて「信頼できる唯一の情報源（SSOT）」「定義元」「一次情報源」「管理元」「元データ」「基準」などの分かりやすい語に言い換える規約。
   - Cursor では `alwaysApply: true` ルールとして、Claude Code では `SessionStart` フックとして自動注入されます。
-- **`rules/readme-writing.mdc`**（Cursor のみ）:
+- **`rules/readme-writing.mdc`**:
   - README を Diátaxis に沿って書き、初めて読む人が試せる内容（前提条件、そのまま実行できるコマンド、成功の確認方法）を過不足なく記載する規約。
-  - `README.md` と `README.*.md` を扱うときに適用されます。
+  - Cursor では `README.md` と `README.*.md` を扱うときに、Claude Code ではそれらへの `Write` / `Edit` 時に `PreToolUse` フック（`claude/inject_readme_rule.py`）で読み込まれます。
 - **禁止用語検出フック (`claude/check_banned_words.py`)**:
   - Claude Code の `PreToolUse` フックとして動作し、ファイル書き込み・編集時に読者の理解を妨げる不適切な禁止用語が含まれていないかをチェックします。
 
