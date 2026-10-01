@@ -20,7 +20,7 @@
     {
       "name": "japanese-writing",
       "source": "plugins/japanese-writing",
-      "description": "日本語の技術文書ライティング規範スキル集（文章規範・認知リズム）"
+      "description": "日本語ライティングの共通ルールと、設計文書を書く前に対応表を作る生成手順（semantic-generation）"
     },
     {
       "name": "shared-mcp",

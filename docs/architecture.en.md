@@ -68,7 +68,7 @@ my-agent-plugins/
     │   └── skills/frontend-ui-development/
     │       ├── SKILL.md
     │       └── assets/AGENTS.frontend.md
-    ├── japanese-writing/       # Japanese writing norm skills
+    ├── japanese-writing/       # Japanese writing rules and skills
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
@@ -79,8 +79,6 @@ my-agent-plugins/
     │   ├── claude/check_banned_words.py   # Detector script invoked by PreToolUse hook
     │   ├── claude/inject_readme_rule.py   # Injects README conventions on README writes
     │   └── skills/
-    │       ├── japanese-tech-writing/SKILL.md
-    │       ├── cognitive-rhythm-writing/SKILL.md
     │       └── semantic-generation/SKILL.md
     └── shared-mcp/             # Shared MCP server definitions
         ├── plugin.json
