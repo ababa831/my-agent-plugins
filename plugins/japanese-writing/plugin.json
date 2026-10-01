@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "japanese-writing",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "日本語ライティングの共通ルールと、設計文書を書く前に対応表を作る生成手順（semantic-generation）",
   "license": "MIT",
   "keywords": ["japanese", "writing", "technical-writing", "documentation"]
