@@ -87,5 +87,5 @@ my-agent-plugins/
 
 ## ライセンスと出典
 
-- 各スキルのライセンスおよび原著作者クレジット（k16shikano 氏、Lauren Tan 氏等）の詳細は、各プラグインディレクトリおよび [プラグイン詳細仕様](docs/plugins.md) を参照してください。
+- `development-rules` の `evidence-driven-engineering` は、[unicodef1wn/lauren-poteto-rules](https://github.com/unicodef1wn/lauren-poteto-rules)（MIT ライセンス、Copyright (c) 2026 unicodef1wn）を改変したものです。元のリポジトリは、[Lauren Tan 氏](https://x.com/poteto)のコーディングエージェントに関する講演に着想を得ています。ライセンス本文は [`LICENSE`](plugins/development-rules/skills/evidence-driven-engineering/LICENSE) にあります。
 - リポジトリ全体としての運用ルールは [リポジトリ運用ルールと規約 (docs/guidelines.md)](docs/guidelines.md) をご覧ください。
