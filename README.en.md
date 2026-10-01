@@ -87,5 +87,5 @@ For design principles and manifest management policies, see [Architecture and De
 
 ## License and Credits
 
-- For license details and author credits (k16shikano, Lauren Tan, etc.), see individual plugin directories and [Plugin Specifications (docs/plugins.en.md)](docs/plugins.en.md).
+- `evidence-driven-engineering` in `development-rules` is adapted from [unicodef1wn/lauren-poteto-rules](https://github.com/unicodef1wn/lauren-poteto-rules) (MIT License, Copyright (c) 2026 unicodef1wn), which is inspired by [Lauren Tan](https://x.com/poteto)'s talks about working with coding agents. See its [`LICENSE`](plugins/development-rules/skills/evidence-driven-engineering/LICENSE) for the full license text.
 - For repository operating and contribution guidelines, see [Operating Guidelines and Rules (docs/guidelines.en.md)](docs/guidelines.en.md).
