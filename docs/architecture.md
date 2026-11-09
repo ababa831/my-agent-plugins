@@ -59,14 +59,17 @@ my-agent-plugins/
     │   └── skills/
     │       ├── git-development-rules/
     │       └── evidence-driven-engineering/
-    ├── frontend-ui-development/ # GUI/UI開発ガードレール
+    ├── frontend-ui-development/ # GUI/UI開発ガードレール（Astryx 準拠）
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
-    │   ├── .claude-plugin/plugin.json
+    │   ├── .claude-plugin/plugin.json   # Astryx MCP をインライン記述
+    │   ├── mcp.json                     # Astryx MCP（ポータブル）
+    │   ├── .mcp.json                    # Codex 用 MCP 定義
     │   ├── rules/frontend-ui-guardrails.mdc   # Cursor 固有の常駐ルール
     │   └── skills/frontend-ui-development/
     │       ├── SKILL.md
+    │       ├── references/astryx.md
     │       └── assets/AGENTS.frontend.md
     ├── japanese-writing/       # 日本語ライティングの共通ルールとスキル
     │   ├── plugin.json

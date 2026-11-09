@@ -1,22 +1,25 @@
 # Frontend Project Context
 
 > Adapt this file to the target repository. Keep only facts and constraints grounded in the actual codebase.
+> In an Astryx project, run `astryx init --features agents` first; it writes the version-matched Astryx rules between `<!-- ASTRYX:START -->` and `<!-- ASTRYX:END -->`. Do not edit or copy that block here.
 
 ## Project facts
 
 - UI phase: `<EXPLORE | STABILIZE | PRODUCTION>`
 - Frontend root: `<path>`
-- Shared UI primitives: `<path or package>`
-- Design token / theme source: `<path or package>`
-- Styling approach: `<CSS Modules | Tailwind | CSS-in-JS | ...>`
+- Design system: `<Astryx @astryxdesign/core x.y.z | other: name>`
+- Astryx CLI invocation: `<npx astryx | npm run astryx -- | pnpm astryx>`
+- Theme: `<@astryxdesign/theme-neutral | custom theme module path>`
+- Styling system: `<StyleX (xstyle) | Tailwind | CSS variables only>`
+- App-owned wrappers and swizzled components: `<path>`
 - Typecheck command: `<command>`
 - Lint command: `<command>`
 - Test command: `<command>`
-- Visual verification: `<Storybook / browser check / screenshot test / ...>`
+- Visual verification: `<astryx doctor --built <dir> / Storybook / browser check / screenshot test>`
 
 ## Repository-specific constraints
 
 - `<constraint that is specific to this repository>`
 - `<constraint that is specific to this repository>`
 
-General frontend implementation guidance comes from the `frontend-ui-development` skill. Do not duplicate that guidance here.
+General frontend and Astryx guidance comes from the `frontend-ui-development` skill and the generated Astryx block. Do not duplicate it here.

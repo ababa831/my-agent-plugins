@@ -39,8 +39,9 @@ Cursor サイドバーの **Customize** を開き、各プラグインに含ま�
   - `rules/common-rules.mdc` は `alwaysApply: true` として定義されており、セッション開始時に常にコンテキストへ読み込まれます。
   - `rules/readme-writing.mdc` は `README.md` と `README.*.md` を扱うときにだけ読み込まれます。
 - **`frontend-ui-development`**:
-  - ポータブルな `SKILL.md` に加えて Cursor 用の `rules/frontend-ui-guardrails.mdc` が配布されます。
-  - プロジェクト固有の UI ルールを記述したい場合は、スキル内のテンプレート `assets/AGENTS.frontend.md` をコピーして、対象リポジトリの `AGENTS.md` に追記します。
+  - ポータブルな `SKILL.md` に加えて Cursor 用の `rules/frontend-ui-guardrails.mdc` と Astryx MCP サーバ（`astryx`）が配布されます。
+  - Astryx を使うプロジェクトでは、対象リポジトリで `npx astryx init --features agents` を実行し、インストール済みバージョンに合った Astryx のルールを `AGENTS.md` に書き込みます。
+  - それ以外のプロジェクト固有の UI ルールは、スキル内のテンプレート `assets/AGENTS.frontend.md` をコピーして、対象リポジトリの `AGENTS.md` に追記します。
 
 ### チームへの配布（Team Marketplace）
 

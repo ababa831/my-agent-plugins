@@ -42,15 +42,20 @@ Provides essential Git development standards and evidence-driven engineering pra
 
 ### Overview
 
-Maintains UI consistency in Web/GUI frontend engineering by preventing ad-hoc, patchwork styling that ignores existing design tokens and components.
+Maintains UI consistency in Web/GUI frontend engineering by preventing ad-hoc, patchwork styling.
+It treats the [Astryx](https://github.com/meta/astryx) design system as the default design convention and checks templates, components, and tokens through the Astryx MCP and CLI before composing UI.
+In projects that standardize on another design system, it does not mix Astryx in and follows the existing conventions instead.
 
 ### Included Components
 
 - **`frontend-ui-development` (Skill)**:
-  - Enforces prioritizing existing components, design tokens, and layout primitives.
+  - Conventions to start pages from Astryx templates and compose them from Astryx components and tokens instead of raw `<div>`s or hardcoded hex/px.
+  - `references/astryx.md` covering adoption, the CLI workflow, and the self-check.
   - Guides prototyping, stabilization, and visual bug fixes.
+- **`astryx` (MCP server)**:
+  - Connects to `https://astryx.atmeta.com/mcp` and provides `search` (components, docs, templates) and `get` (props, examples, install command). No authentication is required.
 - **`rules/frontend-ui-guardrails.mdc` (Cursor Rule)**:
-  - Enforces frontend guardrails in Cursor sessions.
+  - Applies Astryx-based UI guardrails when Cursor edits frontend files.
 - **`assets/AGENTS.frontend.md` (Template)**:
   - Reusable template for configuring repository-specific frontend guidelines in `AGENTS.md`.
 

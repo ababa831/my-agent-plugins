@@ -19,7 +19,7 @@ Cursor / Codex / Claude Code で共通利用するエージェント向け設定
 | プラグイン | 概要 | 主な機能 / スキル |
 | :-- | :-- | :-- |
 | [`development-rules`](plugins/development-rules/) | Git開発共通ルール & 証拠駆動検証 | `git-development-rules`, `evidence-driven-engineering` |
-| [`frontend-ui-development`](plugins/frontend-ui-development/) | フロントエンドUI実装ガードレール | `frontend-ui-development`, Cursor rules, テンプレート |
+| [`frontend-ui-development`](plugins/frontend-ui-development/) | Astryx 準拠のフロントエンドUI実装ガードレール | `frontend-ui-development`, Astryx MCP, Cursor rules, テンプレート |
 | [`japanese-writing`](plugins/japanese-writing/) | 日本語技術文書の品質向上 & 共通規約 | `semantic-generation`, 共通ルール, README 規約 |
 | [`shared-mcp`](plugins/shared-mcp/) | 共通 MCP サーバ定義 | Chrome DevTools, BigQuery, Hugging Face |
 
