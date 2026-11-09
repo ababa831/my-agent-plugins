@@ -100,4 +100,4 @@ AI っぽい日本語の推敲には、本プラグインに含めず外部の [
 - **`bigquery`**: Google Cloud BigQuery との接続・クエリ実行（streamable-http）。
 - **`huggingface`**: Hugging Face API との連携（streamable-http）。
 
-各クライアント（Cursor, Codex, Claude Code）のスキーマ差分は、`mcp.json`, `.mcp.json`, `.claude-plugin/plugin.json` を通じて適切に吸収されます。
+各クライアント（Cursor, Codex, Claude Code）のスキーマ差分は、ポータブルな `mcp.json`（Codex も参照）と、各クライアントのマニフェスト内のインライン定義を通じて適切に吸収されます。

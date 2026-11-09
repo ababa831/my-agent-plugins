@@ -99,4 +99,4 @@ Bundles common Model Context Protocol (MCP) servers for convenient client integr
 - **`bigquery`**: Query execution and integration with Google Cloud BigQuery (streamable-http).
 - **`huggingface`**: Hugging Face API integration (streamable-http).
 
-Differences in client schemas (Cursor, Codex, Claude Code) are handled via `mcp.json`, `.mcp.json`, and `.claude-plugin/plugin.json`.
+Differences in client schemas (Cursor, Codex, Claude Code) are handled via the portable `mcp.json` (also read by Codex) and the inline definitions in each client manifest.

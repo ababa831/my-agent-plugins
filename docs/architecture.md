@@ -65,7 +65,6 @@ my-agent-plugins/
     │   ├── .codex-plugin/plugin.json
     │   ├── .claude-plugin/plugin.json   # Astryx MCP をインライン記述
     │   ├── mcp.json                     # Astryx MCP（ポータブル）
-    │   ├── .mcp.json                    # Codex 用 MCP 定義
     │   ├── rules/frontend-ui-guardrails.mdc   # Cursor 固有の常駐ルール
     │   └── skills/frontend-ui-development/
     │       ├── SKILL.md
@@ -88,8 +87,7 @@ my-agent-plugins/
         ├── mcp.json
         ├── .cursor-plugin/plugin.json
         ├── .codex-plugin/plugin.json
-        ├── .claude-plugin/plugin.json   # Claude Code 用に MCP 定義をインライン記述
-        └── .mcp.json
+        └── .claude-plugin/plugin.json   # Claude Code 用に MCP 定義をインライン記述
 ```
 
 ---
@@ -107,4 +105,4 @@ my-agent-plugins/
 3. **クライアント固有リソースの分離**:
    - **Cursor**: 固有のルールは `rules/*.mdc` に配置し、`.cursor-plugin/plugin.json` からのみ参照します。
    - **Claude Code**: 固有のフックは `claude/` に配置し、`.claude-plugin/plugin.json` からのみ参照します。
-   - **Codex / MCP**: MCP 定義のスキーマ差分（例: Claude Code ではインライン形式を要求する等）を吸収するため、形式別のファイルを用意・参照します。
+   - **Codex / MCP**: Codex はポータブルな `mcp.json` を `.codex-plugin/plugin.json` の `"mcpServers": "./mcp.json"` で参照します。Claude Code はプラグイン直下の `.mcp.json` を自動で読み込むため、このファイルは置かず、MCP 定義を `.claude-plugin/plugin.json` にインラインで記述します。
