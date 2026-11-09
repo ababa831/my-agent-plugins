@@ -40,7 +40,7 @@ Open **Customize** in the Cursor sidebar to verify that rules, skills, and MCP s
   - `rules/readme-writing.mdc` is loaded only when working on `README.md` and `README.*.md`.
 - **`frontend-ui-development`**:
   - In addition to the portable `SKILL.md`, this plugin provides `rules/frontend-ui-guardrails.mdc` for Cursor and the Astryx MCP server (`astryx`).
-  - In an Astryx project, run `npx astryx init --features agents` in the target repository to write Astryx rules matching the installed version into `AGENTS.md`.
+  - In an Astryx project, install `@astryxdesign/cli` in the target repository (at the same version as `@astryxdesign/core` if Core is installed), then run `npx astryx init --features agents` to write Astryx rules matching the installed version into `AGENTS.md`. Add `--agent all` to also write a Claude Code file reliably (`.claude/CLAUDE.md` when there is no `CLAUDE.md`). Running `npx astryx` before the CLI is installed can fetch an unrelated package named `astryx`.
   - For other project-specific UI rules, copy the bundled template `assets/AGENTS.frontend.md` into the target repository's `AGENTS.md`.
 
 ### Team Distribution (Team Marketplace)

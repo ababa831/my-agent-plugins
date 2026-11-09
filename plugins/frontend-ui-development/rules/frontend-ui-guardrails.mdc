@@ -7,10 +7,12 @@ alwaysApply: false
 
 # Frontend UI guardrails
 
-- In a project that uses `@astryxdesign/core`, or a new React UI with no design system, build with Astryx. Do not mix Astryx into a project that standardizes on another design system unless the user asks for a migration.
-- Look up components with the `astryx` MCP (`search`, then `get`) or the project's `astryx` CLI before using them. Do not invent props or import paths.
-- Start new pages from the template `astryx build "<idea>"` names; keep its frame, gap, and padding.
-- Use components instead of raw `<div>`/`<span>` for layout, and tokens instead of hardcoded hex/px, `style={{…}}`, ad-hoc CSS, or `:root` overrides.
+- In a project that uses `@astryxdesign/core`, or a React 19+ UI with no design system, build with Astryx. Do not mix Astryx into a project that standardizes on another design system, and do not use it outside React 19+, unless the user asks for a migration.
+- When building with Astryx:
+  - Look up components with the `astryx` MCP (`search`, then `get`) or the project's `astryx` CLI before using them. Do not invent props or import paths.
+  - Start new pages from the template `astryx build "<idea>"` names; keep its frame, gap, and padding.
+  - Use components instead of raw `<div>`/`<span>` for layout, and tokens instead of hardcoded hex/px, `style={{…}}`, ad-hoc CSS, or `:root` overrides.
+- Otherwise, reuse the existing design system's components and tokens in the same way.
 - Prefer structural fixes (template frame, parent stack, component props) over one-off offsets or selector overrides. Avoid `!important` and arbitrary z-index escalation.
 - Before finishing, re-read changed files and replace leftover raw elements or hardcoded values with components or tokens.
 

@@ -22,9 +22,11 @@ UIをその場しのぎのパッチの集合にしない。
 | プロジェクトの状態 | 方針 |
 | :-- | :-- |
 | `@astryxdesign/core` を使っている | Astryxの規約に従う。 |
-| 新規UI、またはReact 19+でdesign systemがまだない | Astryxで作る。導入は `references/astryx.md` の「導入」を参照する。 |
+| React 19+ の新規UI、またはReact 19+でdesign systemがまだない | Astryxで作る。導入は `references/astryx.md` の「Adoption」を参照する。 |
 | 別のdesign system / component libraryが定着している | Astryxを部分的に混ぜない。混在こそ継ぎ接ぎの原因になる。既存の規約に従い、移行はユーザーが求めたときに画面単位で行う。 |
-| React以外（Vue、Svelteなど） | Astryxは使えない。既存のcomponentとtokenを基準に、下記の一般原則だけを適用する。 |
+| React以外（Vue、Svelteなど）、またはReact 18以前 | Astryxは使えない（Astryxは React 19+ が必要）。既存のcomponentとtokenを基準に、「構造で直す」以降の一般原則だけを適用する。 |
+
+次の「Astryxの情報源」と「Astryxの規約」は、Astryxで作ると判断した場合だけ適用する。それ以外の場合は、Astryx MCP・CLIを使わず、既存のdesign systemのcomponentとtokenを同じ考え方で優先する。
 
 ## Astryxの情報源
 
@@ -83,7 +85,7 @@ Pages / Screens（Astryx templateから始める）
 
 ## AGENTS.mdを整備するとき
 
-Astryxを使うプロジェクトでは `astryx init --features agents` でバージョンに合ったルールを `AGENTS.md`（Claude Codeでは `CLAUDE.md` にも）へ書き込む。
+Astryxを使うプロジェクトでは `astryx init --features agents` でバージョンに合ったルールを `AGENTS.md` へ書き込む（`CLAUDE.md` があればそちらにも書き込まれる）。Claude Code 用のファイルにも確実に書き込むときは `--agent all` を付ける（`CLAUDE.md` が無ければ `.claude/CLAUDE.md` に書き込まれる）。
 それ以外のproject factsは `assets/AGENTS.frontend.md` を雛形に、実際のpath、theme、styling方式、検証commandだけを記録する。一般原則を再掲しない。
 
 ## 完了時

@@ -22,9 +22,11 @@ This skill provides defaults for judgment, not a fixed procedure.
 | Project state | Approach |
 | :-- | :-- |
 | Uses `@astryxdesign/core` | Follow the Astryx conventions. |
-| New UI, or React 19+ without a design system | Build with Astryx. See "Adoption" in `references/astryx.md`. |
+| New React 19+ UI, or React 19+ without a design system | Build with Astryx. See "Adoption" in `references/astryx.md`. |
 | Another design system or component library is established | Do not mix Astryx in piecemeal; mixing is what creates patchwork. Follow the existing conventions and migrate whole screens only when the user asks. |
-| Not React (Vue, Svelte, etc.) | Astryx does not apply. Use existing components and tokens and apply only the general principles below. |
+| Not React (Vue, Svelte, etc.), or React 18 and earlier | Astryx does not apply (it requires React 19+). Use existing components and tokens and apply only the general principles from "Fix the structure" onward. |
+
+The next two sections, "Astryx sources" and "Astryx conventions", apply only when you decided to build with Astryx. Otherwise, do not use the Astryx MCP or CLI; prefer the existing design system's components and tokens in the same spirit.
 
 ## Astryx sources
 
@@ -83,7 +85,7 @@ Run the smallest meaningful validation proportional to the change.
 
 ## Maintaining AGENTS.md
 
-In an Astryx project, run `astryx init --features agents` to write version-matched rules into `AGENTS.md` (and `CLAUDE.md` for Claude Code).
+In an Astryx project, run `astryx init --features agents` to write version-matched rules into `AGENTS.md` (and into `CLAUDE.md` when one exists). Add `--agent all` to also write a Claude Code file reliably (`.claude/CLAUDE.md` when there is no `CLAUDE.md`).
 For other project facts, use `assets/AGENTS.frontend.md` as a template and record only real paths, theme, styling system, and validation commands. Do not restate general principles.
 
 ## On completion

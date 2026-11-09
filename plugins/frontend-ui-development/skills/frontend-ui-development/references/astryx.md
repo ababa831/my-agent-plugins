@@ -17,7 +17,7 @@ Read docs through these tools, not by opening files under `node_modules`. If the
 
 ## Adoption
 
-Astryx requires React 19+. In a new project, or one without `@astryxdesign/core`:
+Astryx requires React 19+. In a new project, or one without `@astryxdesign/core`, install the packages; in a project that already has `@astryxdesign/core`, install only `@astryxdesign/cli`, at the same version as Core:
 
 ```bash
 npm install @astryxdesign/core @astryxdesign/theme-neutral @stylexjs/stylex
@@ -25,12 +25,12 @@ npm install -D @astryxdesign/cli
 npx astryx init --features agents
 ```
 
-In a project that already has `@astryxdesign/core`, install `@astryxdesign/cli` at the same version. Import the CSS once in the app entry, or components render unstyled:
+Run `npx astryx` only after `@astryxdesign/cli` is installed; otherwise npx may fetch an unrelated package named `astryx`. Use `npx @astryxdesign/cli <cmd>` when unsure.
 
-```ts
-import "@astryxdesign/core/reset.css";
-import "@astryxdesign/core/astryx.css";
-```
+Either way, the app needs these once, or components render unstyled or unthemed (the Core README's Quick Start shows each framework):
+
+1. Import the stylesheets in this order: `@astryxdesign/core/reset.css`, `@astryxdesign/core/astryx.css`, then the theme's `theme.css` (for example `@astryxdesign/theme-neutral/theme.css`).
+2. Wrap the app in `<Theme theme={…}>` from `@astryxdesign/core/theme` (for example `neutralTheme` from `@astryxdesign/theme-neutral/built`), and in `<LinkProvider component={…}>` from `@astryxdesign/core/Link` with the framework's link component.
 
 Pick another theme with `astryx theme add <slug>`; see `astryx docs theme`. After a dependency bump, run `astryx upgrade --from <old version> --apply` so codemods and the agent-docs block stay current.
 
