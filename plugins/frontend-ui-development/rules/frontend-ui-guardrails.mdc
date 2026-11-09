@@ -7,7 +7,8 @@ alwaysApply: false
 
 # Frontend UI guardrails
 
-- In a project that uses `@astryxdesign/core`, or a React 19+ UI with no design system, build with Astryx. Do not mix Astryx into a project that standardizes on another design system, and do not use it outside React 19+, unless the user asks for a migration.
+- In a project that uses `@astryxdesign/core`, or a React 19+ UI with no design system, build with Astryx.
+- Never use Astryx outside React 19+ (it requires React 19+). In a React 19+ project that standardizes on another design system, do not mix Astryx in unless the user asks for a migration.
 - When building with Astryx:
   - Look up components with the `astryx` MCP (`search`, then `get`) or the project's `astryx` CLI before using them. Do not invent props or import paths.
   - Start new pages from the template `astryx build "<idea>"` names; keep its frame, gap, and padding.
