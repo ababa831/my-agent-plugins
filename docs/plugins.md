@@ -42,15 +42,26 @@ Git 開発における基本規約と、仮説や推測に依存しない「証�
 
 ### 概要
 
-Web / GUI アプリケーションのフロントエンド開発において、既存のコンポーネントやデザイントークンを無視した場当たり的なスタイル追加（パッチワーク化）を防ぎ、一貫性のある UI 実装を保つためのガードレールです。
+Web / GUI アプリケーションのフロントエンド開発において、場当たり的なスタイル追加（パッチワーク化）を防ぎ、一貫性のある UI 実装を保つためのガードレールです。
+[Astryx](https://github.com/meta/astryx) design system を既定のデザイン規約とし、Astryx MCP と CLI で template・component・token を確認してから UI を組み立てます。
+別の design system が定着しているプロジェクトでは Astryx を部分的に混ぜず、既存の規約に従います。
 
 ### 含まれるコンポーネント
 
 - **`frontend-ui-development` (スキル)**:
-  - 既存の UI コンポーネント、デザインシステム、トークン、レイアウト構造の優先利用を徹底。
+  - ページを Astryx template から始め、生の `<div>` や hex/px の直書きではなく Astryx component と token で組み立てる規約。
+  - Astryx の導入手順、CLI ワークフロー、self-check をまとめた `references/astryx.md`。
   - プロトタイピングから安定化・視覚的不具合の修正までをガイド。
+- **`astryx` (MCP サーバ)**:
+  - `https://astryx.atmeta.com/mcp` に接続し、`search`（component・doc・template の検索）と `get`（props・例・install command の取得）を提供。認証は不要です。
+  - Meta が運営する外部サーバなので、検索語はこのサーバに送られます。スキルは、検索語にプロジェクトのコードや機密情報を含めないよう指示しています。使わない場合は、クライアントの MCP 設定でこのサーバを無効にできます。
+
+### 1.x からの変更（2.0.0）
+
+- Astryx を使っているプロジェクトと、デザインシステムも component library もない React 19+ のプロジェクトで新しい画面やアプリを作る場合は、Astryx の規約に従うようになります。既存 UI の小さな変更では、Astryx を導入しません。
+- 別のデザインシステムや component library が定着しているプロジェクト、React 18 以前、React 以外のプロジェクトでは Astryx を導入せず、1.x と同じく既存の component と token を優先します。依存関係は追加されません。
 - **`rules/frontend-ui-guardrails.mdc` (Cursor 向けルール)**:
-  - Cursor 環境で常時または特定ファイル編集時に UI ガードレールを強制適用するルール。
+  - Cursor 環境でフロントエンドのファイルを編集するときに、Astryx に基づく UI ガードレールを適用するルール。
 - **`assets/AGENTS.frontend.md` (テンプレート)**:
   - 対象プロジェクトの `AGENTS.md` に組み込んで使用する、プロジェクト固有 UI 指示用テンプレート。
 
@@ -95,4 +106,4 @@ AI っぽい日本語の推敲には、本プラグインに含めず外部の [
 - **`bigquery`**: Google Cloud BigQuery との接続・クエリ実行（streamable-http）。
 - **`huggingface`**: Hugging Face API との連携（streamable-http）。
 
-各クライアント（Cursor, Codex, Claude Code）のスキーマ差分は、`mcp.json`, `.mcp.json`, `.claude-plugin/plugin.json` を通じて適切に吸収されます。
+各クライアント（Cursor, Codex, Claude Code）のスキーマ差分は、ポータブルな `mcp.json`（Codex も参照）と、各クライアントのマニフェスト内のインライン定義を通じて適切に吸収されます。

@@ -42,15 +42,26 @@ Provides essential Git development standards and evidence-driven engineering pra
 
 ### Overview
 
-Maintains UI consistency in Web/GUI frontend engineering by preventing ad-hoc, patchwork styling that ignores existing design tokens and components.
+Maintains UI consistency in Web/GUI frontend engineering by preventing ad-hoc, patchwork styling.
+It treats the [Astryx](https://github.com/meta/astryx) design system as the default design convention and checks templates, components, and tokens through the Astryx MCP and CLI before composing UI.
+In projects that standardize on another design system, it does not mix Astryx in and follows the existing conventions instead.
 
 ### Included Components
 
 - **`frontend-ui-development` (Skill)**:
-  - Enforces prioritizing existing components, design tokens, and layout primitives.
+  - Conventions to start pages from Astryx templates and compose them from Astryx components and tokens instead of raw `<div>`s or hardcoded hex/px.
+  - `references/astryx.md` covering adoption, the CLI workflow, and the self-check.
   - Guides prototyping, stabilization, and visual bug fixes.
+- **`astryx` (MCP server)**:
+  - Connects to `https://astryx.atmeta.com/mcp` and provides `search` (components, docs, templates) and `get` (props, examples, install command). No authentication is required.
+  - It is an external server run by Meta, so search queries are sent to it. The skill tells agents not to put project code or secrets in queries. If you do not want it, disable the server in your client's MCP settings.
+
+### Changes from 1.x (2.0.0)
+
+- Projects that use Astryx, and new screens or apps in React 19+ projects with no design system or component library, now follow the Astryx conventions. Small changes to existing UI do not adopt Astryx.
+- Projects that standardize on another design system or component library, React 18 and earlier, and non-React projects do not adopt Astryx; as in 1.x, existing components and tokens come first, and no dependencies are added.
 - **`rules/frontend-ui-guardrails.mdc` (Cursor Rule)**:
-  - Enforces frontend guardrails in Cursor sessions.
+  - Applies Astryx-based UI guardrails when Cursor edits frontend files.
 - **`assets/AGENTS.frontend.md` (Template)**:
   - Reusable template for configuring repository-specific frontend guidelines in `AGENTS.md`.
 
@@ -94,4 +105,4 @@ Bundles common Model Context Protocol (MCP) servers for convenient client integr
 - **`bigquery`**: Query execution and integration with Google Cloud BigQuery (streamable-http).
 - **`huggingface`**: Hugging Face API integration (streamable-http).
 
-Differences in client schemas (Cursor, Codex, Claude Code) are handled via `mcp.json`, `.mcp.json`, and `.claude-plugin/plugin.json`.
+Differences in client schemas (Cursor, Codex, Claude Code) are handled via the portable `mcp.json` (also read by Codex) and the inline definitions in each client manifest.

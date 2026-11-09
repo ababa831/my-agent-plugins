@@ -59,14 +59,16 @@ my-agent-plugins/
     │   └── skills/
     │       ├── git-development-rules/
     │       └── evidence-driven-engineering/
-    ├── frontend-ui-development/ # GUI/UI development guardrails
+    ├── frontend-ui-development/ # GUI/UI development guardrails (Astryx-based)
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
-    │   ├── .claude-plugin/plugin.json
+    │   ├── .claude-plugin/plugin.json   # Astryx MCP inlined
+    │   ├── mcp.json                     # Astryx MCP (portable)
     │   ├── rules/frontend-ui-guardrails.mdc   # Cursor-specific persistent rule
     │   └── skills/frontend-ui-development/
     │       ├── SKILL.md
+    │       ├── references/astryx.md
     │       └── assets/AGENTS.frontend.md
     ├── japanese-writing/       # Japanese writing rules and skills
     │   ├── plugin.json
@@ -85,8 +87,7 @@ my-agent-plugins/
         ├── mcp.json
         ├── .cursor-plugin/plugin.json
         ├── .codex-plugin/plugin.json
-        ├── .claude-plugin/plugin.json   # MCP servers inlined for Claude Code
-        └── .mcp.json
+        └── .claude-plugin/plugin.json   # MCP servers inlined for Claude Code
 ```
 
 ---
@@ -104,4 +105,4 @@ Client-specific manifests (Cursor: `.cursor-plugin/plugin.json`, Codex: `.codex-
 3. **Client-Specific Separation**:
    - **Cursor**: Specific rules live under `rules/*.mdc` and are exposed only via `.cursor-plugin/plugin.json`.
    - **Claude Code**: Specific hooks live under `claude/` and are exposed only via `.claude-plugin/plugin.json`.
-   - **Codex / MCP**: Different format files are maintained where schemas differ (e.g., inlined definitions for Claude Code).
+   - **Codex / MCP**: Codex reads the portable `mcp.json` through `"mcpServers": "./mcp.json"` in `.codex-plugin/plugin.json`. Claude Code auto-loads a plugin-root `.mcp.json`, so none is kept there and MCP servers are inlined in `.claude-plugin/plugin.json`.

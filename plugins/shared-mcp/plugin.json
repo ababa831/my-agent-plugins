@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "shared-mcp",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Cursor/Codex/Claude Code で共通利用する MCP サーバ定義（chrome-devtools / bigquery / huggingface）",
   "license": "MIT",
   "keywords": ["mcp", "chrome-devtools", "bigquery", "huggingface"]

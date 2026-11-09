@@ -15,7 +15,7 @@
     {
       "name": "frontend-ui-development",
       "source": "./plugins/frontend-ui-development",
-      "description": "GUI/UIの設計を保ちながらエージェントで実装・モック・安定化するためのフロントエンド開発ガイド"
+      "description": "Astryx design system と Astryx MCP を基準に、GUI/UIを継ぎ接ぎにせず統一的に実装・モック・安定化するためのフロントエンド開発ガイド"
     },
     {
       "name": "japanese-writing",
