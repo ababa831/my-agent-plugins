@@ -85,7 +85,7 @@ Pages / Screens（Astryx templateから始める）
 
 ## AGENTS.mdを整備するとき
 
-Astryxを使うプロジェクトでは `astryx init --features agents` でバージョンに合ったルールを `AGENTS.md` へ書き込む（`CLAUDE.md` があればそちらにも書き込まれる）。`CLAUDE.md` が無く、Claude Code が `AGENTS.md` を読んでいるか分からない場合は、`@AGENTS.md` の1行だけを書いた `CLAUDE.md` を作り、`AGENTS.md` を読み込ませる。
+Astryxを使うプロジェクトでは `astryx init --features agents` でバージョンに合ったルールを `AGENTS.md` へ書き込む（`CLAUDE.md` があればそちらにも書き込まれる）。各エージェントがそのファイルを読むかどうかと書き込み先の選び方は、`astryx docs working-with-ai` に従う。
 それ以外のproject factsは `assets/AGENTS.frontend.md` を雛形に、実際のpath、theme、styling方式、検証commandだけを記録する。一般原則を再掲しない。
 
 ## 完了時
