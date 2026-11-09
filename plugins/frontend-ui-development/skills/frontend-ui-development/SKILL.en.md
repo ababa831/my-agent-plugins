@@ -85,7 +85,7 @@ Run the smallest meaningful validation proportional to the change.
 
 ## Maintaining AGENTS.md
 
-In an Astryx project, run `astryx init --features agents` to write version-matched rules into `AGENTS.md` (and into `CLAUDE.md` when one exists). Claude Code reads `AGENTS.md` when there is no `CLAUDE.md`, so you do not need a separate Claude Code file.
+In an Astryx project, run `astryx init --features agents` to write version-matched rules into `AGENTS.md` (and into `CLAUDE.md` when one exists). If there is no `CLAUDE.md` and you are not sure Claude Code reads `AGENTS.md`, create a `CLAUDE.md` containing only the line `@AGENTS.md` so it imports `AGENTS.md`.
 For other project facts, use `assets/AGENTS.frontend.md` as a template and record only real paths, theme, styling system, and validation commands. Do not restate general principles.
 
 ## On completion
