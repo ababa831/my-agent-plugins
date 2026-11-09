@@ -22,7 +22,7 @@ UIをその場しのぎのパッチの集合にしない。
 | プロジェクトの状態 | 方針 |
 | :-- | :-- |
 | `@astryxdesign/core` を使っている | Astryxの規約に従う。 |
-| React 19+ の新規UI、またはReact 19+でdesign systemがまだない | Astryxで作る。導入は `references/astryx.md` の「Adoption」を参照する。 |
+| design systemがまだないReact 19+のプロジェクト（新規UIを含む） | Astryxで作る。導入は `references/astryx.md` の「Adoption」を参照する。 |
 | 別のdesign system / component libraryが定着している | Astryxを部分的に混ぜない。混在こそ継ぎ接ぎの原因になる。既存の規約に従い、移行はユーザーが求めたときに画面単位で行う。 |
 | React以外（Vue、Svelteなど）、またはReact 18以前 | Astryxは使えない（Astryxは React 19+ が必要）。既存のcomponentとtokenを基準に、「構造で直す」以降の一般原則だけを適用する。 |
 
@@ -50,9 +50,9 @@ componentのpropやimport pathを記憶や推測で書かない。次の順で�
 
 ## 構造で直す
 
-位置ずれや見た目の不具合では、すぐに `margin-*`、`top/left`、transform、selector overrideを足さない。templateのframe、親のStack/gap、component propを先に確認する。templateのframeを変える前に `astryx docs layout` を読む。
+位置ずれや見た目の不具合では、すぐに `margin-*`、`top/left`、transform、selector overrideを足さない。親のlayout・gap・padding、shared component、component propを先に確認する。Astryxで作る場合は、templateのframeと親のStackも確認し、frameを変える前に `astryx docs layout` を読む。
 
-Astryxで足りない部分を自作する場合は、次の依存方向を保つ。
+共通部品を自作する場合は、次の依存方向を保つ（Astryxで作らない場合は、Astryxを既存のdesign systemのtokenとcomponentに読み替える）。
 
 ```text
 Astryx tokens / theme

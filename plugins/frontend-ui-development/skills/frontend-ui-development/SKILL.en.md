@@ -22,7 +22,7 @@ This skill provides defaults for judgment, not a fixed procedure.
 | Project state | Approach |
 | :-- | :-- |
 | Uses `@astryxdesign/core` | Follow the Astryx conventions. |
-| New React 19+ UI, or React 19+ without a design system | Build with Astryx. See "Adoption" in `references/astryx.md`. |
+| React 19+ project without a design system (new UI included) | Build with Astryx. See "Adoption" in `references/astryx.md`. |
 | Another design system or component library is established | Do not mix Astryx in piecemeal; mixing is what creates patchwork. Follow the existing conventions and migrate whole screens only when the user asks. |
 | Not React (Vue, Svelte, etc.), or React 18 and earlier | Astryx does not apply (it requires React 19+). Use existing components and tokens and apply only the general principles from "Fix the structure" onward. |
 
@@ -50,9 +50,9 @@ See `references/astryx.md` for details and CLI steps. The core rules:
 
 ## Fix the structure
 
-For alignment or visual bugs, do not immediately add `margin-*`, `top/left`, transforms, or selector overrides. Check the template frame, the parent Stack/gap, and component props first. Read `astryx docs layout` before changing a template's frame.
+For alignment or visual bugs, do not immediately add `margin-*`, `top/left`, transforms, or selector overrides. Check the parent layout, gap, padding, shared components, and component props first. When building with Astryx, also check the template frame and parent Stack, and read `astryx docs layout` before changing a frame.
 
-When you build what Astryx lacks, keep this dependency direction:
+When you build shared parts yourself, keep this dependency direction (when not building with Astryx, read Astryx as the existing design system's tokens and components):
 
 ```text
 Astryx tokens / theme

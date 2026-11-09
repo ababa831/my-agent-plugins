@@ -17,11 +17,20 @@ Read docs through these tools, not by opening files under `node_modules`. If the
 
 ## Adoption
 
-Astryx requires React 19+. In a new project, or one without `@astryxdesign/core`, install the packages; in a project that already has `@astryxdesign/core`, install only `@astryxdesign/cli`, at the same version as Core:
+Astryx requires React 19+, and the CLI requires the Node.js version in its `engines.node` (22.13.0+ for 0.7.x). Check both before installing.
+
+In a new project, or one without `@astryxdesign/core`:
 
 ```bash
 npm install @astryxdesign/core @astryxdesign/theme-neutral @stylexjs/stylex
 npm install -D @astryxdesign/cli
+npx astryx init --features agents
+```
+
+In a project that already has `@astryxdesign/core`, install only the CLI, at the installed Core version:
+
+```bash
+npm install -D @astryxdesign/cli@<installed core version>
 npx astryx init --features agents
 ```
 
