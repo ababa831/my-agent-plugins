@@ -22,7 +22,7 @@ UIをその場しのぎのパッチの集合にしない。
 | プロジェクトの状態 | 方針 |
 | :-- | :-- |
 | `@astryxdesign/core` を使っている | Astryxの規約に従う。 |
-| design systemがまだないReact 19+のプロジェクト（新規UIを含む） | Astryxで作る。導入は `references/astryx.md` の「Adoption」を参照する。 |
+| design systemもcomponent libraryもないReact 19+のプロジェクトで、新しい画面やアプリを作る | Astryxで作る。導入は `references/astryx.md` の「Adoption」を参照する。同じプロジェクトでも既存UIの小さな変更では導入せず、既存のコードに合わせる（導入はユーザーが求めたとき）。 |
 | 別のdesign system / component libraryが定着している | Astryxを部分的に混ぜない。混在こそ継ぎ接ぎの原因になる。既存の規約に従い、移行はユーザーが求めたときに画面単位で行う。 |
 | React以外（Vue、Svelteなど）、またはReact 18以前 | Astryxは使えない（Astryxは React 19+ が必要）。既存のcomponentとtokenを基準に、「構造で直す」以降の一般原則だけを適用する。 |
 
@@ -33,7 +33,7 @@ UIをその場しのぎのパッチの集合にしない。
 componentのpropやimport pathを記憶や推測で書かない。次の順で確認する。
 
 1. **Astryx MCP**（このプラグインが `astryx` サーバとして接続する）: `search("<やりたいこと>")` で候補を探し、`get("<Name>")` でprops・例・install commandを読む。外部サーバなので、検索語にはやりたいことだけを書き、プロジェクトのコード・機密情報・顧客データを含めない。
-2. **プロジェクトのCLI**: プロジェクトにinstall済みのバージョンを答えるので、MCPと食い違ったらこちらを優先する。`astryx build "<idea>"`、`astryx template`、`astryx component <Name>`、`astryx docs <topic>` を使う。
+2. **プロジェクトのCLI**: プロジェクトにinstall済みのバージョンを答えるので、MCPと食い違ったらこちらを優先する。MCPは最新リリースを答えるため、既存のAstryxプロジェクトではMCPで見つけたpropやimport pathをCLI（使えなければinstall済みパッケージの型定義）で確かめてから使う。確かめられない場合は、MCPの結果だけでAPIを確定しない。`astryx build "<idea>"`、`astryx template`、`astryx component <Name>`、`astryx docs <topic>` を使う。
 3. MCPもCLIも使えないときは、その旨を伝え、確認できないpropを推測で埋めない。
 
 ## Astryxの規約
@@ -85,7 +85,7 @@ Pages / Screens（Astryx templateから始める）
 
 ## AGENTS.mdを整備するとき
 
-Astryxを使うプロジェクトでは `astryx init --features agents` でバージョンに合ったルールを `AGENTS.md` へ書き込む（`CLAUDE.md` があればそちらにも書き込まれる）。Claude Code 用のファイルにも確実に書き込むときは `--agent all` を付ける（`CLAUDE.md` が無ければ `.claude/CLAUDE.md` に書き込まれる）。
+Astryxを使うプロジェクトでは `astryx init --features agents` でバージョンに合ったルールを `AGENTS.md` へ書き込む（`CLAUDE.md` があればそちらにも書き込まれる）。`CLAUDE.md` が無いプロジェクトで Claude Code 用のファイルも必要なときは、続けて `--agent claude` を付けて実行する（`.claude/CLAUDE.md` に書き込まれる）。
 それ以外のproject factsは `assets/AGENTS.frontend.md` を雛形に、実際のpath、theme、styling方式、検証commandだけを記録する。一般原則を再掲しない。
 
 ## 完了時

@@ -58,8 +58,8 @@ In projects that standardize on another design system, it does not mix Astryx in
 
 ### Changes from 1.x (2.0.0)
 
-- Projects that use Astryx, and React 19+ projects without a design system, now follow the Astryx conventions.
-- Projects that standardize on another design system, React 18 and earlier, and non-React projects do not adopt Astryx; as in 1.x, existing components and tokens come first, and no dependencies are added.
+- Projects that use Astryx, and new screens or apps in React 19+ projects with no design system or component library, now follow the Astryx conventions. Small changes to existing UI do not adopt Astryx.
+- Projects that standardize on another design system or component library, React 18 and earlier, and non-React projects do not adopt Astryx; as in 1.x, existing components and tokens come first, and no dependencies are added.
 - **`rules/frontend-ui-guardrails.mdc` (Cursor Rule)**:
   - Applies Astryx-based UI guardrails when Cursor edits frontend files.
 - **`assets/AGENTS.frontend.md` (Template)**:

@@ -22,7 +22,7 @@ This skill provides defaults for judgment, not a fixed procedure.
 | Project state | Approach |
 | :-- | :-- |
 | Uses `@astryxdesign/core` | Follow the Astryx conventions. |
-| React 19+ project without a design system (new UI included) | Build with Astryx. See "Adoption" in `references/astryx.md`. |
+| React 19+ project with no design system or component library, building new screens or a new app | Build with Astryx. See "Adoption" in `references/astryx.md`. For small changes to existing UI in the same project, do not adopt it; match the existing code (adopt only when the user asks). |
 | Another design system or component library is established | Do not mix Astryx in piecemeal; mixing is what creates patchwork. Follow the existing conventions and migrate whole screens only when the user asks. |
 | Not React (Vue, Svelte, etc.), or React 18 and earlier | Astryx does not apply (it requires React 19+). Use existing components and tokens and apply only the general principles from "Fix the structure" onward. |
 
@@ -33,7 +33,7 @@ The next two sections, "Astryx sources" and "Astryx conventions", apply only whe
 Do not write component props or import paths from memory or guesswork. Check in this order:
 
 1. **Astryx MCP** (this plugin connects it as the `astryx` server): `search("<what you need>")` to find candidates, then `get("<Name>")` for props, examples, and the install command. It is an external server: put only what you need in queries, never project code, secrets, or customer data.
-2. **Project CLI**: it answers for the installed version, so prefer it when it disagrees with the MCP. Use `astryx build "<idea>"`, `astryx template`, `astryx component <Name>`, and `astryx docs <topic>`.
+2. **Project CLI**: it answers for the installed version, so prefer it when it disagrees with the MCP. The MCP describes the latest release, so in an existing Astryx project, confirm props and import paths found through the MCP with the CLI (or the installed package's type definitions) before using them. If you cannot confirm them, do not settle an API on the MCP result alone. Use `astryx build "<idea>"`, `astryx template`, `astryx component <Name>`, and `astryx docs <topic>`.
 3. If neither is available, say so and do not fill in unverified props by guessing.
 
 ## Astryx conventions
@@ -85,7 +85,7 @@ Run the smallest meaningful validation proportional to the change.
 
 ## Maintaining AGENTS.md
 
-In an Astryx project, run `astryx init --features agents` to write version-matched rules into `AGENTS.md` (and into `CLAUDE.md` when one exists). Add `--agent all` to also write a Claude Code file reliably (`.claude/CLAUDE.md` when there is no `CLAUDE.md`).
+In an Astryx project, run `astryx init --features agents` to write version-matched rules into `AGENTS.md` (and into `CLAUDE.md` when one exists). If the project has no `CLAUDE.md` and you also need a Claude Code file, run it again with `--agent claude` (it writes `.claude/CLAUDE.md`).
 For other project facts, use `assets/AGENTS.frontend.md` as a template and record only real paths, theme, styling system, and validation commands. Do not restate general principles.
 
 ## On completion

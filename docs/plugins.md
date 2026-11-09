@@ -58,8 +58,8 @@ Web / GUI アプリケーションのフロントエンド開発において、�
 
 ### 1.x からの変更（2.0.0）
 
-- Astryx を使っているプロジェクトと、デザインシステムがまだない React 19+ のプロジェクトでは、Astryx の規約に従うようになります。
-- 別のデザインシステムが定着しているプロジェクト、React 18 以前、React 以外のプロジェクトでは Astryx を導入せず、1.x と同じく既存の component と token を優先します。依存関係は追加されません。
+- Astryx を使っているプロジェクトと、デザインシステムも component library もない React 19+ のプロジェクトで新しい画面やアプリを作る場合は、Astryx の規約に従うようになります。既存 UI の小さな変更では、Astryx を導入しません。
+- 別のデザインシステムや component library が定着しているプロジェクト、React 18 以前、React 以外のプロジェクトでは Astryx を導入せず、1.x と同じく既存の component と token を優先します。依存関係は追加されません。
 - **`rules/frontend-ui-guardrails.mdc` (Cursor 向けルール)**:
   - Cursor 環境でフロントエンドのファイルを編集するときに、Astryx に基づく UI ガードレールを適用するルール。
 - **`assets/AGENTS.frontend.md` (テンプレート)**:
