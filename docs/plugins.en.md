@@ -54,6 +54,12 @@ In projects that standardize on another design system, it does not mix Astryx in
   - Guides prototyping, stabilization, and visual bug fixes.
 - **`astryx` (MCP server)**:
   - Connects to `https://astryx.atmeta.com/mcp` and provides `search` (components, docs, templates) and `get` (props, examples, install command). No authentication is required.
+  - It is an external server run by Meta, so search queries are sent to it. The skill tells agents not to put project code or secrets in queries. If you do not want it, disable the server in your client's MCP settings.
+
+### Changes from 1.x (2.0.0)
+
+- Projects that use Astryx, and React 19+ projects without a design system, now follow the Astryx conventions.
+- Projects that standardize on another design system, React 18 and earlier, and non-React projects do not adopt Astryx; as in 1.x, existing components and tokens come first, and no dependencies are added.
 - **`rules/frontend-ui-guardrails.mdc` (Cursor Rule)**:
   - Applies Astryx-based UI guardrails when Cursor edits frontend files.
 - **`assets/AGENTS.frontend.md` (Template)**:

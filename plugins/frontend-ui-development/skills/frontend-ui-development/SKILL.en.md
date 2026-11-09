@@ -32,7 +32,7 @@ The next two sections, "Astryx sources" and "Astryx conventions", apply only whe
 
 Do not write component props or import paths from memory or guesswork. Check in this order:
 
-1. **Astryx MCP** (this plugin connects it as the `astryx` server): `search("<what you need>")` to find candidates, then `get("<Name>")` for props, examples, and the install command.
+1. **Astryx MCP** (this plugin connects it as the `astryx` server): `search("<what you need>")` to find candidates, then `get("<Name>")` for props, examples, and the install command. It is an external server: put only what you need in queries, never project code, secrets, or customer data.
 2. **Project CLI**: it answers for the installed version, so prefer it when it disagrees with the MCP. Use `astryx build "<idea>"`, `astryx template`, `astryx component <Name>`, and `astryx docs <topic>`.
 3. If neither is available, say so and do not fill in unverified props by guessing.
 
@@ -79,7 +79,7 @@ Infer the phase from the request and existing code only when it matters. Phases 
 Run the smallest meaningful validation proportional to the change.
 
 - Run checks the repository requires.
-- Before delivering, run `astryx doctor --built <dir>` when the project's CLI supports it, and do not deliver while it fails.
+- When you built with Astryx, run `astryx doctor --built <dir>` before delivering if the project's CLI supports it, and do not deliver while it fails.
 - For visual changes, inspect the affected surfaces in a browser, Storybook, or screenshots when available.
 - Once relevant checks pass, do not broaden or repeat validation without a concrete reason.
 

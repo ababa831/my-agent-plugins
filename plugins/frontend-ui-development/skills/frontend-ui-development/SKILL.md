@@ -32,7 +32,7 @@ UIをその場しのぎのパッチの集合にしない。
 
 componentのpropやimport pathを記憶や推測で書かない。次の順で確認する。
 
-1. **Astryx MCP**（このプラグインが `astryx` サーバとして接続する）: `search("<やりたいこと>")` で候補を探し、`get("<Name>")` でprops・例・install commandを読む。
+1. **Astryx MCP**（このプラグインが `astryx` サーバとして接続する）: `search("<やりたいこと>")` で候補を探し、`get("<Name>")` でprops・例・install commandを読む。外部サーバなので、検索語にはやりたいことだけを書き、プロジェクトのコード・機密情報・顧客データを含めない。
 2. **プロジェクトのCLI**: プロジェクトにinstall済みのバージョンを答えるので、MCPと食い違ったらこちらを優先する。`astryx build "<idea>"`、`astryx template`、`astryx component <Name>`、`astryx docs <topic>` を使う。
 3. MCPもCLIも使えないときは、その旨を伝え、確認できないpropを推測で埋めない。
 
@@ -79,7 +79,7 @@ Pages / Screens（Astryx templateから始める）
 変更に比例した、最小限で意味のある検証を行う。
 
 - リポジトリで必須とされるcheckは実行する。
-- 納品前にプロジェクトのCLIが対応していれば `astryx doctor --built <dir>` を実行し、失敗したまま納品しない。
+- Astryxで作った場合は、納品前にプロジェクトのCLIが対応していれば `astryx doctor --built <dir>` を実行し、失敗したまま納品しない。
 - 見た目の変更は、利用可能ならbrowser / Storybook / screenshotで対象範囲を確認する。
 - 関連checkが通ったら、具体的な理由なく検証範囲を広げたり繰り返したりしない。
 

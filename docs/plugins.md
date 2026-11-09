@@ -54,6 +54,12 @@ Web / GUI アプリケーションのフロントエンド開発において、�
   - プロトタイピングから安定化・視覚的不具合の修正までをガイド。
 - **`astryx` (MCP サーバ)**:
   - `https://astryx.atmeta.com/mcp` に接続し、`search`（component・doc・template の検索）と `get`（props・例・install command の取得）を提供。認証は不要です。
+  - Meta が運営する外部サーバなので、検索語はこのサーバに送られます。スキルは、検索語にプロジェクトのコードや機密情報を含めないよう指示しています。使わない場合は、クライアントの MCP 設定でこのサーバを無効にできます。
+
+### 1.x からの変更（2.0.0）
+
+- Astryx を使っているプロジェクトと、デザインシステムがまだない React 19+ のプロジェクトでは、Astryx の規約に従うようになります。
+- 別のデザインシステムが定着しているプロジェクト、React 18 以前、React 以外のプロジェクトでは Astryx を導入せず、1.x と同じく既存の component と token を優先します。依存関係は追加されません。
 - **`rules/frontend-ui-guardrails.mdc` (Cursor 向けルール)**:
   - Cursor 環境でフロントエンドのファイルを編集するときに、Astryx に基づく UI ガードレールを適用するルール。
 - **`assets/AGENTS.frontend.md` (テンプレート)**:
