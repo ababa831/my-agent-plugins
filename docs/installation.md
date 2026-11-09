@@ -40,7 +40,7 @@ Cursor サイドバーの **Customize** を開き、各プラグインに含ま�
   - `rules/readme-writing.mdc` は `README.md` と `README.*.md` を扱うときにだけ読み込まれます。
 - **`frontend-ui-development`**:
   - ポータブルな `SKILL.md` に加えて Cursor 用の `rules/frontend-ui-guardrails.mdc` と Astryx MCP サーバ（`astryx`）が配布されます。
-  - Astryx を使うプロジェクトでは、対象リポジトリに `@astryxdesign/cli` を導入します（`@astryxdesign/core` が導入済みなら同じバージョン）。次に `npx astryx init --features agents` を実行し、インストール済みバージョンに合った Astryx のルールを `AGENTS.md` に書き込みます。Claude Code 用のファイルにも確実に書き込むときは `--agent all` を付けます（`CLAUDE.md` が無ければ `.claude/CLAUDE.md`）。CLI を導入する前に `npx astryx` を実行すると、無関係な `astryx` パッケージを取得するおそれがあります。
+  - Astryx を使うプロジェクトでは、対象リポジトリに `@astryxdesign/cli` を導入します（`@astryxdesign/core` が導入済みなら同じバージョン）。次に `npx astryx init --features agents` を実行し、インストール済みバージョンに合った Astryx のルールを `AGENTS.md` に書き込みます。Claude Code 用のファイルにも確実に書き込むときは `--agent all` を付けます（`CLAUDE.md` が無ければ `.claude/CLAUDE.md`）。CLI を導入する前に `npx astryx` を実行すると、無関係な `astryx` パッケージを取得するおそれがあります。CLI 0.7.2 以前では、`CLAUDE.md` だけがあるプロジェクトに `AGENTS.md` が作られないため、実行後に `AGENTS.md` に Astryx のブロック（`<!-- ASTRYX:START -->`）があるか確認します。
   - それ以外のプロジェクト固有の UI ルールは、スキル内のテンプレート `assets/AGENTS.frontend.md` をコピーして、対象リポジトリの `AGENTS.md` に追記します。
 
 ### チームへの配布（Team Marketplace）
