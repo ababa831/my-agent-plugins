@@ -42,11 +42,22 @@ componentのpropやimport pathを記憶や推測で書かない。次の順で�
 
 - **ページはtemplateから始める**: 新しいページは `astryx build` が示すtemplateをscaffoldし、frame・gap・paddingを保って中身を置き換える。既存ページの変更ではtemplateを作り直さず、そのsectionの中にblock/componentを追加する。
 - **componentが扱う範囲はcomponentで書く**: 生の `<div>` / `<span>` でlayoutや見た目を組まない。layoutと余白はStack系などのcomponentに任せる。
-- **値はtokenで書く**: 色・余白・角丸・影に生のhex/pxを書かない。`style={{…}}` やimportした独自CSS、`:root` の上書きで見た目を変えない。色やpaletteの変更はthemeで行う。
+- **値はtokenで書く**: 色・余白・角丸・影に生のhex/pxを書かない。`style={{…}}` やimportした独自CSS、`:root` の上書きで見た目を変えない。色やpaletteの変更はthemeで行う。例外はCSSでしか書けないWeb標準機能だけで、扱いは次の「Web標準機能との分担」に従う。
 - **スタイルの優先順**: componentのprop → プロジェクトで有効なstyling方式（StyleXなら `xstyle`、Tailwindならtokenに対応したutility、どちらもなければ `var(--color-*|--spacing-*|--radius-*)`）。
 - **密なデータは行で表す**: 一覧は Table や List/Item で表し、各行をCardで包まない。Badgeは件数や列挙状態に限る。
 - **propを発明しない**: 使う前に `get` / `astryx component` で読む。formは制御コンポーネント（`value` + `onChange`）、遷移は `useLinkComponent()` を使う。
 - **仕上げのself-check**: 書き終えたファイルを読み直し、生の要素、`style={{…}}`、独自CSS、hex/pxの直書きをcomponentかtokenに置き換える。
+
+## Web標準機能との分担
+
+View Transitions、scroll-driven animation、`content-visibility`、LCP/INPの改善など、Astryxのcomponentとpropで表せないWeb標準機能は、[Modern Web Guidance](https://github.com/GoogleChrome/modern-web-guidance)（`modern-web-guidance` skill、なければ同名のCLI）でガイドを確認してから使う。詳細は `references/web-platform.md` を参照する。中核は次のとおり。
+
+- **部品と見た目はAstryxが決める**: Dialog、Popover、Tooltipなど、Astryxにcomponentがあるものは、ガイドの例に合わせてネイティブの `<dialog>` や `[popover]` で作り直さない。ガイドは、component・template・tokenの外側にある機能と、そのfallbackに使う。
+- **CSSでしか書けない機能だけを例外にする**: アプリ側の1つのstylesheetにまとめ、Astryxのstylesheetの後に読み込む。中身はその機能のpropertyだけにし、時間とeasingはAstryxのmotion token（`--duration-*`、`--ease-*`）を使う。classはcomponentの `className` / `ref` で付ける。
+- **`astryx doctor` の警告は想定内として扱う**: このstylesheetのimportはstylingの警告になる。完了時に例外として説明する。失敗（fail）は従来どおり納品を止める。
+- **動きを足したら `prefers-reduced-motion` に対応する**: Astryxのcomponentはすでに対応している。追加した動きだけをガイドに沿って止めるか弱める。
+
+Astryxで作らない場合も、Web標準機能の使い方とfallbackは同じガイドに従う。
 
 ## 構造で直す
 

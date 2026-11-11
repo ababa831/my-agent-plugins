@@ -19,7 +19,7 @@ A personal repository that consolidates agent configurations (skills and MCP ser
 | Plugin | Overview | Key Features / Skills |
 | :-- | :-- | :-- |
 | [`development-rules`](plugins/development-rules/) | Shared Git development rules & evidence-driven verification | `git-development-rules`, `evidence-driven-engineering` |
-| [`frontend-ui-development`](plugins/frontend-ui-development/) | Astryx-based frontend GUI/UI development guardrails | `frontend-ui-development`, Astryx MCP, Cursor rules, template |
+| [`frontend-ui-development`](plugins/frontend-ui-development/) | Astryx-based frontend GUI/UI development guardrails (web platform features via Modern Web Guidance) | `frontend-ui-development`, Astryx MCP, Cursor rules, template |
 | [`japanese-writing`](plugins/japanese-writing/) | Japanese writing norms & common conventions | `semantic-generation`, shared rules, README conventions |
 | [`shared-mcp`](plugins/shared-mcp/) | Shared MCP server definitions | Chrome DevTools, BigQuery, Hugging Face |
 

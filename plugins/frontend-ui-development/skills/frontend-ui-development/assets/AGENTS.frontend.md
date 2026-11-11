@@ -12,6 +12,8 @@
 - Theme: `<@astryxdesign/theme-neutral | custom theme module path>`
 - Styling system: `<StyleX (xstyle) | Tailwind | CSS variables only>`
 - App-owned wrappers and swizzled components: `<path>`
+- Web platform stylesheet (CSS-only platform features, if any): `<path, e.g. src/platform.css>`
+- Browser support policy: `<Baseline Widely available (default) | Baseline <year> | specific browsers and versions>`
 - Typecheck command: `<command>`
 - Lint command: `<command>`
 - Test command: `<command>`
