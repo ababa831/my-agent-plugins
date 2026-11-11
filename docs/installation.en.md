@@ -42,6 +42,7 @@ Open **Customize** in the Cursor sidebar to verify that rules, skills, and MCP s
   - In addition to the portable `SKILL.md`, this plugin provides `rules/frontend-ui-guardrails.mdc` for Cursor and the Astryx MCP server (`astryx`).
   - In an Astryx project, install `@astryxdesign/cli` in the target repository (at the same version as `@astryxdesign/core` if Core is installed), then run `npx astryx init --features agents` to write Astryx rules matching the installed version into `AGENTS.md`. If the project has a `CLAUDE.md`, the rules are written there too. For whether each agent reads that file and how to choose another target, see `npx astryx docs working-with-ai`. Running `npx astryx` before the CLI is installed can fetch an unrelated package named `astryx`. CLI 0.7.2 and earlier do not create `AGENTS.md` in a project that has only `CLAUDE.md`, so check afterward that `AGENTS.md` contains the Astryx block (`<!-- ASTRYX:START -->`).
   - For other project-specific UI rules, copy the bundled template `assets/AGENTS.frontend.md` into the target repository's `AGENTS.md`.
+  - To use Modern Web Guidance alongside it, install it with the interactive wizard (`npx modern-web-guidance@latest install`). The Claude Code section explains why you would.
 
 ### Team Distribution (Team Marketplace)
 
@@ -70,6 +71,13 @@ codex plugin add development-rules@my-agent-plugins
 codex plugin add frontend-ui-development@my-agent-plugins
 codex plugin add japanese-writing@my-agent-plugins
 codex plugin add shared-mcp@my-agent-plugins
+```
+
+To use Modern Web Guidance with `frontend-ui-development`, also register its marketplace (the Claude Code section explains why).
+
+```bash
+codex plugin marketplace add GoogleChrome/modern-web-guidance
+codex plugin add modern-web-guidance@googlechrome
 ```
 
 ### GUI Installation and Activation
@@ -114,6 +122,18 @@ claude plugin install shared-mcp@my-agent-plugins
 ```
 
 You can also install plugins interactively using the `/plugin` command inside `claude`.
+
+### Using Modern Web Guidance (optional)
+
+`frontend-ui-development` checks guides for web platform features Astryx does not express (such as View Transitions) in [Modern Web Guidance](https://github.com/GoogleChrome/modern-web-guidance). It is not bundled with this plugin; install it separately to use it. Without it, the skill only says the guide is missing and how to install it, and checks no guides. The Modern Web Guidance CLI sends search queries to Google as usage telemetry; set the `DISABLE_TELEMETRY=1` environment variable to opt out.
+
+```bash
+# Register the official marketplace (claude-plugins-official) first if it is not registered yet
+claude plugin marketplace add anthropics/claude-plugins-official
+claude plugin install modern-web-guidance@claude-plugins-official
+```
+
+You can instead install it as `modern-web-guidance@googlechrome` from Google's marketplace (`GoogleChrome/modern-web-guidance`). Install only one of the two.
 
 ### Hook Specifications and Behavior
 

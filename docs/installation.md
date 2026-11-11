@@ -42,6 +42,7 @@ Cursor サイドバーの **Customize** を開き、各プラグインに含ま�
   - ポータブルな `SKILL.md` に加えて Cursor 用の `rules/frontend-ui-guardrails.mdc` と Astryx MCP サーバ（`astryx`）が配布されます。
   - Astryx を使うプロジェクトでは、対象リポジトリに `@astryxdesign/cli` を導入します（`@astryxdesign/core` が導入済みなら同じバージョン）。次に `npx astryx init --features agents` を実行し、インストール済みバージョンに合った Astryx のルールを `AGENTS.md` に書き込みます。`CLAUDE.md` があれば、そちらにも書き込まれます。各エージェントがそのファイルを読むかどうかと書き込み先の選び方は、`npx astryx docs working-with-ai` を参照してください。CLI を導入する前に `npx astryx` を実行すると、無関係な `astryx` パッケージを取得するおそれがあります。CLI 0.7.2 以前では、`CLAUDE.md` だけがあるプロジェクトに `AGENTS.md` が作られないため、実行後に `AGENTS.md` に Astryx のブロック（`<!-- ASTRYX:START -->`）があるか確認します。
   - それ以外のプロジェクト固有の UI ルールは、スキル内のテンプレート `assets/AGENTS.frontend.md` をコピーして、対象リポジトリの `AGENTS.md` に追記します。
+  - Modern Web Guidance を併用する場合は、対話式のウィザード（`npx modern-web-guidance@latest install`）でインストールします。併用の目的は Claude Code の節にある説明と同じです。
 
 ### チームへの配布（Team Marketplace）
 
@@ -70,6 +71,13 @@ codex plugin add development-rules@my-agent-plugins
 codex plugin add frontend-ui-development@my-agent-plugins
 codex plugin add japanese-writing@my-agent-plugins
 codex plugin add shared-mcp@my-agent-plugins
+```
+
+`frontend-ui-development` と Modern Web Guidance を併用する場合は、Modern Web Guidance のマーケットプレイスも登録します（目的は Claude Code の節を参照）。
+
+```bash
+codex plugin marketplace add GoogleChrome/modern-web-guidance
+codex plugin add modern-web-guidance@googlechrome
 ```
 
 ### GUI からの導入と有効化
@@ -114,6 +122,18 @@ claude plugin install shared-mcp@my-agent-plugins
 ```
 
 `claude` 起動後の `/plugin` コマンドメニューからも同様に対話式でインストールできます。
+
+### Modern Web Guidance の併用（任意）
+
+`frontend-ui-development` は、Astryx で表せない Web 標準機能（View Transitions など）のガイドを [Modern Web Guidance](https://github.com/GoogleChrome/modern-web-guidance) から確認します。このプラグインには含まれないので、使う場合は別にインストールします。入れていない場合、スキルは未導入であることと導入方法を伝えるだけで、ガイドは確認しません。Modern Web Guidance の CLI は検索語を利用状況として Google に送ります。止めるには環境変数 `DISABLE_TELEMETRY=1` を設定します。
+
+```bash
+# 公式マーケットプレイス（claude-plugins-official）が未登録なら先に登録する
+claude plugin marketplace add anthropics/claude-plugins-official
+claude plugin install modern-web-guidance@claude-plugins-official
+```
+
+Google が配布するマーケットプレイス（`GoogleChrome/modern-web-guidance`）から `modern-web-guidance@googlechrome` として入れることもできます。どちらか一方だけを入れます。
 
 ### フック機能と動作仕様
 

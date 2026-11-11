@@ -69,7 +69,7 @@ Web / GUI アプリケーションのフロントエンド開発において、�
   claude plugin install modern-web-guidance@claude-plugins-official
   ```
 
-  Cursor と Codex では `npx modern-web-guidance@latest install` を使います。
+  Cursor と Codex の手順は [クライアント別導入ガイド](installation.md) を参照してください。
 
 ### 1.x からの変更（2.0.0）
 

@@ -69,7 +69,7 @@ In projects that standardize on another design system, it does not mix Astryx in
   claude plugin install modern-web-guidance@claude-plugins-official
   ```
 
-  For Cursor and Codex, use `npx modern-web-guidance@latest install`.
+  For Cursor and Codex, see the [client installation guide](installation.en.md).
 
 ### Changes from 1.x (2.0.0)
 
