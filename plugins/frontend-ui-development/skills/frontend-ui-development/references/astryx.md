@@ -40,6 +40,7 @@ Either way, the app needs these once, or components render unstyled or unthemed 
 
 1. Import the stylesheets in this order: `@astryxdesign/core/reset.css`, `@astryxdesign/core/astryx.css`, then the theme's `theme.css` (for example `@astryxdesign/theme-neutral/theme.css`).
 2. Wrap the app in `<Theme theme={…}>` from `@astryxdesign/core/theme` (for example `neutralTheme` from `@astryxdesign/theme-neutral/built`), and in `<LinkProvider component={…}>` from `@astryxdesign/core/Link` with the framework's link component.
+3. Put each page inside `AppShell` from `@astryxdesign/core/AppShell`, which Astryx documents as the root wrapper for every page. Some page templates scaffold only the page content without it. Without a shell nothing paints the page background, so switching `Theme`'s `mode` changes the components but leaves the page behind them in the other mode.
 
 Pick another theme with `astryx theme add <slug>`; see `astryx docs theme`. After a dependency bump, run `astryx upgrade --from <old version> --apply` so codemods and the agent-docs block stay current.
 
@@ -62,7 +63,7 @@ When changing an existing page, keep it: skip step 2 and add blocks or component
   - StyleX compiler wired: the `xstyle` prop with StyleX tokens.
   - Tailwind: utilities backed by tokens (`text-primary`, `bg-surface`), no arbitrary values such as `bg-[#fff]` or `p-[13px]`.
   - Neither: tokens through CSS variables (`var(--color-*)`, `var(--spacing-*)`, `var(--radius-*)`). Do not use `xstyle` or utility classes without their compiler; some templates need a StyleX compiler plugin (`astryx docs styling-overview`).
-- No hardcoded hex or px values, no `style={{…}}` on raw elements, no imported ad-hoc `.css` or `@apply`.
+- No hardcoded hex or px values, no `style={{…}}` on raw elements, no imported ad-hoc `.css` or `@apply`. The one exception is a single stylesheet for web platform features that exist only as CSS; see `web-platform.md`.
 - Palettes and custom colors go through the theme, never `:root` overrides. `astryx theme add <slug>` imports a theme; `astryx theme eject <slug>` only forks its source.
 - Form inputs are controlled (`value` + `onChange`).
 - Navigation uses `useLinkComponent()` so the app's router plugs in through `LinkProvider`; no hardcoded `<a>` for in-app links.
@@ -78,7 +79,7 @@ When changing an existing page, keep it: skip step 2 and add blocks or component
 
 ## Self-check and review
 
-Before delivering, re-read each changed file and replace any raw `<div>`/`<span>`, `style={{…}}`, imported `.css`/`@apply`, or hardcoded `#hex`/`px` with the component or a token. Astryx measured that this re-read cuts leftover raw CSS several-fold on complex UIs.
+Before delivering, re-read each changed file and replace any raw `<div>`/`<span>`, `style={{…}}`, imported `.css`/`@apply`, or hardcoded `#hex`/`px` with the component or a token. Leave the single web platform stylesheet that `web-platform.md` allows; replace any other imported `.css`. Astryx measured that this re-read cuts leftover raw CSS several-fold on complex UIs.
 
 If the project's CLI supports it (0.7.4+), run `astryx doctor --built <dir>` before delivering a build and do not deliver it while it fails.
 

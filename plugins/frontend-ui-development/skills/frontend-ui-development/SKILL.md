@@ -42,11 +42,22 @@ componentのpropやimport pathを記憶や推測で書かない。次の順で�
 
 - **ページはtemplateから始める**: 新しいページは `astryx build` が示すtemplateをscaffoldし、frame・gap・paddingを保って中身を置き換える。既存ページの変更ではtemplateを作り直さず、そのsectionの中にblock/componentを追加する。
 - **componentが扱う範囲はcomponentで書く**: 生の `<div>` / `<span>` でlayoutや見た目を組まない。layoutと余白はStack系などのcomponentに任せる。
-- **値はtokenで書く**: 色・余白・角丸・影に生のhex/pxを書かない。`style={{…}}` やimportした独自CSS、`:root` の上書きで見た目を変えない。色やpaletteの変更はthemeで行う。
+- **値はtokenで書く**: 色・余白・角丸・影に生のhex/pxを書かない。`style={{…}}` やimportした独自CSS、`:root` の上書きで見た目を変えない。色やpaletteの変更はthemeで行う。例外はCSSでしか書けないWeb標準機能だけで、扱いは次の「Web標準機能との分担」に従う。
 - **スタイルの優先順**: componentのprop → プロジェクトで有効なstyling方式（StyleXなら `xstyle`、Tailwindならtokenに対応したutility、どちらもなければ `var(--color-*|--spacing-*|--radius-*)`）。
 - **密なデータは行で表す**: 一覧は Table や List/Item で表し、各行をCardで包まない。Badgeは件数や列挙状態に限る。
 - **propを発明しない**: 使う前に `get` / `astryx component` で読む。formは制御コンポーネント（`value` + `onChange`）、遷移は `useLinkComponent()` を使う。
-- **仕上げのself-check**: 書き終えたファイルを読み直し、生の要素、`style={{…}}`、独自CSS、hex/pxの直書きをcomponentかtokenに置き換える。
+- **仕上げのself-check**: 書き終えたファイルを読み直し、生の要素、`style={{…}}`、独自CSS、hex/pxの直書きをcomponentかtokenに置き換える。次節で例外にしたWeb標準機能用のstylesheetは置き換えない。
+
+## Web標準機能との分担
+
+View Transitions、scroll-driven animation、`content-visibility`、LCP/INPの改善など、Astryxのcomponentとpropで表せないWeb標準機能は、[Modern Web Guidance](https://github.com/GoogleChrome/modern-web-guidance)（`modern-web-guidance` skill）でガイドを確認してから使う。skillが入っていなければCLIを自分で取得・実行せず、未導入であることと導入方法をユーザーに伝える。検索語はGoogleに送られるので、やりたいことだけを書き、機密情報を含めない。詳細は `references/web-platform.md` を参照する。中核は次のとおり。
+
+- **部品と見た目はAstryxが決める**: Dialog、Popover、Tooltipなど、Astryxにcomponentがあるものは、ガイドの例に合わせてネイティブの `<dialog>` や `[popover]` で作り直さない。ガイドは、component・template・tokenの外側にある機能と、そのfallbackに使う。
+- **CSSでしか書けない機能だけを例外にする**: アプリ側の1つのstylesheetにまとめ、Astryxのstylesheetの後に読み込む。中身はその機能とfallbackに必要な宣言だけにし、layout・余白・色・テーマは変えない。時間で進むアニメーションの時間とeasingはAstryxのmotion token（`--duration-*`、`--ease-*`）を使う（scroll-driven animationはガイドに従う）。classはcomponentの `className` / `ref` で付ける。
+- **`astryx doctor` の警告は想定内として扱う**: このstylesheetのimportはstylingの警告になる。完了時に例外として説明する。失敗（fail）は従来どおり納品を止める。
+- **動きを足したら `prefers-reduced-motion` に対応する**: Astryxのcomponentはすでに対応している。追加した動きだけをガイドに沿って止めるか弱める。
+
+Astryxで作らない場合、Astryx固有の規約（template、token、例外のstylesheet、`astryx doctor`）は適用せず、既存のdesign systemやcomponent libraryの規約に従う。Web標準機能の使い方とfallbackは同じガイドに従う。
 
 ## 構造で直す
 
@@ -86,7 +97,7 @@ Pages / Screens（Astryx templateから始める）
 ## AGENTS.mdを整備するとき
 
 Astryxを使うプロジェクトでは `astryx init --features agents` でバージョンに合ったルールを `AGENTS.md` へ書き込む（`CLAUDE.md` があればそちらにも書き込まれる）。各エージェントがそのファイルを読むかどうかと書き込み先の選び方は、`astryx docs working-with-ai` に従う。
-それ以外のproject factsは `assets/AGENTS.frontend.md` を雛形に、実際のpath、theme、styling方式、検証commandだけを記録する。一般原則を再掲しない。
+それ以外のproject factsは `assets/AGENTS.frontend.md` を雛形に、実際のpath、theme、styling方式、検証command、ブラウザ対応方針だけを記録する。一般原則を再掲しない。
 
 ## 完了時
 
