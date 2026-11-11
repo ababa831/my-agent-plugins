@@ -46,18 +46,18 @@ See `references/astryx.md` for details and CLI steps. The core rules:
 - **Styling order**: component props first, then the styling system the project has configured (`xstyle` with StyleX, token-backed utilities with Tailwind, otherwise `var(--color-*|--spacing-*|--radius-*)`).
 - **Dense data as rows**: render lists with Table or List/Item instead of wrapping each row in a Card. Badge is for counts and enumerated states.
 - **Do not invent props**: read `get` / `astryx component` before use. Forms are controlled (`value` + `onChange`); navigation uses `useLinkComponent()`.
-- **Final self-check**: re-read the files you wrote and replace raw elements, `style={{…}}`, ad-hoc CSS, and hardcoded hex/px with components or tokens.
+- **Final self-check**: re-read the files you wrote and replace raw elements, `style={{…}}`, ad-hoc CSS, and hardcoded hex/px with components or tokens. Leave the web platform stylesheet that the next section makes an exception for.
 
 ## Web platform features
 
-For web platform features that Astryx components and props do not express, such as View Transitions, scroll-driven animations, `content-visibility`, and LCP/INP work, check the guide in [Modern Web Guidance](https://github.com/GoogleChrome/modern-web-guidance) (the `modern-web-guidance` skill, or its CLI of the same name) before using them. See `references/web-platform.md` for details. The core rules:
+For web platform features that Astryx components and props do not express, such as View Transitions, scroll-driven animations, `content-visibility`, and LCP/INP work, check the guide in [Modern Web Guidance](https://github.com/GoogleChrome/modern-web-guidance) (the `modern-web-guidance` skill) before using them. If the skill is not installed, do not fetch and run its CLI yourself; tell the user it is missing and how to install it. Search queries are sent to Google, so write only the need and no confidential terms. See `references/web-platform.md` for details. The core rules:
 
 - **Astryx decides components and appearance**: when Astryx has a component (Dialog, Popover, Tooltip, and so on), do not rebuild it from native `<dialog>` or `[popover]` to match a guide's example. Use the guides for features outside components, templates, and tokens, and for their fallbacks.
-- **Make an exception only for CSS-only features**: keep them in one app-owned stylesheet imported after the Astryx stylesheets. Put only those features' properties in it, and take durations and easing from Astryx motion tokens (`--duration-*`, `--ease-*`). Attach classes through a component's `className` / `ref`.
+- **Make an exception only for CSS-only features**: keep them in one app-owned stylesheet imported after the Astryx stylesheets. Put only the declarations those features and their fallbacks need in it, and do not change layout, spacing, color, or theme. For time-based animations, take durations and easing from Astryx motion tokens (`--duration-*`, `--ease-*`); scroll-driven animations follow the guide. Attach classes through a component's `className` / `ref`.
 - **Treat the `astryx doctor` warning as expected**: importing that stylesheet produces a styling warning. Explain it as an exception on completion. A failure still blocks delivery as before.
 - **When you add motion, handle `prefers-reduced-motion`**: Astryx components already do. Stop or soften only the motion you added, following the guide.
 
-When not building with Astryx, still follow the same guides for how to use web platform features and their fallbacks.
+When not building with Astryx, the Astryx-specific rules (templates, tokens, the exception stylesheet, `astryx doctor`) do not apply; follow the existing design system or component library's conventions. Still follow the same guides for how to use web platform features and their fallbacks.
 
 ## Fix the structure
 
@@ -97,7 +97,7 @@ Run the smallest meaningful validation proportional to the change.
 ## Maintaining AGENTS.md
 
 In an Astryx project, run `astryx init --features agents` to write version-matched rules into `AGENTS.md` (and into `CLAUDE.md` when one exists). For whether each agent reads that file and how to choose another target, follow `astryx docs working-with-ai`.
-For other project facts, use `assets/AGENTS.frontend.md` as a template and record only real paths, theme, styling system, and validation commands. Do not restate general principles.
+For other project facts, use `assets/AGENTS.frontend.md` as a template and record only real paths, theme, styling system, validation commands, and browser support policy. Do not restate general principles.
 
 ## On completion
 

@@ -62,7 +62,8 @@ Web / GUI アプリケーションのフロントエンド開発において、�
 - Astryx の component と prop で表せない Web 標準機能は、[Modern Web Guidance](https://github.com/GoogleChrome/modern-web-guidance) のガイドを確認してから使うようになります。Dialog など Astryx にある部品は、ガイドの例に合わせて作り直しません。
 - CSS でしか書けない機能（View Transitions、`content-visibility`、scroll-driven animation）だけを「独自 CSS を読み込まない」規約の例外にし、1 つの stylesheet にまとめて Astryx の motion token を使います。
 - Astryx の導入手順に、ページを `AppShell` で包む手順を加えました。包まないとライト／ダークを切り替えてもページの背景が追従しません。
-- Modern Web Guidance はこのプラグインに含まれません。使う場合は別にインストールします。入っていない場合、スキルは `npx -y modern-web-guidance@latest` の CLI でガイドを確認します。
+- Modern Web Guidance はこのプラグインに含まれません。使う場合は別にインストールします。入っていない場合、スキルは CLI を自分で取得・実行せず、未導入であることと導入方法を伝えます。
+- Modern Web Guidance の CLI は、検索語を利用状況として Google に送ります。スキルは検索語に機密情報を含めないよう指示しています。送信を止めるには、環境変数 `DISABLE_TELEMETRY=1` を設定します。
 
   ```bash
   claude plugin install modern-web-guidance@claude-plugins-official

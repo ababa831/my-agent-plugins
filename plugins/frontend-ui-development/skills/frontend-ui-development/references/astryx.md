@@ -79,7 +79,7 @@ When changing an existing page, keep it: skip step 2 and add blocks or component
 
 ## Self-check and review
 
-Before delivering, re-read each changed file and replace any raw `<div>`/`<span>`, `style={{…}}`, imported `.css`/`@apply`, or hardcoded `#hex`/`px` with the component or a token. Astryx measured that this re-read cuts leftover raw CSS several-fold on complex UIs.
+Before delivering, re-read each changed file and replace any raw `<div>`/`<span>`, `style={{…}}`, imported `.css`/`@apply`, or hardcoded `#hex`/`px` with the component or a token. Leave the single web platform stylesheet that `web-platform.md` allows; replace any other imported `.css`. Astryx measured that this re-read cuts leftover raw CSS several-fold on complex UIs.
 
 If the project's CLI supports it (0.7.4+), run `astryx doctor --built <dir>` before delivering a build and do not deliver it while it fails.
 

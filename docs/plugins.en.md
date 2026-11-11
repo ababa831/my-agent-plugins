@@ -62,7 +62,8 @@ In projects that standardize on another design system, it does not mix Astryx in
 - Web platform features that Astryx components and props do not express are now used after checking the [Modern Web Guidance](https://github.com/GoogleChrome/modern-web-guidance) guide. Parts Astryx provides, such as Dialog, are not rebuilt to match a guide's example.
 - Only features that exist solely as CSS (View Transitions, `content-visibility`, scroll-driven animations) are an exception to "no imported ad-hoc CSS"; they go in one stylesheet that uses Astryx motion tokens.
 - The Astryx adoption steps now include wrapping each page in `AppShell`. Without it, switching light/dark mode leaves the page background behind.
-- Modern Web Guidance is not bundled with this plugin; install it separately to use it. When it is not installed, the skill checks guides with the `npx -y modern-web-guidance@latest` CLI.
+- Modern Web Guidance is not bundled with this plugin; install it separately to use it. When it is not installed, the skill does not fetch and run the CLI itself; it says the guide is missing and how to install it.
+- The Modern Web Guidance CLI sends search queries to Google as usage telemetry. The skill tells agents to keep confidential terms out of queries. Set the `DISABLE_TELEMETRY=1` environment variable to opt out.
 
   ```bash
   claude plugin install modern-web-guidance@claude-plugins-official
