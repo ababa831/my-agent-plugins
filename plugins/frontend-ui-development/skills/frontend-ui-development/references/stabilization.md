@@ -13,6 +13,7 @@ Look for patterns that have actually become stable enough to justify cleanup:
 - domain components that have accumulated unrelated responsibilities
 - accessibility issues in important interactions
 - responsive behavior that depends on brittle offsets or one-off breakpoints
+- unrequested subtitles, parenthetical notes, or explanatory copy added during prototyping (keep user-specified copy)
 
 Refactor only where the evidence is strong enough to improve future changes. Avoid speculative abstraction.
 

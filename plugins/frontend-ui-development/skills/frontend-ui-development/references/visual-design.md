@@ -22,6 +22,14 @@ Use this reference for new GUI work, screenshot-based recreation, or substantial
 - Preserve readable hierarchy among navigation, headings, body content, metadata, and actions.
 - Treat empty, loading, error, disabled, focus, hover, and selected states as part of the interface when they matter to the flow.
 
+## Let layout explain instead of copy
+
+Apply `SKILL.md`'s copy-restraint principle when creating new screens:
+
+- Omit subtitles, parenthetical notes, and helper text that restate a heading or control (for example, "Manage your notification preferences" under "Notifications", or "(click to edit)" beside an Edit button).
+- Add short text only for concrete constraints, errors, or irreversible impact that cannot be inferred (for example, password rules, or what a delete action removes).
+- When recreating a user-provided mock or screenshot, preserve its copy rather than stripping headings or subtitles unasked.
+
 ## Responsive behavior
 
 - Prefer the template's frame and layout components, which adapt naturally, before adding breakpoint-specific patches.

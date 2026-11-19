@@ -57,6 +57,10 @@ In projects that standardize on another design system, it does not mix Astryx in
   - Connects to `https://astryx.atmeta.com/mcp` and provides `search` (components, docs, templates) and `get` (props, examples, install command). No authentication is required.
   - It is an external server run by Meta, so search queries are sent to it. The skill tells agents not to put project code or secrets in queries. If you do not want it, disable the server in your client's MCP settings.
 
+### Changes in 2.2.0
+
+- Added a principle across the rule, skill, and references (`visual-design.md` / `stabilization.md`) to avoid adding subtitles, secondary labels, parenthetical notes, and explanatory copy, letting layout, proximity, spacing, and visual hierarchy communicate meaning instead. Existing or user-specified copy, actual data, input/action labels, input constraints, errors, and destructive confirmations are kept.
+
 ### Changes in 2.1.0
 
 - Web platform features that Astryx components and props do not express are now used after checking the [Modern Web Guidance](https://github.com/GoogleChrome/modern-web-guidance) guide. Parts Astryx provides, such as Dialog, are not rebuilt to match a guide's example.
