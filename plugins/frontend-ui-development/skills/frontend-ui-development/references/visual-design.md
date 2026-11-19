@@ -24,10 +24,10 @@ Use this reference for new GUI work, screenshot-based recreation, or substantial
 
 ## Let layout explain instead of copy
 
-Apply the copy-restraint principle from `SKILL.md` with concrete checks when creating new screens:
+Apply `SKILL.md`'s copy-restraint principle when creating new screens:
 
-- Omit boilerplate copy that merely restates a heading or control (for example, "Manage your notification preferences" under a "Notifications" heading, or "(click to edit)" beside an Edit button).
-- Keep non-obvious operational or domain facts that layout cannot imply (for example, "Changes apply on next sign-in", password constraints, or what a delete action removes).
+- Omit subtitles, parenthetical notes, and helper text that restate a heading or control (for example, "Manage your notification preferences" under "Notifications", or "(click to edit)" beside an Edit button).
+- Add short text only for concrete constraints, errors, or irreversible impact that cannot be inferred (for example, password rules, or what a delete action removes).
 - When recreating a user-provided mock or screenshot, preserve its copy rather than stripping headings or subtitles unasked.
 
 ## Responsive behavior
