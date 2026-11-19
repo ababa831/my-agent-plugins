@@ -24,9 +24,11 @@ Use this reference for new GUI work, screenshot-based recreation, or substantial
 
 ## Let layout explain instead of copy
 
-- Do not add boilerplate section subtitles, parenthetical annotations, or helper copy that merely restates a heading or control label.
-- Communicate structure and meaning first through grouping, proximity, spacing, typographic hierarchy, and clear control labels or affordances.
-- Keep explanatory copy short and limited to what layout cannot show on its own: input constraints, validation errors, destructive-action consequences, domain-required notices, and accessibility labels.
+Apply the copy-restraint principle from `SKILL.md` with concrete checks when creating new screens:
+
+- Omit boilerplate copy that merely restates a heading or control (for example, "Manage your notification preferences" under a "Notifications" heading, or "(click to edit)" beside an Edit button).
+- Keep non-obvious operational or domain facts that layout cannot imply (for example, "Changes apply on next sign-in", password constraints, or what a delete action removes).
+- When recreating a user-provided mock or screenshot, preserve its copy rather than stripping headings or subtitles unasked.
 
 ## Responsive behavior
 

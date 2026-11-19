@@ -59,7 +59,7 @@ In projects that standardize on another design system, it does not mix Astryx in
 
 ### Changes in 2.2.0
 
-- Added a principle across the rule, skill, and references (`visual-design.md` / `stabilization.md`) to avoid unnecessary subtitles, secondary labels, parenthetical notes, and self-evident explanatory copy, letting layout, proximity, spacing, and visual hierarchy communicate meaning instead. It also clarifies the boundary for keeping short text when layout alone cannot convey information (such as input constraints, error reasons, destructive-action confirmations, and accessibility labels).
+- Added a principle across the rule, skill, and references (`visual-design.md` / `stabilization.md`) to avoid adding unnecessary subtitles, secondary labels, parenthetical notes, and self-evident explanatory copy, letting layout, proximity, spacing, and visual hierarchy communicate meaning instead. It also clarifies the boundary to preserve user-specified or existing copy and information layout alone cannot convey (such as input constraints, error reasons, destructive-action confirmations, required domain notices, and visible or accessible labels).
 
 ### Changes in 2.1.0
 

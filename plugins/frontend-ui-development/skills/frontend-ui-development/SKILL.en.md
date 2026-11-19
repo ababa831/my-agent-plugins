@@ -79,9 +79,11 @@ If an Astryx component has the same role, do not build a similar generic one. Av
 
 ## Let layout explain instead of copy
 
-Avoid unnecessary subtitles, secondary labels, parenthetical notes, and self-evident explanatory copy. Before adding text to clarify something, consider whether placement, proximity, spacing, visual hierarchy, or a clearer label on the element itself can communicate it.
+Do not add unnecessary subtitles, decorative secondary labels, parenthetical notes, or self-evident explanatory copy. Before clarifying something with prose, consider whether placement, proximity, spacing, visual hierarchy, or a clearer label on the element itself can communicate it.
 
-Reserve short text for information layout alone cannot convey, such as input constraints, error reasons, confirmation for destructive actions, required domain notices, or labels needed for accessibility.
+Do not remove or summarize user-specified, spec-defined, mock-provided, or existing copy unless asked. Secondary data lines (such as metadata in list items) and visible labels for inputs or actions are out of scope; do not replace visible labels with placeholders or icons alone.
+
+Keep information layout alone cannot convey—such as input constraints, error reasons, destructive-action confirmations (including target and impact), required domain notices, and accessible labels—and keep any newly added helper text brief.
 
 ## Development phases
 
