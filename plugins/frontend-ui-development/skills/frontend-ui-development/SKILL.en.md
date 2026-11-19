@@ -77,6 +77,12 @@ Pages / Screens (start from an Astryx template)
 
 If an Astryx component has the same role, do not build a similar generic one. Avoid `!important`, deep selector chains, and unexplained z-index increases.
 
+## Let layout explain instead of copy
+
+Avoid unnecessary subtitles, secondary labels, parenthetical notes, and self-evident explanatory copy. Before adding text to clarify something, consider whether placement, proximity, spacing, visual hierarchy, or a clearer label on the element itself can communicate it.
+
+Reserve short text for information layout alone cannot convey, such as input constraints, error reasons, confirmation for destructive actions, required domain notices, or labels needed for accessibility.
+
 ## Development phases
 
 Infer the phase from the request and existing code only when it matters. Phases do not relax the Astryx conventions; they change how far to polish.

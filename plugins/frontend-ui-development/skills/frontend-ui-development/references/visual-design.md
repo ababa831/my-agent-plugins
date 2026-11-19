@@ -22,6 +22,12 @@ Use this reference for new GUI work, screenshot-based recreation, or substantial
 - Preserve readable hierarchy among navigation, headings, body content, metadata, and actions.
 - Treat empty, loading, error, disabled, focus, hover, and selected states as part of the interface when they matter to the flow.
 
+## Let layout explain instead of copy
+
+- Do not add boilerplate section subtitles, parenthetical annotations, or helper copy that merely restates a heading or control label.
+- Communicate structure and meaning first through grouping, proximity, spacing, typographic hierarchy, and clear control labels or affordances.
+- Keep explanatory copy short and limited to what layout cannot show on its own: input constraints, validation errors, destructive-action consequences, domain-required notices, and accessibility labels.
+
 ## Responsive behavior
 
 - Prefer the template's frame and layout components, which adapt naturally, before adding breakpoint-specific patches.

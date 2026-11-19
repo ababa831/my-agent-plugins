@@ -57,6 +57,10 @@ Web / GUI アプリケーションのフロントエンド開発において、�
   - `https://astryx.atmeta.com/mcp` に接続し、`search`（component・doc・template の検索）と `get`（props・例・install command の取得）を提供。認証は不要です。
   - Meta が運営する外部サーバなので、検索語はこのサーバに送られます。スキルは、検索語にプロジェクトのコードや機密情報を含めないよう指示しています。使わない場合は、クライアントの MCP 設定でこのサーバを無効にできます。
 
+### 2.2.0 の変更
+
+- 不要なサブタイトル、セカンダリラベル、カッコ書きの注釈、自明な説明コピーを避け、レイアウト・近接・余白・視覚階層で伝える原則をルール・スキル・リファレンス（`visual-design.md` / `stabilization.md`）に追加しました。入力制約やエラー理由、破壊的操作の確認、アクセシビリティに必要なラベルなど、レイアウトだけでは伝えられない情報に限って短いテキストを使う境界も明記しています。
+
 ### 2.1.0 の変更
 
 - Astryx の component と prop で表せない Web 標準機能は、[Modern Web Guidance](https://github.com/GoogleChrome/modern-web-guidance) のガイドを確認してから使うようになります。Dialog など Astryx にある部品は、ガイドの例に合わせて作り直しません。
