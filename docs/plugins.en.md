@@ -9,9 +9,10 @@ This document explains the objectives, included skills, rules, hooks, and operat
 ## Table of Contents
 
 1. [development-rules](#1-development-rules)
-2. [frontend-ui-development](#2-frontend-ui-development)
-3. [japanese-writing](#3-japanese-writing)
-4. [shared-mcp](#4-shared-mcp)
+2. [formal-verification](#2-formal-verification)
+3. [frontend-ui-development](#3-frontend-ui-development)
+4. [japanese-writing](#4-japanese-writing)
+5. [shared-mcp](#5-shared-mcp)
 
 ---
 
@@ -38,7 +39,28 @@ Provides essential Git development standards and evidence-driven engineering pra
 
 ---
 
-## 2. frontend-ui-development
+## 2. formal-verification
+
+### Overview
+
+Provides guardrails and skills to guarantee invariants of critical kernels (core business logic, state transitions, and access/PII policies) using formal verification. It currently supports Lean 4 and is structured so future methods such as TLA+ can sit alongside it cleanly across skills, rules, and hooks.
+
+### Included Components
+
+- **`lean4-formal-verification` (Skill)**:
+  - Criteria for choosing among Level 1 (specification/invariant verification), Level 2 (executable oracle differential testing), and Level 3 (direct implementation verification).
+  - Responsibility boundary where humans review specifications (theorem statements and assumptions) while agents handle proof search, differential testing, and CI wiring.
+  - Soundness rules prohibiting `sorry`, `admit`, unapproved custom `axiom`s, and vacuous truth.
+  - `references/ci-and-soundness.md`, `references/differential-testing.md`, `references/data-domain-patterns.md`, and `references/examples.md`.
+  - `assets/formal-verification.yml` (GitHub Actions template) and `assets/AGENTS.formal-verification.md` (project context template).
+- **`rules/lean4-verification-guardrails.mdc` (Cursor Rule)**:
+  - Applies specification-protection and soundness guardrails when editing `*.lean`, `lakefile.lean`, `lakefile.toml`, or `lean-toolchain` (`alwaysApply: false`).
+- **Claude Code Hook (`claude/hooks.json`, `claude/inject_formal_verification_rule.py`)**:
+  - Non-blocking `PreToolUse` (`Write` / `Edit`) hook that injects the matching guardrail rule body into context via a method-extensible pattern mapping table (ready for future TLA+ rules).
+
+---
+
+## 3. frontend-ui-development
 
 ### Overview
 
@@ -86,7 +108,7 @@ In projects that standardize on another design system, it does not mix Astryx in
 
 ---
 
-## 3. japanese-writing
+## 4. japanese-writing
 
 ### Overview
 
@@ -112,7 +134,7 @@ For rewriting AI-sounding Japanese, use the external [yomiyasu](https://github.c
 
 ---
 
-## 4. shared-mcp
+## 5. shared-mcp
 
 ### Overview
 

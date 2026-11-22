@@ -24,6 +24,7 @@
 ```bash
 mkdir -p ~/.cursor/plugins/local
 cp -R /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/
+cp -R /path/to/my-agent-plugins/plugins/formal-verification ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/frontend-ui-development ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/
@@ -34,6 +35,10 @@ cp -R /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/
 Cursor サイドバーの **Customize** を開き、各プラグインに含まれるルール（rules）、スキル（skills）、MCP サーバの一覧が表示されていることを確認します。
 
 ### ルールの適用動作
+
+- **`formal-verification`**:
+  - `rules/lean4-verification-guardrails.mdc` は `*.lean`、`lakefile.lean`、`lakefile.toml`、`lean-toolchain` を扱うときにだけ読み込まれます（`alwaysApply: false`）。
+  - 対象リポジトリにプロジェクト固有の前提やコマンドを記録する場合は、スキル内のテンプレート `assets/AGENTS.formal-verification.md` を参考に `AGENTS.md` へ追記します。
 
 - **`japanese-writing`**:
   - `rules/common-rules.mdc` は `alwaysApply: true` として定義されており、セッション開始時に常にコンテキストへ読み込まれます。
@@ -68,6 +73,7 @@ codex plugin list --marketplace my-agent-plugins --json --available
 
 # 各プラグインのインストール
 codex plugin add development-rules@my-agent-plugins
+codex plugin add formal-verification@my-agent-plugins
 codex plugin add frontend-ui-development@my-agent-plugins
 codex plugin add japanese-writing@my-agent-plugins
 codex plugin add shared-mcp@my-agent-plugins
@@ -116,6 +122,7 @@ claude plugin marketplace add /path/to/my-agent-plugins
 
 # 各プラグインのインストール（既定の user スコープで全プロジェクトに適用）
 claude plugin install development-rules@my-agent-plugins
+claude plugin install formal-verification@my-agent-plugins
 claude plugin install frontend-ui-development@my-agent-plugins
 claude plugin install japanese-writing@my-agent-plugins
 claude plugin install shared-mcp@my-agent-plugins
@@ -153,7 +160,9 @@ Claude Code 向けには、ポータブルなスキルに加えて `claude/hooks
 4. **`japanese-writing` の PreToolUse フック（README 規約の注入）**:
    - `Write` / `Edit` の対象が `README.md` または `README.*.md` のときだけ、`claude/inject_readme_rule.py` が `rules/readme-writing.mdc` の本文（frontmatter を除く）をコンテキストに追加します。ツールの実行は止めません。
    - 規約が届くのは書き込みツールの呼び出し時です。新しく README を書く場合、最初の書き込みには規約が反映されず、その後の見直しや編集から反映されます。
-5. **`shared-mcp` の設定**:
+5. **`formal-verification` の PreToolUse フック（形式検証ガードレールの注入）**:
+   - `Write` / `Edit` の対象が `*.lean`、`lakefile.lean`、`lakefile.toml`、`lean-toolchain` のときだけ、`claude/inject_formal_verification_rule.py` が対応するルール（`rules/lean4-verification-guardrails.mdc`）の本文（frontmatter を除く）をコンテキストに追加します。探索中の一時的な `sorry` を妨げないよう、ツールの実行自体は止めません。
+6. **`shared-mcp` の設定**:
    - Claude Code では `.claude-plugin/plugin.json` 内にインラインで定義された MCP サーバ設定を使用します。
 
 ### プラグインの更新手順

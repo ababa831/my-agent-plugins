@@ -10,7 +10,7 @@ A personal repository that consolidates agent configurations (skills and MCP ser
 
 - **Multi-Client Support**: Seamlessly distributes plugins to the three major agent environments: Cursor, Codex, and Claude Code.
 - **Specification-Compliant Clean Architecture**: Strictly separates portable components (Agent Skills / MCP) from client-specific extensions (rules / hooks).
-- **Practical Skills Included**: Bundled with Git development conventions, frontend UI guardrails, Japanese writing norms, and common MCP servers.
+- **Practical Skills Included**: Bundled with Git development conventions, formal verification (Lean 4, extensible to TLA+), frontend UI guardrails, Japanese writing norms, and common MCP servers.
 
 ---
 
@@ -19,6 +19,7 @@ A personal repository that consolidates agent configurations (skills and MCP ser
 | Plugin | Overview | Key Features / Skills |
 | :-- | :-- | :-- |
 | [`development-rules`](plugins/development-rules/) | Shared Git development rules & evidence-driven verification | `git-development-rules`, `evidence-driven-engineering` |
+| [`formal-verification`](plugins/formal-verification/) | Formal verification guardrails for critical invariants (Lean 4, extensible to TLA+) | `lean4-formal-verification`, Cursor rules, Claude Code hook, templates |
 | [`frontend-ui-development`](plugins/frontend-ui-development/) | Astryx-based frontend GUI/UI development guardrails (web platform features via Modern Web Guidance) | `frontend-ui-development`, Astryx MCP, Cursor rules, template |
 | [`japanese-writing`](plugins/japanese-writing/) | Japanese writing norms & common conventions | `semantic-generation`, shared rules, README conventions |
 | [`shared-mcp`](plugins/shared-mcp/) | Shared MCP server definitions | Chrome DevTools, BigQuery, Hugging Face |

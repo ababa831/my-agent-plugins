@@ -1,0 +1,62 @@
+# 対象リポジトリの `.github/workflows/formal-verification.yml` へコピーし、
+# SPECS_DIR や対象モジュール名・差分テストコマンドを合わせて使います。
+name: Formal Verification (Lean 4)
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  SPECS_DIR: specs
+
+jobs:
+  verify-specs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install elan
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Cache Lean build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.elan
+            ${{ env.SPECS_DIR }}/.lake
+          key: lean4-${{ runner.os }}-${{ hashFiles('specs/lean-toolchain', 'specs/lake-manifest.json') }}
+          restore-keys: |
+            lean4-${{ runner.os }}-
+
+      - name: Build proofs (warnings as errors)
+        working-directory: ${{ env.SPECS_DIR }}
+        run: |
+          lake exe cache get || true
+          lake build -- -DwarningAsError=true
+
+      - name: Audit theorem axioms
+        working-directory: ${{ env.SPECS_DIR }}
+        run: |
+          # Audit.lean に公開定理の `#print axioms <TheoremName>` を列挙して使う
+          if [ -f Specs/Audit.lean ]; then
+            audit_out=$(lake env lean Specs/Audit.lean 2>&1)
+            echo "$audit_out"
+            if echo "$audit_out" | grep -qE 'sorryAx|uses sorry'; then
+              echo "::error::Incomplete proof or sorryAx detected in axiom audit."
+              exit 1
+            fi
+          fi
+
+      # Level 2: 実行可能オラクルと実実装の差分テストを使う場合に有効化する
+      # - name: Run differential tests against Lean 4 oracle
+      #   run: |
+      #     # 例: pytest tests/differential/
+      #     echo "Run your differential test suite here"

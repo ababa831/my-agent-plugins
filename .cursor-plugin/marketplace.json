@@ -13,6 +13,11 @@
       "description": "Gitリポジトリで共通利用する最小限の開発ルールと、証拠に基づく検証・改善の進め方"
     },
     {
+      "name": "formal-verification",
+      "source": "plugins/formal-verification",
+      "description": "壊れてはいけないコアロジック・状態遷移・ポリシーの不変条件を形式検証で保証するためのガードレールとスキル。現在は Lean 4 による証明とオラクル差分テストを提供し、TLA+ 等の形式手法も追加できる構成をとる"
+    },
+    {
       "name": "frontend-ui-development",
       "source": "plugins/frontend-ui-development",
       "description": "Astryx design system と Astryx MCP を基準に、GUI/UIを継ぎ接ぎにせず統一的に実装・モック・安定化するためのフロントエンド開発ガイド。Astryx で表せない Web 標準機能は Modern Web Guidance と分担する"

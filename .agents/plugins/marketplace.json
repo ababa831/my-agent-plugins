@@ -14,6 +14,18 @@
       "category": "Developer Tools"
     },
     {
+      "name": "formal-verification",
+      "source": {
+        "source": "local",
+        "path": "./plugins/formal-verification"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
       "name": "frontend-ui-development",
       "source": {
         "source": "local",
