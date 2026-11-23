@@ -10,7 +10,7 @@ Cursor / Codex / Claude Code で共通利用するエージェント向け設定
 
 - **マルチクライアント対応**: Cursor、Codex、Claude Code の3大エージェント環境にワンストップでプラグインを配布。
 - **仕様準拠のクリーンな設計**: 移植可能なポータブル機能（Agent Skills / MCP）とクライアント固有拡張（ルール / フック）を明確に分離。
-- **実践的なスキル集を同梱**: Git開発規約、フロントエンドガードレール、日本語ライティング規範、共通MCPを初期提供。
+- **実践的なスキル集を同梱**: Git開発規約、形式検証（Lean 4・TLA+ 等を追加可能）、フロントエンドガードレール、日本語ライティング規範、共通MCPを提供。
 
 ---
 
@@ -19,6 +19,7 @@ Cursor / Codex / Claude Code で共通利用するエージェント向け設定
 | プラグイン | 概要 | 主な機能 / スキル |
 | :-- | :-- | :-- |
 | [`development-rules`](plugins/development-rules/) | Git開発共通ルール & 証拠駆動検証 | `git-development-rules`, `evidence-driven-engineering` |
+| [`formal-verification`](plugins/formal-verification/) | 壊れてはいけない最小核の形式検証ガードレール（Lean 4・TLA+ 等を追加可能） | `lean4-formal-verification`, Cursor rules, Claude Code hook, テンプレート |
 | [`frontend-ui-development`](plugins/frontend-ui-development/) | Astryx 準拠のフロントエンドUI実装ガードレール（Web 標準機能は Modern Web Guidance と分担） | `frontend-ui-development`, Astryx MCP, Cursor rules, テンプレート |
 | [`japanese-writing`](plugins/japanese-writing/) | 日本語技術文書の品質向上 & 共通規約 | `semantic-generation`, 共通ルール, README 規約 |
 | [`shared-mcp`](plugins/shared-mcp/) | 共通 MCP サーバ定義 | Chrome DevTools, BigQuery, Hugging Face |

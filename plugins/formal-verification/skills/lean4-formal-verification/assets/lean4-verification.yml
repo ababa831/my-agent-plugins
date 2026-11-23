@@ -1,0 +1,42 @@
+# 対象リポジトリの `.github/workflows/lean4-verification.yml` へコピーするか、
+# 既存ワークフローへ Lean 4 ジョブとして組み込みます（将来の TLA+ 用ワークフローと分離するため）。
+# 本番リポジトリでは `leanprover/lean-action` をタグではなく検証済みコミット SHA に固定してください。
+name: Lean 4 Formal Verification
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  SPECS_DIR: specs
+
+jobs:
+  verify-lean4:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Build and audit Lean 4 proofs
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: ${{ env.SPECS_DIR }}
+          build: "true"
+          build-args: "--wfail"
+          use-mathlib-cache: "auto"
+          use-github-cache: "true"
+          axiom-audit: "true"
+          axiom-audit-allow: "propext,Classical.choice,Quot.sound"
+          # 高保証が必要な場合は有効化し、カーネル環境を再検証する（set_option debug.skipKernelTC 対策）
+          # leanchecker: "true"
+
+      # Level 2: 実行可能オラクルと実実装の差分テストを使う場合に有効化する
+      # - name: Run differential tests against Lean 4 oracle
+      #   run: |
+      #     # 例: pytest tests/differential/
+      #     echo "Run your differential test suite here"

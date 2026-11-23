@@ -59,6 +59,18 @@ my-agent-plugins/
     │   └── skills/
     │       ├── git-development-rules/
     │       └── evidence-driven-engineering/
+    ├── formal-verification/    # 形式検証ガードレールとスキル（Lean 4、TLA+ 等を追加できる構成）
+    │   ├── plugin.json
+    │   ├── .cursor-plugin/plugin.json
+    │   ├── .codex-plugin/plugin.json
+    │   ├── .claude-plugin/plugin.json
+    │   ├── rules/lean4-verification-guardrails.mdc      # Cursor 固有のファイル限定ルール
+    │   ├── claude/hooks.json                            # Claude Code 固有の PreToolUse hook
+    │   ├── claude/inject_formal_verification_rule.py    # 対象形式手法のルールを注入するスクリプト
+    │   └── skills/lean4-formal-verification/
+    │       ├── SKILL.md
+    │       ├── references/
+    │       └── assets/
     ├── frontend-ui-development/ # GUI/UI開発ガードレール（Astryx 準拠）
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json

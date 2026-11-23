@@ -9,9 +9,10 @@
 ## 目次
 
 1. [development-rules](#1-development-rules)
-2. [frontend-ui-development](#2-frontend-ui-development)
-3. [japanese-writing](#3-japanese-writing)
-4. [shared-mcp](#4-shared-mcp)
+2. [formal-verification](#2-formal-verification)
+3. [frontend-ui-development](#3-frontend-ui-development)
+4. [japanese-writing](#4-japanese-writing)
+5. [shared-mcp](#5-shared-mcp)
 
 ---
 
@@ -38,7 +39,28 @@ Git 開発における基本規約と、仮説や推測に依存しない「証�
 
 ---
 
-## 2. frontend-ui-development
+## 2. formal-verification
+
+### 概要
+
+壊れてはいけない最小核（計算ロジック・状態遷移・権限/PII ポリシー）の不変条件を形式検証で保証するためのガードレールとスキルです。現在は Lean 4 を提供しており、将来 TLA+ などのモデル検査手法を追加してもスキル・ルール・フックを無理なく並べられる構成になっています。
+
+### 含まれるコンポーネント
+
+- **`lean4-formal-verification` (スキル)**:
+  - Level 1（仕様・不変条件検証）、Level 2（実行可能オラクルによる差分テスト）、Level 3（実装直接検証）の 3 段階から選ぶ基準。
+  - 人間が仕様（定理文・主要定義・前提）をレビューし、エージェントが証明探索・差分テスト・CI を担う責務境界。
+  - `sorry` / `admit` / 未承認のカスタム `axiom` / 空虚な真を防ぐ健全性ルール。
+  - `references/ci-and-soundness.md`、`references/differential-testing.md`、`references/data-domain-patterns.md`、`references/examples.md`。
+  - `assets/lean4-verification.yml`（GitHub Actions 雛形）、`assets/AGENTS.formal-verification.md`（プロジェクト用テンプレート）。
+- **`rules/lean4-verification-guardrails.mdc` (Cursor 向けルール)**:
+  - `*.lean`、`lakefile.lean`、`lakefile.toml`、`lean-toolchain` を編集するときに仕様保護・健全性ルールを適用します（`alwaysApply: false`）。
+- **Claude Code 固有フック (`claude/hooks.json`, `claude/inject_formal_verification_rule.py`)**:
+  - `PreToolUse` フック（`Write` / `Edit`）で対象ファイルを検知し、対応するルール本文をコンテキストに注入します（非ブロッキング）。マッピング表で手法別にルールを切り替えられるため、将来の TLA+ 追加にも対応できます。
+
+---
+
+## 3. frontend-ui-development
 
 ### 概要
 
@@ -86,7 +108,7 @@ Web / GUI アプリケーションのフロントエンド開発において、�
 
 ---
 
-## 3. japanese-writing
+## 4. japanese-writing
 
 ### 概要
 
@@ -113,7 +135,7 @@ AI っぽい日本語の推敲には、本プラグインに含めず外部の [
 
 ---
 
-## 4. shared-mcp
+## 5. shared-mcp
 
 ### 概要
 

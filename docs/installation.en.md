@@ -24,6 +24,7 @@ Copy each plugin directory under `~/.cursor/plugins/local/`, then restart Cursor
 ```bash
 mkdir -p ~/.cursor/plugins/local
 cp -R /path/to/my-agent-plugins/plugins/development-rules ~/.cursor/plugins/local/
+cp -R /path/to/my-agent-plugins/plugins/formal-verification ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/frontend-ui-development ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/japanese-writing ~/.cursor/plugins/local/
 cp -R /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/
@@ -34,6 +35,10 @@ cp -R /path/to/my-agent-plugins/plugins/shared-mcp ~/.cursor/plugins/local/
 Open **Customize** in the Cursor sidebar to verify that rules, skills, and MCP servers appear properly.
 
 ### Rule Behavior
+
+- **`formal-verification`**:
+  - `rules/lean4-verification-guardrails.mdc` is loaded only when working on `*.lean`, `lakefile.lean`, `lakefile.toml`, and `lean-toolchain` (`alwaysApply: false`).
+  - To record repository-specific assumptions and commands, adapt `assets/AGENTS.formal-verification.md` into the target repository's `AGENTS.md`.
 
 - **`japanese-writing`**:
   - `rules/common-rules.mdc` is configured with `alwaysApply: true` and is automatically injected into every session.
@@ -68,6 +73,7 @@ codex plugin list --marketplace my-agent-plugins --json --available
 
 # Install plugins
 codex plugin add development-rules@my-agent-plugins
+codex plugin add formal-verification@my-agent-plugins
 codex plugin add frontend-ui-development@my-agent-plugins
 codex plugin add japanese-writing@my-agent-plugins
 codex plugin add shared-mcp@my-agent-plugins
@@ -116,6 +122,7 @@ claude plugin marketplace add /path/to/my-agent-plugins
 
 # Install plugins (default user scope applies across all projects)
 claude plugin install development-rules@my-agent-plugins
+claude plugin install formal-verification@my-agent-plugins
 claude plugin install frontend-ui-development@my-agent-plugins
 claude plugin install japanese-writing@my-agent-plugins
 claude plugin install shared-mcp@my-agent-plugins
@@ -153,7 +160,11 @@ In addition to portable skills, Claude Code uses hooks defined in `claude/hooks.
 4. **`japanese-writing` PreToolUse Hook (README Conventions)**:
    - Only when `Write` / `Edit` targets `README.md` or `README.*.md`, `claude/inject_readme_rule.py` adds the body of `rules/readme-writing.mdc` (excluding frontmatter) to the context. It never blocks the tool call.
    - The conventions arrive with the write tool call, so the first write of a new README is not governed by them; they apply from the following review and edits.
-5. **`shared-mcp` Configuration**:
+5. **`formal-verification` PreToolUse Hook (Guardrail Injection)**:
+   - Only when `Write` / `Edit` targets `*.lean`, `lakefile.lean`, `lakefile.toml`, or `lean-toolchain`, `claude/inject_formal_verification_rule.py` adds the body of the matching rule (`rules/lean4-verification-guardrails.mdc`, excluding frontmatter) to the context. It does not block tool execution so iterative proof exploration with temporary `sorry` remains unobstructed.
+   - Because the guardrails arrive on tool invocation, the first write of a brand-new Lean file has already been generated; they apply to the following review and edits, and are injected statelessly on each matching `Write` / `Edit`.
+   - *Note: Requires a POSIX shell and `python3` (if `python3` is unavailable, the hook exits silently and the skill itself remains available).*
+6. **`shared-mcp` Configuration**:
    - Claude Code uses the MCP servers declared inline in `.claude-plugin/plugin.json`.
 
 ### Updating Plugins
