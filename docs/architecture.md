@@ -59,7 +59,7 @@ my-agent-plugins/
     │   └── skills/
     │       ├── git-development-rules/
     │       └── evidence-driven-engineering/
-    ├── formal-verification/    # 形式検証ガードレールとスキル（Lean 4、将来 TLA+ 対応）
+    ├── formal-verification/    # 形式検証ガードレールとスキル（Lean 4、TLA+ 等を追加できる構成）
     │   ├── plugin.json
     │   ├── .cursor-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json

@@ -48,11 +48,11 @@ Git 開発における基本規約と、仮説や推測に依存しない「証�
 ### 含まれるコンポーネント
 
 - **`lean4-formal-verification` (スキル)**:
-  - Level 1（仕様・不変条件検証）→ Level 2（実行可能オラクルによる差分テスト）→ Level 3（実装直接検証）の段階選定基準。
-  - 人間が仕様（定理文・前提）をレビューし、エージェントが証明探索・差分テスト・CI を担う責務境界。
+  - Level 1（仕様・不変条件検証）、Level 2（実行可能オラクルによる差分テスト）、Level 3（実装直接検証）の 3 段階から選ぶ基準。
+  - 人間が仕様（定理文・主要定義・前提）をレビューし、エージェントが証明探索・差分テスト・CI を担う責務境界。
   - `sorry` / `admit` / 未承認のカスタム `axiom` / 空虚な真を防ぐ健全性ルール。
   - `references/ci-and-soundness.md`、`references/differential-testing.md`、`references/data-domain-patterns.md`、`references/examples.md`。
-  - `assets/formal-verification.yml`（GitHub Actions 雛形）、`assets/AGENTS.formal-verification.md`（プロジェクト用テンプレート）。
+  - `assets/lean4-verification.yml`（GitHub Actions 雛形）、`assets/AGENTS.formal-verification.md`（プロジェクト用テンプレート）。
 - **`rules/lean4-verification-guardrails.mdc` (Cursor 向けルール)**:
   - `*.lean`、`lakefile.lean`、`lakefile.toml`、`lean-toolchain` を編集するときに仕様保護・健全性ルールを適用します（`alwaysApply: false`）。
 - **Claude Code 固有フック (`claude/hooks.json`, `claude/inject_formal_verification_rule.py`)**:

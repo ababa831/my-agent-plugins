@@ -162,6 +162,8 @@ Claude Code 向けには、ポータブルなスキルに加えて `claude/hooks
    - 規約が届くのは書き込みツールの呼び出し時です。新しく README を書く場合、最初の書き込みには規約が反映されず、その後の見直しや編集から反映されます。
 5. **`formal-verification` の PreToolUse フック（形式検証ガードレールの注入）**:
    - `Write` / `Edit` の対象が `*.lean`、`lakefile.lean`、`lakefile.toml`、`lean-toolchain` のときだけ、`claude/inject_formal_verification_rule.py` が対応するルール（`rules/lean4-verification-guardrails.mdc`）の本文（frontmatter を除く）をコンテキストに追加します。探索中の一時的な `sorry` を妨げないよう、ツールの実行自体は止めません。
+   - 規約が届くのは書き込みツールの呼び出し時であるため、新規ファイルの最初の書き込み内容はすでに生成済みであり、その後の見直しや編集から反映されます。また状態を持たず該当ファイルの `Write` / `Edit` ごとに注入されます。
+   - ※ POSIX シェルと `python3` が必要です（`python3` がない環境ではフックはスキップされ、スキル自体は利用可能です）。
 6. **`shared-mcp` の設定**:
    - Claude Code では `.claude-plugin/plugin.json` 内にインラインで定義された MCP サーバ設定を使用します。
 

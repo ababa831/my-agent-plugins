@@ -52,7 +52,7 @@ Provides guardrails and skills to guarantee invariants of critical kernels (core
   - Responsibility boundary where humans review specifications (theorem statements and assumptions) while agents handle proof search, differential testing, and CI wiring.
   - Soundness rules prohibiting `sorry`, `admit`, unapproved custom `axiom`s, and vacuous truth.
   - `references/ci-and-soundness.md`, `references/differential-testing.md`, `references/data-domain-patterns.md`, and `references/examples.md`.
-  - `assets/formal-verification.yml` (GitHub Actions template) and `assets/AGENTS.formal-verification.md` (project context template).
+  - `assets/lean4-verification.yml` (GitHub Actions template) and `assets/AGENTS.formal-verification.md` (project context template).
 - **`rules/lean4-verification-guardrails.mdc` (Cursor Rule)**:
   - Applies specification-protection and soundness guardrails when editing `*.lean`, `lakefile.lean`, `lakefile.toml`, or `lean-toolchain` (`alwaysApply: false`).
 - **Claude Code Hook (`claude/hooks.json`, `claude/inject_formal_verification_rule.py`)**:

@@ -3,11 +3,12 @@
 When Write or Edit targets a file matching one of `RULE_MAPPINGS` (aligned with the
 Cursor rule's globs), emit the matching rule body without YAML frontmatter as
 `additionalContext`. The tool call itself is never blocked, and any unexpected input
-exits 0 silently.
+or malformed frontmatter exits 0 silently.
 """
 
 import json
 import os
+import posixpath
 import sys
 from fnmatch import fnmatchcase
 
@@ -18,18 +19,21 @@ RULES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "rule
 
 
 def strip_frontmatter(text):
-    """Return rule body without leading YAML frontmatter."""
+    """Return rule body without leading YAML frontmatter, or None if unclosed."""
     lines = text.splitlines()
     if lines and lines[0].strip() == "---":
         for i, line in enumerate(lines[1:], start=1):
             if line.strip() == "---":
                 return "\n".join(lines[i + 1:]).strip() + "\n"
+        return None
     return text
 
 
 def find_rule_file(path):
     """Return the matching rule filename for path, or None if unmatched."""
-    basename = os.path.basename(path)
+    if not isinstance(path, str) or not path:
+        return None
+    basename = posixpath.basename(path.replace("\\", "/"))
     if not basename:
         return None
     for patterns, rule_name in RULE_MAPPINGS:
@@ -46,8 +50,10 @@ def main():
         if not rule_name:
             return 0
         rule_path = os.path.join(RULES_DIR, rule_name)
-        with open(rule_path, encoding="utf-8") as f:
+        with open(rule_path, encoding="utf-8-sig") as f:
             body = strip_frontmatter(f.read())
+        if body is None:
+            return 0
     except Exception:
         return 0
     output = {"hookSpecificOutput": {"hookEventName": "PreToolUse", "additionalContext": body}}

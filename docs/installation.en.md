@@ -162,6 +162,8 @@ In addition to portable skills, Claude Code uses hooks defined in `claude/hooks.
    - The conventions arrive with the write tool call, so the first write of a new README is not governed by them; they apply from the following review and edits.
 5. **`formal-verification` PreToolUse Hook (Guardrail Injection)**:
    - Only when `Write` / `Edit` targets `*.lean`, `lakefile.lean`, `lakefile.toml`, or `lean-toolchain`, `claude/inject_formal_verification_rule.py` adds the body of the matching rule (`rules/lean4-verification-guardrails.mdc`, excluding frontmatter) to the context. It does not block tool execution so iterative proof exploration with temporary `sorry` remains unobstructed.
+   - Because the guardrails arrive on tool invocation, the first write of a brand-new Lean file has already been generated; they apply to the following review and edits, and are injected statelessly on each matching `Write` / `Edit`.
+   - *Note: Requires a POSIX shell and `python3` (if `python3` is unavailable, the hook exits silently and the skill itself remains available).*
 6. **`shared-mcp` Configuration**:
    - Claude Code uses the MCP servers declared inline in `.claude-plugin/plugin.json`.
 

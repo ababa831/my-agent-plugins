@@ -4,12 +4,12 @@
 
 ## Project facts
 
-- Formal methods used: `<Lean 4 | Lean 4 + TLA+ (future)>`
+- Formal methods used: `<Lean 4>`
 - Verification level: `<Level 1 (spec & invariants) | Level 2 (executable oracle + differential testing) | Level 3 (direct impl)>`
 - Specs directory: `<path, e.g. specs/>`
 - Lean toolchain file: `<path, e.g. specs/lean-toolchain>`
-- Build & soundness check command: `<e.g. cd specs && lake build -- -DwarningAsError=true>`
-- Axiom audit command: `<e.g. cd specs && lake env lean Specs/Audit.lean>`
+- Build & soundness check command: `<e.g. cd specs && lake build --wfail>`
+- Axiom audit command: `<e.g. lean-action axiom-audit / cd specs && lake env lean Specs/Audit.lean (allowlist check)>`
 - Differential test command (if Level 2): `<e.g. pytest tests/differential/>`
 - Allowed axioms: `<propext, Classical.choice, Quot.sound>`
 
